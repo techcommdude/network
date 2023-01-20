@@ -1,22 +1,20 @@
-# Mock email application built with Javascript
+# Social Networking/Blog application built with Javascript, Django, Python, HTML and CSS
 
-This project is a single-page Javascript application.  It is a mock email client application that makes API calls to compose, send and archive/unarchive email.  This project utilizes pre-built Python APIs with GET, POST and PUT requests in Javascript.  AJAX is used to fetch data from the server.  Javascript is used to display/hide information and manipulate the DOM for the various views in the app.
+TODO:
 
 You can use these credentials for the application:
-User email: **guest@example.com**
+User: **Guest**
 Password: **123**
-
-You can also use these email addresses with the same password of "123" without the quotes: **foo@example.com**, **bar@example.com**, **baz@example.com**.
 
 You can also register and create your own credentials.
 
-This project is deployed on Heroku (please have patience since the instance is likely sleeping but will wake up after a few seconds): <a href="https://mail-client-gfarnell.herokuapp.com/">https://mail-client-gfarnell.herokuapp.com/</a>
+This project is deployed on Heroku (please have patience since the instance is likely sleeping but will wake up after a few seconds): <a href="???????">????????</a>
 
-A screencast of the project can be found here: <a href="https://youtu.be/V2s00sozPkU">https://youtu.be/V2s00sozPkU</a>
+A screencast of the project can be found here: <a href="??????">???????</a>
 
 You can log in to the Heroku app above with this account. No registration is required (although you can register):
 
-* Email: **guest**
+* User: **Guest**
 * Password: **123**
 
 Some of the technologies I used when building this demo application:

@@ -8,7 +8,13 @@ from .models import User
 
 
 def index(request):
-    return render(request, "network/index.html")
+    # Authenticated users view their inbox
+    if request.user.is_authenticated:
+        return render(request, "network/index.html")
+
+    # Everyone else is prompted to sign in
+    else:
+        return HttpResponseRedirect(reverse("login"))
 
 
 def login_view(request):
@@ -61,3 +67,15 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+
+def handler404(request, exception, template_name="404.html"):
+    response = render(template_name)
+    response.status_code = 404
+    return response
+
+
+def handler500(request, exception, template_name="500.html"):
+    response = render(template_name)
+    response.status_code = 500
+    return response
