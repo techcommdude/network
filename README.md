@@ -3,7 +3,7 @@
 TODO:
 
 You can use these credentials for the application:
-User: **Guest**
+User: **guest**
 Password: **123**
 
 You can also register and create your own credentials.
@@ -14,7 +14,7 @@ A screencast of the project can be found here: <a href="??????">???????</a>
 
 You can log in to the Heroku app above with this account. No registration is required (although you can register):
 
-* User: **Guest**
+* User: **guest**
 * Password: **123**
 
 Some of the technologies I used when building this demo application:
