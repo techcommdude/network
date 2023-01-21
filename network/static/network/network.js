@@ -3,31 +3,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //FIXME:
 
-  document
-    .querySelector("#inbox")
-    .addEventListener("click", () => load_mailbox("inbox"));
+  // debugger;
+  document.querySelector("#allPosts").addEventListener("click", () => allPosts());
 
-  //This is the Sent button at the top of the page.
-  document
-    .querySelector("#sent")
-    .addEventListener("click", () => load_mailbox("sent"));
+  document.querySelector(".navbar-brand").addEventListener("click", () => allPosts());
 
-  document
-    .querySelector("#archived")
-    .addEventListener("click", () => load_mailbox("archive"));
 
-  //Listener on the Compose button at the top of the page.
-  document.querySelector("#compose").addEventListener("click", compose_email);
+  document.querySelector("#profile").addEventListener("click", () => profile());
 
-  // Send Mail: When a user submits the email composition form.  Prevent default is needed to prevent the inbox from loading by default.
-  //This is the listener on the form.
+  // debugger;
   document
-    .querySelector("#compose-form")
-    .addEventListener("submit", (event) => {
-      event.preventDefault();
-      submit_email();
-    });
+    .querySelector("#following")
+    .addEventListener("click", () => following());
 
   // By default, load the inbox
   // load_mailbox("inbox");
+  allPosts()
 });
+
+function allPosts() {
+  // debugger;
+
+  document.querySelector("#post-view").style.display = "block";
+  document.querySelector("#following-view").style.display = "none";
+  document.querySelector("#profile-view").style.display = "none";
+
+  // return false;
+}
+
+function following() {
+  // debugger;
+  document.querySelector("#post-view").style.display = "none";
+  document.querySelector("#following-view").style.display = "block";
+  document.querySelector("#profile-view").style.display = "none";
+
+  // return false;
+}
+
+function profile() {
+  // debugger;
+  document.querySelector("#post-view").style.display = "none";
+  document.querySelector("#following-view").style.display = "none";
+  document.querySelector("#profile-view").style.display = "block";
+
+  // return false;
+}
