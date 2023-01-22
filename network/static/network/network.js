@@ -16,9 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
     .querySelector("#following")
     .addEventListener("click", () => following());
 
-  // By default, load the inbox
-  // load_mailbox("inbox");
-  allPosts()
+  // By default, load the profile
+  profile()
 });
 
 function allPosts() {

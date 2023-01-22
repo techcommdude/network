@@ -1,0 +1,17 @@
+#posty {
+
+    margin: 1.0em;
+    border-style: solid;
+    border-width: thin;
+    border-color: lightgray;
+}
+
+#post-form {
+
+    margin: 1em;
+}
+
+#post-button {
+
+    margin-top: 0.4em;
+}
