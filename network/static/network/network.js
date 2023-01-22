@@ -1,33 +1,38 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Use buttons to toggle between views
 
-  //FIXME:
-
-  // debugger;
-  document.querySelector("#allPosts").addEventListener("click", () => allPosts());
+  document.querySelector("#allPosts").addEventListener("click", () => loadAllPosts());
 
   document.querySelector(".navbar-brand").addEventListener("click", () => profile());
 
 
   document.querySelector("#profile").addEventListener("click", () => profile());
 
+   //TODO: Event listener for the Post button.  Update to go to function.
+   document
+   .querySelector("#post-button")
+   .addEventListener("click", () => profile());
+
   // debugger;
   document
     .querySelector("#following")
     .addEventListener("click", () => following());
 
-  // By default, load the profile
+  // By default, load the profile for the user
   profile()
 });
 
-function allPosts() {
+function loadAllPosts() {
   // debugger;
 
   document.querySelector("#post-view").style.display = "block";
   document.querySelector("#following-view").style.display = "none";
   document.querySelector("#profile-view").style.display = "none";
 
-  // return false;
+  //TODO: Load all the existing posts.
+
+  //TODO: Add an event listener for the Post button.  Do it above.
+  return false;
 }
 
 function following() {
