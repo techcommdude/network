@@ -3,23 +3,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.querySelector("#allPosts").addEventListener("click", () => loadAllPosts());
 
-  document.querySelector(".navbar-brand").addEventListener("click", () => profile());
+  document.querySelector(".navbar-brand").addEventListener("click", () => loadProfile());
 
 
-  document.querySelector("#profile").addEventListener("click", () => profile());
+  document.querySelector("#profile").addEventListener("click", () => loadProfile());
 
    //TODO: Event listener for the Post button.  Update to go to function.
    document
    .querySelector("#post-button")
-   .addEventListener("click", () => profile());
+   .addEventListener("click", () => loadProfile());
 
   // debugger;
   document
     .querySelector("#following")
-    .addEventListener("click", () => following());
+    .addEventListener("click", () => loadFollowing());
 
   // By default, load the profile for the user
-  profile()
+  loadProfile()
 });
 
 function loadAllPosts() {
@@ -31,11 +31,15 @@ function loadAllPosts() {
 
   //TODO: Load all the existing posts.
 
+  //TODO: Do not save if the post is empty?  Throw an error.
+
+  //TODO: Clear out what is there after you Post it.
+
   //TODO: Add an event listener for the Post button.  Do it above.
   return false;
 }
 
-function following() {
+function loadFollowing() {
   // debugger;
   document.querySelector("#post-view").style.display = "none";
   document.querySelector("#following-view").style.display = "block";
@@ -44,7 +48,7 @@ function following() {
   // return false;
 }
 
-function profile() {
+function loadProfile() {
   // debugger;
   document.querySelector("#post-view").style.display = "none";
   document.querySelector("#following-view").style.display = "none";
