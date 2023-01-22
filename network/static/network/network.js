@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // debugger;
   document.querySelector("#allPosts").addEventListener("click", () => allPosts());
 
-  document.querySelector(".navbar-brand").addEventListener("click", () => allPosts());
+  document.querySelector(".navbar-brand").addEventListener("click", () => profile());
 
 
   document.querySelector("#profile").addEventListener("click", () => profile());
