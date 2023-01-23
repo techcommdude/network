@@ -7,6 +7,19 @@ from django.urls import reverse
 from .models import User, Posts, Follow
 
 
+def savePost(request):
+    pass
+
+def retrievePost(request, post_id):
+    pass
+
+def getAllPosts(request, user_id):
+    pass
+
+def getProfile(request, user_id):
+    pass
+
+
 def index(request):
     # Authenticated users view their inbox
     if request.user.is_authenticated:
