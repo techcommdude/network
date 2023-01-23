@@ -1,11 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
-
-from .models import User, Posts, Follow
+import json
+from .models import User, Posts
 
 
 @login_required
@@ -22,8 +22,13 @@ def retrievePost(request, post_id):
 
 @login_required
 def getAllPosts(request):
+
     print("In getAllPosts")
-    return HttpResponse("Loading all posts!")
+    #Need default = str to convert the datetime object to a string.
+    posts = json.dumps([dict(item) for item in Posts.objects.all().values('id', 'creator', 'content', 'createdDate', 'numberLikes')], default=str)
+
+    #If you are returning anything other than a dict, you must use safe=False.
+    return JsonResponse(posts, safe=False)
 
 @login_required
 def getProfile(request):

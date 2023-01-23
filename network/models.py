@@ -19,7 +19,7 @@ class Posts(models.Model):
             "id": self.id,
             "creator": self.creator,
             "content": self.content,
-            "createdDate": self.timestamp.strftime("%b %d %Y, %I:%M %p"),
+            "createdDate": self.createdDate.strftime("%b %d %Y, %I:%M %p"),
             "numberLikes": self.numberLikes,
         }
 
