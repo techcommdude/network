@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
    //TODO: Event listener for the Post button.  Update to go to function.
    document
    .querySelector("#post-button")
-   .addEventListener("click", () => loadProfile());
+   .addEventListener("click", () => loadAllPosts());
 
   // debugger;
   document
@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // By default, load the profile for the user
   loadProfile()
 });
+
 
 function loadAllPosts() {
   // debugger;
@@ -36,6 +37,17 @@ function loadAllPosts() {
   //TODO: Clear out what is there after you Post it.
 
   //TODO: Add an event listener for the Post button.  Do it above.
+
+  fetch(`/posts`)
+  .then((response) => response.json())
+  .then((posts) => {
+    // Print email
+    console.log(posts);
+
+
+  });
+
+
   return false;
 }
 

@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -7,15 +8,20 @@ from django.urls import reverse
 from .models import User, Posts, Follow
 
 
+@login_required
 def savePost(request):
     pass
 
+@login_required
 def retrievePost(request, post_id):
     pass
 
-def getAllPosts(request, user_id):
-    pass
+@login_required
+def getAllPosts(request):
+    print("In getAlllPosts")
+    return HttpResponse("Loading all posts!")
 
+@login_required
 def getProfile(request, user_id):
     pass
 

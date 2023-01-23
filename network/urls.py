@@ -11,7 +11,7 @@ urlpatterns = [
 
 
     # API Routes
-    path("post", views.savePost, name="savePost"),
-    path("post/<int:post_id>", views.retrievePost, name="retrievePost"),
+    path("posts", views.getAllPosts, name="getAllPosts"),
+    path("posts/<int:post_id>", views.retrievePost, name="retrievePost"),
 
 ]
