@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.querySelector("#allPosts").addEventListener("click", () => loadAllPosts());
 
-  document.querySelector(".navbar-brand").addEventListener("click", () => loadProfile());
+  document.querySelector(".navbar-brand").addEventListener("click", () => loadAllPosts());
 
 
   document.querySelector("#profile").addEventListener("click", () => loadProfile());
@@ -57,7 +57,17 @@ function loadFollowing() {
   document.querySelector("#following-view").style.display = "block";
   document.querySelector("#profile-view").style.display = "none";
 
-  // return false;
+  fetch(`/following`)
+  .then((response) => response.json())
+  .then((following) => {
+    // Print email
+    console.log(following);
+
+
+  });
+
+
+  return false;
 }
 
 function loadProfile() {
@@ -66,5 +76,15 @@ function loadProfile() {
   document.querySelector("#following-view").style.display = "none";
   document.querySelector("#profile-view").style.display = "block";
 
-  // return false;
+  fetch(`/profile`)
+  .then((response) => response.json())
+  .then((profile) => {
+    // Print email
+    console.log(profile);
+
+
+  });
+
+
+  return false;
 }

@@ -10,20 +10,34 @@ from .models import User, Posts, Follow
 
 @login_required
 def savePost(request):
-    pass
+    user = request.user
+    print(user)
+    return HttpResponse("savePOST!")
 
 @login_required
 def retrievePost(request, post_id):
-    pass
+    # TODO: This is for editing the post after clicking edit.
+    print("In retrievePost")
+    return HttpResponse("retrievePost!")
 
 @login_required
 def getAllPosts(request):
-    print("In getAlllPosts")
+    print("In getAllPosts")
     return HttpResponse("Loading all posts!")
 
 @login_required
-def getProfile(request, user_id):
-    pass
+def getProfile(request):
+    print("In getProfile")
+    user = request.user
+    print(user)
+    return HttpResponse("getProfile!")
+
+@login_required
+def getFollowing(request):
+    print("In getFollowing")
+    user = request.user
+    print(user)
+    return HttpResponse("getFollowing!")
 
 
 def index(request):
