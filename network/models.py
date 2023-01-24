@@ -5,6 +5,9 @@ from django.db import models
 class User(AbstractUser):
     pass
 
+    def __str__(self) -> str:
+        return f"User Name: {self.username} - User ID: {self.id}"
+
 
 class Posts(models.Model):
     # The creator of the listing who can close it.
@@ -25,14 +28,20 @@ class Posts(models.Model):
 
 
 class Follow(models.Model):
+    followUser = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="get_followUser_listings", blank=False)
     followers = models.ManyToManyField(
-        User, blank=True, related_name="get_follower_posts")
+        User, blank=True, related_name="get_follower_users")
     following = models.ManyToManyField(
-        User, blank=True, related_name="get_following_posts")
+        User, blank=True, related_name="get_following_users")
+
+    def __str__(self) -> str:
+        return f"ID: {self.id} - User: {self.followUser} - Followers: {self.followers.all()} Following: {self.following.all()}"
 
     def serialize(self):
         return {
             "id": self.id,
-            "followers": [user for user in self.followers.all()],
-            "following": [user for user in self.following.all()],
+            "followUser": self.followUser,
+            "followers": [user.username for user in self.followers.all()],
+            "following": [user.username for user in self.following.all()],
         }

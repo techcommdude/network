@@ -2,10 +2,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.core.serializers import serialize
 from django.shortcuts import render
 from django.urls import reverse
 import json
-from .models import User, Posts
+from .models import User, Posts, Follow
 
 
 @login_required
@@ -34,8 +35,17 @@ def getAllPosts(request):
 def getProfile(request):
     print("In getProfile")
     user = request.user
-    print(user)
-    return HttpResponse("getProfile!")
+
+       #This returns a queryset which must be serialized to convert to JSON.
+    followQS = Follow.objects.filter(followUser=user)
+
+    serialized_data = serialize("json", followQS)
+    serialized_data = json.loads(serialized_data)
+    print(serialized_data)
+
+    #TODO: Need to handle the case where nothing is returned.  What do we display on the page.
+
+    return JsonResponse(serialized_data, safe=False, status=200)
 
 @login_required
 def getFollowing(request):
