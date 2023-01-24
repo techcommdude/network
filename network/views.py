@@ -15,43 +15,58 @@ def savePost(request):
     print(user)
     return HttpResponse("savePOST!")
 
+
 @login_required
 def retrievePost(request, post_id):
     # TODO: This is for editing the post after clicking edit.
     print("In retrievePost")
     return HttpResponse("retrievePost!")
 
+
 @login_required
 def getAllPosts(request):
 
     print("In getAllPosts")
-    #Need default = str to convert the datetime object to a string.
-    posts = json.dumps([dict(item) for item in Posts.objects.all().values('id', 'creator', 'content', 'createdDate', 'numberLikes')], default=str)
+    allPosts = Posts.objects.all()
 
-    #If you are returning anything other than a dict, you must use safe=False.
-    return JsonResponse(posts, safe=False)
+    serialized_data = serialize("json", allPosts)
+    serialized_data = json.loads(serialized_data)
+    print(serialized_data)
+
+    # TODO: most recent posts first, how to do?
+
+    # posts = json.dumps([dict(item) for item in Posts.objects.all().values('id', 'creator', 'content', 'createdDate', 'numberLikes')], default=str)
+    # print(posts)
+
+    # If you are returning anything other than a dict, you must use safe=False.
+    return JsonResponse(serialized_data, safe=False, status=200)
+
 
 @login_required
 def getProfile(request):
     print("In getProfile")
     user = request.user
 
-       #This returns a queryset which must be serialized to convert to JSON.
+    # This returns a queryset which must be serialized to convert to JSON.
     followQS = Follow.objects.filter(followUser=user)
 
     serialized_data = serialize("json", followQS)
     serialized_data = json.loads(serialized_data)
     print(serialized_data)
 
-    #TODO: Need to handle the case where nothing is returned.  What do we display on the page.
+    # TODO: Need to handle the case where nothing is returned.  What do we display on the page.
 
     return JsonResponse(serialized_data, safe=False, status=200)
+
 
 @login_required
 def getFollowing(request):
     print("In getFollowing")
     user = request.user
     print(user)
+
+    # TODO: From the Follow object, get the "following" users and then retrieve all posts for those users with the most recent posts first.
+
     return HttpResponse("getFollowing!")
 
 

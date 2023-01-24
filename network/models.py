@@ -17,6 +17,7 @@ class Posts(models.Model):
     createdDate = models.DateTimeField(auto_now_add=True)
     numberLikes = models.IntegerField(blank=True, default=0)
 
+#TODO: get rid of this?
     def serialize(self):
         return {
             "id": self.id,
@@ -38,6 +39,7 @@ class Follow(models.Model):
     def __str__(self) -> str:
         return f"ID: {self.id} - User: {self.followUser} - Followers: {self.followers.all()} Following: {self.following.all()}"
 
+    #TODO: get rid of this?
     def serialize(self):
         return {
             "id": self.id,
