@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -6,6 +7,9 @@ from django.core.serializers import serialize
 from django.shortcuts import render
 from django.urls import reverse
 import json
+from django.core.serializers.json import DjangoJSONEncoder
+
+from yaml import serialize_all
 from .models import User, Posts, Follow
 
 
@@ -27,19 +31,37 @@ def retrievePost(request, post_id):
 def getAllPosts(request):
 
     print("In getAllPosts")
-    allPosts = Posts.objects.all()
+    # TODO: most recent posts first, how to do?  Need to sort the below.
+    allPosts = Posts.objects.values('id', 'creator', 'content', 'createdDate', 'numberLikes').order_by('-createdDate')
 
-    serialized_data = serialize("json", allPosts)
-    serialized_data = json.loads(serialized_data)
-    print(serialized_data)
+    serialized_q = json.dumps(list(allPosts), cls=DjangoJSONEncoder, default=str)
+    print(serialized_q)
 
-    # TODO: most recent posts first, how to do?
+
+
+
+
+    # serialized_data = serialize("json", allPosts)
+    # serialized_data = json.loads(serialized_data)
+    # print(serialized_data)
+    # test = json.dumps(serialized_data)
+    # print(test)
+
+#     createdDate = '2019-01-04T16:41:24+02:00'
+
+#    createdDate.strftime("%b %d %Y, %I:%M %p")
+    # //TODO: This converts the format of the date.
+    test = datetime.datetime.fromisoformat('2019-01-04T16:41:24+02:00')
+    print(test)
+
+
+
 
     # posts = json.dumps([dict(item) for item in Posts.objects.all().values('id', 'creator', 'content', 'createdDate', 'numberLikes')], default=str)
     # print(posts)
 
     # If you are returning anything other than a dict, you must use safe=False.
-    return JsonResponse(serialized_data, safe=False, status=200)
+    return JsonResponse(serialized_q, safe=False, status=200)
 
 
 @login_required
