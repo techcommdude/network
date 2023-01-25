@@ -48,8 +48,8 @@ function loadAllPosts() {
     .then((posts) => {
       // TODO: this finally works!
       myJSONArray = JSON.parse(posts);
-      test = myJSONArray[0]["content"];
-      console.log(test);
+      // test = myJSONArray[0]["content"];
+      // console.log(test);
 
       let counter = 0;
 
@@ -65,6 +65,16 @@ function loadAllPosts() {
         creator.className = "creator";
         creator.innerHTML = obj.creator;
         document.querySelector(".post" + counter).append(creator);
+
+        //TODO: create the button here.
+        var button = document.createElement("button");
+        button.innerHTML = "Edit";
+        button.className = "btn btn-sm btn-outline-primary mt-2";
+        button.onclick = () => {
+          alert("here be dragons"); return false;
+        };
+
+        document.querySelector(".post" + counter).append(button);
 
         //create p within the div for the subject
         content = document.createElement("p");
