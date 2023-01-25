@@ -13,6 +13,22 @@ document.addEventListener("DOMContentLoaded", function () {
     .querySelector("#profile")
     .addEventListener("click", () => loadProfile());
 
+  //FIXME: trying to get the class name of the div for editing the post.
+  //Put this elsewhere.
+  document.addEventListener("click", (event) => {
+    // Find what was clicked on
+    const element = event.target;
+    postClassName = element.parentElement.className;
+
+    debugger;
+
+
+    // Check if the user clicked on a hide button
+    if (element.className === 'btn btn-sm btn-outline-primary test') {
+      element.parentElement.remove();
+    }
+  });
+
   //TODO: Event listener for the Post button.  Update to go to function.
   document.querySelector("#post-button").addEventListener("click", (event) => {
     event.preventDefault();
@@ -70,7 +86,7 @@ function loadAllPosts() {
         var button = document.createElement("button");
         button.innerHTML = "Edit";
         button.className = "btn btn-sm btn-outline-primary test";
-              // button.onclick = () => {
+        // button.onclick = () => {
         //   alert("here be dragons"); return false;
         // };
         document.querySelector(".post" + counter).append(button);
@@ -140,9 +156,5 @@ function loadProfile() {
 }
 
 function editPost(post_id) {
-
-
-
-
-  return false
+  return false;
 }
