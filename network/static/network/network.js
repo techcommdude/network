@@ -44,8 +44,6 @@ function loadAllPosts() {
   fetch(`/posts`)
     .then((response) => response.json())
     .then((posts) => {
-      // Print email
-      //debugger;
 
       // TODO: this finally works!
       myJSONArray = JSON.parse(posts);
@@ -56,19 +54,16 @@ function loadAllPosts() {
 
       for (let i = 0; i < myJSONArray.length; i++) {
         let obj = myJSONArray[i];
-        sender2 = document.createElement("div");
-        sender2.className = "post" + counter;
+        postDiv = document.createElement("div");
+        postDiv.className = "post" + counter;
 
-        document.querySelector("#allPostings").append(sender2);
+        document.querySelector("#allPostings").append(postDiv);
 
         //create p within the div for
-        sender3 = document.createElement("p");
-        sender3.className = "creator";
-        sender3.innerHTML = obj.creator;
-        console.log(obj.content);
-        console.log(obj.creator);
-
-        document.querySelector(".post" + counter).append(sender3);
+        creator = document.createElement("p");
+        creator.className = "creator";
+        creator.innerHTML = obj.creator;
+        document.querySelector(".post" + counter).append(creator);
 
         //create p within the div for the subject
         content = document.createElement("p");
