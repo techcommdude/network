@@ -30,6 +30,7 @@ function loadAllPosts() {
   document.querySelector("#post-view").style.display = "block";
   document.querySelector("#following-view").style.display = "none";
   document.querySelector("#profile-view").style.display = "none";
+  document.getElementById("allPostings").innerHTML = "";
 
   //debugger;
 
