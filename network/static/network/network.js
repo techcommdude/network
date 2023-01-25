@@ -31,7 +31,7 @@ function loadAllPosts() {
   document.querySelector("#following-view").style.display = "none";
   document.querySelector("#profile-view").style.display = "none";
 
-  debugger;
+  //debugger;
 
   //TODO: Load all the existing posts.
 
@@ -45,44 +45,48 @@ function loadAllPosts() {
     .then((response) => response.json())
     .then((posts) => {
       // Print email
-      debugger;
-
+      //debugger;
 
       // TODO: this finally works!
       myJSONArray = JSON.parse(posts);
-      test = myJSONArray[0]["content"]
-      console.log(test)
-
+      test = myJSONArray[0]["content"];
+      console.log(test);
 
       let counter = 0;
 
       for (let i = 0; i < myJSONArray.length; i++) {
         let obj = myJSONArray[i];
         sender2 = document.createElement("div");
-        sender2.className = "inbox" + counter;
+        sender2.className = "post" + counter;
 
         document.querySelector("#allPostings").append(sender2);
 
         //create p within the div for
         sender3 = document.createElement("p");
-        sender3.className = "left";
+        sender3.className = "creator";
         sender3.innerHTML = obj.creator;
         console.log(obj.content);
         console.log(obj.creator);
 
-        document.querySelector(".inbox" + counter).append(sender3);
+        document.querySelector(".post" + counter).append(sender3);
 
         //create p within the div for the subject
-        subject3 = document.createElement("p");
-        subject3.className = "middle";
-        subject3.innerHTML = obj.content;
-        document.querySelector(".inbox" + counter).append(subject3);
+        content = document.createElement("p");
+        content.className = "content";
+        content.innerHTML = obj.content;
+        document.querySelector(".post" + counter).append(content);
 
         //create p within the div for the subject
-        timestamp3 = document.createElement("p");
-        timestamp3.className = "right";
-        timestamp3.innerHTML = obj.createdDate;
-        document.querySelector(".inbox" + counter).append(timestamp3);
+        timestamp = document.createElement("p");
+        timestamp.className = "timestamp";
+        timestamp.innerHTML = obj.createdDate;
+        document.querySelector(".post" + counter).append(timestamp);
+
+        //create p within the div for the subject
+        likes = document.createElement("p");
+        likes.className = "numberLikes";
+        likes.innerHTML = obj.numberLikes;
+        document.querySelector(".post" + counter).append(likes);
 
         // Need to update stylesheet here.  Flag to mark email as read.
 
@@ -90,13 +94,11 @@ function loadAllPosts() {
       }
     });
 
-    // debugger;
+  // debugger;
 
-    // document.querySelector(
-    //   "#allPostings"
-    // ).innerHTML = `<h4>You have no email in your Inbox.</h4>`;
-
-
+  // document.querySelector(
+  //   "#allPostings"
+  // ).innerHTML = `<h4>You have no email in your Inbox.</h4>`;
 }
 
 function loadFollowing() {

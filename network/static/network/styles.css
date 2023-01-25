@@ -10,6 +10,15 @@ body {
     border-color: lightgray;
 }
 
+/* This is for each post */
+[class*="post"] {
+
+    margin: 1.0em;
+    border-style: solid;
+    border-width: thin;
+    border-color: lightgray;
+}
+
 #post-form {
 
     margin: 1em;
