@@ -69,11 +69,10 @@ function loadAllPosts() {
         //TODO: create the button here.
         var button = document.createElement("button");
         button.innerHTML = "Edit";
-        button.className = "btn btn-sm btn-outline-primary mt-2";
-        button.onclick = () => {
-          alert("here be dragons"); return false;
-        };
-
+        button.className = "btn btn-sm btn-outline-primary test";
+              // button.onclick = () => {
+        //   alert("here be dragons"); return false;
+        // };
         document.querySelector(".post" + counter).append(button);
 
         //create p within the div for the subject
@@ -138,4 +137,12 @@ function loadProfile() {
     });
 
   return false;
+}
+
+function editPost(post_id) {
+
+
+
+
+  return false
 }
