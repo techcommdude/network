@@ -14,9 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", () => loadProfile());
 
   //TODO: Event listener for the Post button.  Update to go to function.
-  document
-    .querySelector("#post-button")
-    .addEventListener("click", () => loadAllPosts());
+  document.querySelector("#post-button").addEventListener("click", (event) => {
+    event.preventDefault();
+    loadAllPosts();
+  });
 
   document
     .querySelector("#following")
@@ -45,7 +46,6 @@ function loadAllPosts() {
   fetch(`/posts`)
     .then((response) => response.json())
     .then((posts) => {
-
       // TODO: this finally works!
       myJSONArray = JSON.parse(posts);
       test = myJSONArray[0]["content"];
@@ -61,7 +61,7 @@ function loadAllPosts() {
         document.querySelector("#allPostings").append(postDiv);
 
         //create p within the div for
-        creator = document.createElement("p");
+        creator = document.createElement("h5");
         creator.className = "creator";
         creator.innerHTML = obj.creator;
         document.querySelector(".post" + counter).append(creator);
@@ -101,6 +101,7 @@ function loadFollowing() {
   document.querySelector("#post-view").style.display = "none";
   document.querySelector("#following-view").style.display = "block";
   document.querySelector("#profile-view").style.display = "none";
+  document.getElementById("followingView").innerHTML = "";
 
   fetch(`/following`)
     .then((response) => response.json())
@@ -117,6 +118,7 @@ function loadProfile() {
   document.querySelector("#post-view").style.display = "none";
   document.querySelector("#following-view").style.display = "none";
   document.querySelector("#profile-view").style.display = "block";
+  document.getElementById("#profile-view").innerHTML = "";
 
   fetch(`/profile`)
     .then((response) => response.json())
