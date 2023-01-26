@@ -217,7 +217,7 @@ function editPost(postContent) {
   newItem = document.createElement("div");
   //FIXME: May need to change the method to "POST".  Need to add an event listener to the button to save the post.
   newItem.innerHTML = `<form action="" method="">  <textarea name="" id="editTextArea"
-  class="form-control"></textarea>  <input type="submit" value="Save post"
+  class="form-control">${postContent}</textarea><input type="submit" value="Save post"
   class="btn btn-sm btn-outline-primary SavePostButton"></form>`;
   //FIXME: This just replaced the button with the text above.  Need to replace
   //the entire div.  Needs to be specific to Posts only.  Only replace the button if
