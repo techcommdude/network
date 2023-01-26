@@ -209,21 +209,23 @@ function saveEditedPost(postContent, postID) {
   console.log(postID);
   //FIXME: Need to do a put here like in the reply function in mail project.
 
-  fetch(`/posts/${postID}`)
-    .then((response) => response.json())
-    .then((posts) => {
-      // Print email
-      console.log(posts);
-      debugger;
+  // fetch(`/posts/${postID}`)
+  //   .then((response) => response.json())
+  //   .then((posts) => {
+  //     // Print email
+  //     console.log(posts);
+  //     debugger;
 
-      //FIXME: Update the content of the post.
+  postcontent = "test";
+
+  fetch(`/posts/${postID}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      content: postContent,
+    }),
+  });
+
+   }   //FIXME: Update the content of the post.
 
 
       //document.querySelector("#compose-recipients").value = email.sender;
-
-    })
-
-    .catch((error) => {
-      console.log(error);
-    });
-}
