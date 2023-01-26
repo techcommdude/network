@@ -208,5 +208,22 @@ function saveEditedPost(postContent, postID) {
   console.log(postContent);
   console.log(postID);
   //FIXME: Need to do a put here like in the reply function in mail project.
-  return false;
+
+  fetch(`/posts/${postID}`)
+    .then((response) => response.json())
+    .then((posts) => {
+      // Print email
+      console.log(posts);
+      debugger;
+
+      //FIXME: Update the content of the post.
+
+
+      //document.querySelector("#compose-recipients").value = email.sender;
+
+    })
+
+    .catch((error) => {
+      console.log(error);
+    });
 }
