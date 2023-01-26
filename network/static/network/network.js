@@ -198,12 +198,15 @@ function editPost(postContent, postID) {
   );
   //Add an event listener for the Save post button.
   savePostbutton[0].addEventListener("click", () =>
-    saveEditedPost(postContent)
+    saveEditedPost(postContent, postID)
   );
 }
 
-function saveEditedPost(postContent) {
+function saveEditedPost(postContent, postID) {
+  debugger;
   console.log("I'm in the SaveEdited Post!");
   console.log(postContent);
+  console.log(postID);
+  //FIXME: Need to do a put here like in the reply function in mail project.
   return false;
 }
