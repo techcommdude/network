@@ -11,17 +11,20 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 from yaml import serialize_all
 from .models import User, Posts, Follow
+from django.views.decorators.csrf import csrf_exempt
 
 
 @login_required
+@csrf_exempt
 def savePost(request):
+    #TODO: This is for saving the post when clicking the POST button at the top of the page.
     user = request.user
     print(user)
     return HttpResponse("savePOST!")
 
-
+@csrf_exempt
 @login_required
-def retrievePost(request, post_id):
+def updatePost(request, post_id):
     # TODO: This is for editing the post after clicking edit.
     print("In retrievePost")
     return HttpResponse("retrievePost!")
@@ -63,7 +66,7 @@ def getAllPosts(request):
     # If you are returning anything other than a dict, you must use safe=False.
     return JsonResponse(serialized_q, safe=False, status=200)
 
-
+@csrf_exempt
 @login_required
 def getProfile(request):
     print("In getProfile")
@@ -80,7 +83,7 @@ def getProfile(request):
 
     return JsonResponse(serialized_data, safe=False, status=200)
 
-
+@csrf_exempt
 @login_required
 def getFollowing(request):
     print("In getFollowing")
@@ -91,7 +94,7 @@ def getFollowing(request):
 
     return HttpResponse("getFollowing!")
 
-
+@csrf_exempt
 def index(request):
     # Authenticated users view their inbox
     if request.user.is_authenticated:
