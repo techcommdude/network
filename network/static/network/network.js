@@ -84,21 +84,18 @@ function loadAllPosts() {
         creator.innerHTML = obj.creator;
         document.querySelector(".post" + counter).append(creator);
 
+        //create p within the div for the content
+        content = document.createElement("p");
+        content.className = "content" + counter;
+        content.innerHTML = obj.content;
+        document.querySelector(".post" + counter).append(content);
+
         //TODO: create the button here.
         var button = document.createElement("button");
 
         button.innerHTML = "Edit post";
         button.className = "btn btn-sm btn-outline-primary edit" + counter;
-        // button.onclick = () => {
-        //   alert("here be dragons"); return false;
-        // };
         document.querySelector(".post" + counter).append(button);
-
-        //create p within the div for the subject
-        content = document.createElement("p");
-        content.className = "content" + counter;
-        content.innerHTML = obj.content;
-        document.querySelector(".post" + counter).append(content);
 
         //create p within the div for the subject
         timestamp = document.createElement("p");
@@ -176,6 +173,8 @@ function loadProfile() {
   return false;
 }
 
+//FIXME: need to get the CSRF token here to do a POST.
+
 function editPost(post_id) {
   debugger;
   // This is the edit button that was clicked on.
@@ -191,14 +190,23 @@ function editPost(post_id) {
   //create the new element.
   //TODO: update this to have a full form, div, text area and save button in it.  Do it in the
   //innerHTML
-  newItem = document.createElement("p");
-  newItem.innerHTML = "blah";
+  newItem = document.createElement("div");
+  //FIXME: May need to change the method to "POST".  Need to add an event listener to the button to save the post.
+  newItem.innerHTML = `<form action="" method="">  <textarea name="" id="editTextArea"
+  class="form-control"></textarea>  <input type="submit" value="Save post"
+  class="btn btn-sm btn-outline-primary SavePostButton"></form>`;
   //FIXME: This just replaced the button with the text above.  Need to replace
   //the entire div.  Needs to be specific to Posts only.  Only replace the button if
   // it starts with a specific name that
   postdiv[0].parentNode.replaceChild(newItem, postdiv[0]);
   // element.parentElement.remove();
-  debugger;
+  //debugger;
+
+  //Event listener for the Save post button.
+  document
+    .querySelector("btn btn-sm btn-outline-primary SavePostButton")
+    .addEventListener("click", () => loadAllPosts());
+  return false;
 }
 
 // return false;
