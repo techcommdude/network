@@ -9,24 +9,21 @@ document.addEventListener("DOMContentLoaded", function () {
     .querySelector(".navbar-brand")
     .addEventListener("click", () => loadAllPosts());
 
-  document
-    .querySelector("#profile")
-    .addEventListener("click", () => loadProfile());
+  document.querySelector("#profile").addEventListener("click", (event) => {
+    event.preventDefault();
+
+    loadProfile();
+  });
 
   //FIXME: trying to get the class name of the div for editing the post.
-  //Put this elsewhere.
+  //Put this elsewhere.  Needs to be specific to the Edit button on the Posts.
   document.addEventListener("click", (event) => {
     // Find what was clicked on
-    const element = event.target;
-    postClassName = element.parentElement.className;
-
-    debugger;
-
-
-    // Check if the user clicked on a hide button
-    if (element.className === 'btn btn-sm btn-outline-primary test') {
-      element.parentElement.remove();
-    }
+    // const element = event.target;
+    // postClassName = element.parentElement.className;
+    // debugger;
+    event.preventDefault();
+    editPost();
   });
 
   //TODO: Event listener for the Post button.  Update to go to function.
@@ -40,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", () => loadFollowing());
 
   // By default, load the profile for the user
-  loadProfile();
+  loadAllPosts();
 });
 
 function loadAllPosts() {
@@ -85,7 +82,7 @@ function loadAllPosts() {
         //TODO: create the button here.
         var button = document.createElement("button");
         button.innerHTML = "Edit";
-        button.className = "btn btn-sm btn-outline-primary test";
+        button.className = "btn btn-sm btn-outline-primary " + counter;
         // button.onclick = () => {
         //   alert("here be dragons"); return false;
         // };
@@ -156,5 +153,22 @@ function loadProfile() {
 }
 
 function editPost(post_id) {
-  return false;
+  debugger;
+  // Find what was clicked on
+  const element = event.target;
+  buttonParentClassName = element.parentElement.className;
+  buttonClass = element.className;
+
+  //Select the button first.
+  postdiv = document.getElementsByClassName(buttonClass);
+  console.log(postdiv[0])
+  //create the new element.
+  newItem = document.createElement("p");
+  newItem.innerHTML = "blah";
+  //FIXME: This just replaced the button with the text above.  Need to replace the entire div.  Needs to be specific to Posts only.
+  postdiv[0].parentNode.replaceChild(newItem, postdiv[0]);
+  // element.parentElement.remove();
+  debugger;
 }
+
+// return false;
