@@ -145,20 +145,20 @@ function loadAllPosts() {
       // console.log(items);
 
       //TODO: event listener for Edit buttons. call the editPost function after clicking.
-      document.addEventListener("click", (event) => {
-        // Find what was clicked on with a regular expression, test that it was the edit button, otherwise do nothing and continue.
-        const element = event.target;
-        const string = "^btn btn-sm btn-outline-primary edit";
-        const regexp = new RegExp(string);
-        if (regexp.test(element.className) === true) {
-          //Name of the post div class.
-          postClassName = element.parentElement.className;
+      // document.addEventListener("click", (event) => {
+      //   // Find what was clicked on with a regular expression, test that it was the edit button, otherwise do nothing and continue.
+      //   const element = event.target;
+      //   const string = "^btn btn-sm btn-outline-primary edit";
+      //   const regexp = new RegExp(string);
+      //   if (regexp.test(element.className) === true) {
+      //     //Name of the post div class.
+      //     postClassName = element.parentElement.className;
 
-          event.preventDefault();
+      //     event.preventDefault();
 
-          editPost();
-        }
-      });
+      //     editPost();
+      //   }
+      // });
 
       return false;
     });
