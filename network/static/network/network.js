@@ -200,7 +200,7 @@ function loadProfile() {
 //FIXME: need to get the CSRF token here to do a POST.
 
 function editPost(postContent) {
-  debugger;
+
   // This is the edit button that was clicked on.
   const element = event.target;
   //Post div class name.
@@ -223,14 +223,16 @@ function editPost(postContent) {
   //the entire div.  Needs to be specific to Posts only.  Only replace the button if
   // it starts with a specific name that
   postdiv[0].parentNode.replaceChild(newItem, postdiv[0]);
-  // element.parentElement.remove();
-  //debugger;
+
+  //TODO: remove the existing content for the post.
+  document.querySelector("[class^='content']").remove();
+
 
   //Event listener for the Save post button.
   document
     .querySelector("btn btn-sm btn-outline-primary SavePostButton")
     .addEventListener("click", () => loadAllPosts());
-  return false;
+  // return false;
 }
 
 // return false;
