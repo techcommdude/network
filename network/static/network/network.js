@@ -17,14 +17,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //FIXME: trying to get the class name of the div for editing the post.
   //Put this elsewhere.  Needs to be specific to the Edit button on the Posts.
-  document.addEventListener("click", (event) => {
-    // Find what was clicked on
-    // const element = event.target;
-    // postClassName = element.parentElement.className;
-    // debugger;
-    event.preventDefault();
-    editPost();
-  });
+  // document.addEventListener("click", (event) => {
+  //   // Find what was clicked on
+  //   // const element = event.target;
+  //   // postClassName = element.parentElement.className;
+  //   // debugger;
+  //   event.preventDefault();
+  //   editPost();
+  // });
+
+  //TODO: this needs to be done after all the posts are loaded.
+  // debugger;
+  // var items = document.querySelectorAll('[class*="btn btn-sm btn-outline-primary"]');
+  // console.log(items)
 
   //TODO: Event listener for the Post button.  Update to go to function.
   document.querySelector("#post-button").addEventListener("click", (event) => {
@@ -81,8 +86,9 @@ function loadAllPosts() {
 
         //TODO: create the button here.
         var button = document.createElement("button");
+
         button.innerHTML = "Edit";
-        button.className = "btn btn-sm btn-outline-primary " + counter;
+        button.className = "btn btn-sm btn-outline-primary edit" + counter;
         // button.onclick = () => {
         //   alert("here be dragons"); return false;
         // };
@@ -110,13 +116,31 @@ function loadAllPosts() {
 
         counter++;
       }
+      //TODO: select all the Edit buttons.
+      // debugger;
+      // var items = document.querySelectorAll(
+      //   '[class*="btn btn-sm btn-outline-primary"]'
+      // );
+      // console.log(items);
+
+      //TODO: event listener for Edit buttons. call the editPost function after clicking.
+      document.addEventListener("click", (event) => {
+        // Find what was clicked on with a regular expression, test that it was the edit button, otherwise do nothing and continue.
+        const element = event.target;
+        const string = "^btn btn-sm btn-outline-primary edit";
+        const regexp = new RegExp(string);
+        if (regexp.test(element.className) === true) {
+          //Name of the post div class.
+          postClassName = element.parentElement.className;
+
+          event.preventDefault();
+
+          editPost();
+        }
+      });
+
+      return false;
     });
-
-  // debugger;
-
-  // document.querySelector(
-  //   "#allPostings"
-  // ).innerHTML = `<h4>You have no email in your Inbox.</h4>`;
 }
 
 function loadFollowing() {
@@ -156,16 +180,22 @@ function editPost(post_id) {
   debugger;
   // Find what was clicked on
   const element = event.target;
+  //Post div class name.
   buttonParentClassName = element.parentElement.className;
+  //class  of the button that was clicked.
   buttonClass = element.className;
 
   //Select the button first.
   postdiv = document.getElementsByClassName(buttonClass);
-  console.log(postdiv[0])
+  console.log(postdiv[0]);
   //create the new element.
+  //TODO: update this to have a full form, div, text area and save button in it.  Do it in the
+  //innerHTML
   newItem = document.createElement("p");
   newItem.innerHTML = "blah";
-  //FIXME: This just replaced the button with the text above.  Need to replace the entire div.  Needs to be specific to Posts only.
+  //FIXME: This just replaced the button with the text above.  Need to replace
+  //the entire div.  Needs to be specific to Posts only.  Only replace the button if
+  // it starts with a specific name that
   postdiv[0].parentNode.replaceChild(newItem, postdiv[0]);
   // element.parentElement.remove();
   debugger;
