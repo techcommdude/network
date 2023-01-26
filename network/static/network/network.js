@@ -96,19 +96,19 @@ function loadAllPosts() {
 
         //create p within the div for the subject
         content = document.createElement("p");
-        content.className = "content";
+        content.className = "content" + counter;
         content.innerHTML = obj.content;
         document.querySelector(".post" + counter).append(content);
 
         //create p within the div for the subject
         timestamp = document.createElement("p");
-        timestamp.className = "timestamp";
+        timestamp.className = "timestamp" + counter;
         timestamp.innerHTML = obj.createdDate;
         document.querySelector(".post" + counter).append(timestamp);
 
         //create p within the div for the subject
         likes = document.createElement("p");
-        likes.className = "numberLikes";
+        likes.className = "numberLikes" + counter;
         likes.innerHTML = obj.numberLikes;
         document.querySelector(".post" + counter).append(likes);
 
