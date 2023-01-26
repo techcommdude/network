@@ -97,6 +97,30 @@ function loadAllPosts() {
         button.className = "btn btn-sm btn-outline-primary edit" + counter;
         document.querySelector(".post" + counter).append(button);
 
+
+        //FIXME:  Add the event listener her for the Edit Post button.
+           //TODO: event listener for Edit buttons. call the editPost function after clicking.
+      //   document.querySelector(".btn btn-sm btn-outline-primary edit").addEventListener("click" => {
+      //   // Find what was clicked on with a regular expression, test that it was the edit button, otherwise do nothing and continue.
+      //   // const element = event.target;
+      //   // const string = "^btn btn-sm btn-outline-primary edit";
+      //   // const regexp = new RegExp(string);
+      //   // if (regexp.test(element.className) === true) {
+      //   //   //Name of the post div class.
+      //   //   postClassName = element.parentElement.className;
+
+
+      //     editPost();
+
+      // });
+
+        editButton = document.getElementsByClassName(button.className)
+        editButton[0].addEventListener("click", (event) => {
+        // event.preventDefault();
+        editPost(obj.content);
+        });
+
+
         //create p within the div for the subject
         timestamp = document.createElement("p");
         timestamp.className = "timestamp" + counter;
@@ -175,7 +199,7 @@ function loadProfile() {
 
 //FIXME: need to get the CSRF token here to do a POST.
 
-function editPost(post_id) {
+function editPost(postContent) {
   debugger;
   // This is the edit button that was clicked on.
   const element = event.target;
