@@ -87,7 +87,7 @@ function loadAllPosts() {
         //TODO: create the button here.
         var button = document.createElement("button");
 
-        button.innerHTML = "Edit";
+        button.innerHTML = "Edit post";
         button.className = "btn btn-sm btn-outline-primary edit" + counter;
         // button.onclick = () => {
         //   alert("here be dragons"); return false;
@@ -178,7 +178,7 @@ function loadProfile() {
 
 function editPost(post_id) {
   debugger;
-  // Find what was clicked on
+  // This is the edit button that was clicked on.
   const element = event.target;
   //Post div class name.
   buttonParentClassName = element.parentElement.className;
