@@ -68,17 +68,6 @@ function loadAllPosts() {
         content.className = "content" + counter;
         content.innerHTML = obj.content;
         document.querySelector(".post" + counter).append(content);
-        //document.getElementsByClassName(content.className).readOnly = true;
-
-        //Check that the text area exists.
-        const btn = document.getElementsByClassName(`content.className`);
-        //Returns an HTML collection.  Need the first in the list.
-        console.log(btn); // null
-
-        //Check that the h5 exists.
-        const h5 = document.getElementsByClassName(`creator.className`);
-        //Returns an HTML collection.  Need the first in the list.
-        console.log(h5); // null
 
         //TODO: create the button here.
         var button = document.createElement("button");
@@ -109,6 +98,15 @@ function loadAllPosts() {
 
         counter++;
       }
+
+    debugger;
+
+    //this returns a node list of all p elements.
+
+      //Check that the text area exists.
+    const textarea = document.querySelectorAll("[class^='content']");
+      //Returns an HTML collection.  Need the first in the list.
+    console.log(textarea); // null
 
       return false;
     });
