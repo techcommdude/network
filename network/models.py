@@ -21,7 +21,7 @@ class Posts(models.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "creator": self.creator,
+            "creator": getUserName(self.creator.id),
             "content": self.content,
             "createdDate": self.createdDate.strftime("%b %d %Y, %I:%M %p"),
             "numberLikes": self.numberLikes,
@@ -47,3 +47,7 @@ class Follow(models.Model):
             "followers": [user.username for user in self.followers.all()],
             "following": [user.username for user in self.following.all()],
         }
+def getUserName(userID):
+    userName = User.objects.get(id=userID)
+    test = userName.username
+    return test

@@ -1,4 +1,5 @@
 import datetime
+from itertools import chain
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -9,7 +10,7 @@ from django.urls import reverse
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 
-from yaml import serialize_all
+#from yaml import serialize_all
 from .models import User, Posts, Follow
 from django.views.decorators.csrf import csrf_exempt
 
@@ -79,12 +80,30 @@ def getAllPosts(request):
     print("In getAllPosts")
     # TODO: most recent posts first, how to do?  Need to sort the below.
 
-    # user = User.objects.values('username')
+    user = User.objects.values('username')
+
+    userName = User.objects.get(id=1)
+    test = userName.username
 
     # allPosts = Posts.objects.filter()
 
+
     allPosts = Posts.objects.values(
         'id', 'creator', 'content', 'createdDate', 'numberLikes').order_by('-createdDate')
+
+    # modelcobmination = chain(allPosts, user)
+    # modelcobmination2 = user.union(allPosts, all=True)
+    # teet = list(modelcobmination2)
+
+    posts = Posts.objects.all()
+
+    for post in posts:
+
+
+        post.serialize()
+
+
+
 
     serialized_q = json.dumps(
         list(allPosts), cls=DjangoJSONEncoder, default=str)
