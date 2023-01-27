@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //TODO: Event listener for the Post button.  Update to go to function.
   document.querySelector("#post-button").addEventListener("click", (event) => {
     event.preventDefault();
-    loadAllPosts();
+    savePost();
   });
 
   document
@@ -222,4 +222,30 @@ function saveEditedPost(postContent, postID) {
       content: textAreaContentUpdate,
     }),
   });
+}
+
+function savePost(){
+  console.log("I'm in the savePost function!");
+
+  debugger;
+
+  fetch("/post", {
+    method: "POST",
+    body: JSON.stringify({
+      content: document.querySelector("#post-body").value,
+    }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      // Print result
+      console.log(result);
+    });
+
+  //timeout so that database is updated.
+  setTimeout(() => {
+    loadAllPosts()
+    console.log("Delayed for 100 milliseconds.");
+  }, "100");
+
+
 }

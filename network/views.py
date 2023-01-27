@@ -17,16 +17,31 @@ from django.views.decorators.csrf import csrf_exempt
 @login_required
 @csrf_exempt
 def savePost(request):
-    #TODO: This is for saving the post when clicking the POST button at the top of the page.
+    # TODO: This is for saving the post when clicking the POST button at the top of the page.
     user = request.user
+    userLoggedIn = request.user.username
     print(user)
+    print(userLoggedIn)
+
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+    # Load the content of the POST request.
+    data = json.loads(request.body)
+
+    if data.get("content") == "":
+        return JsonResponse({
+            "error": "You have not posted any content.  Please try again."
+        }, status=400)
+
     return HttpResponse("savePOST!")
+
 
 @csrf_exempt
 @login_required
 def updatePost(request, post_id):
     # TODO: This is for editing the post after clicking edit.
-    print("In retrievePost")
+    print("In updatePost")
 
     try:
         posts = Posts.objects.get(pk=post_id)
@@ -39,7 +54,7 @@ def updatePost(request, post_id):
             posts.content = data["content"]
         posts.save()
 
-        #FIXME: Put a delay here so that the database updates.
+        # FIXME: Put a delay here so that the database updates.
         return HttpResponse(status=204)
     return HttpResponse("retrievePost!")
 
@@ -47,16 +62,20 @@ def updatePost(request, post_id):
 @login_required
 def getAllPosts(request):
 
+    # FIXME: Need to return the user name and possibly a better version of the date.
     print("In getAllPosts")
     # TODO: most recent posts first, how to do?  Need to sort the below.
-    allPosts = Posts.objects.values('id', 'creator', 'content', 'createdDate', 'numberLikes').order_by('-createdDate')
 
-    serialized_q = json.dumps(list(allPosts), cls=DjangoJSONEncoder, default=str)
+    # user = User.objects.values('username')
+
+    # allPosts = Posts.objects.filter()
+
+    allPosts = Posts.objects.values(
+        'id', 'creator', 'content', 'createdDate', 'numberLikes').order_by('-createdDate')
+
+    serialized_q = json.dumps(
+        list(allPosts), cls=DjangoJSONEncoder, default=str)
     print(serialized_q)
-
-
-
-
 
     # serialized_data = serialize("json", allPosts)
     # serialized_data = json.loads(serialized_data)
@@ -71,14 +90,12 @@ def getAllPosts(request):
     test = datetime.datetime.fromisoformat('2019-01-04T16:41:24+02:00')
     print(test)
 
-
-
-
     # posts = json.dumps([dict(item) for item in Posts.objects.all().values('id', 'creator', 'content', 'createdDate', 'numberLikes')], default=str)
     # print(posts)
 
     # If you are returning anything other than a dict, you must use safe=False.
     return JsonResponse(serialized_q, safe=False, status=200)
+
 
 @csrf_exempt
 @login_required
@@ -97,6 +114,7 @@ def getProfile(request):
 
     return JsonResponse(serialized_data, safe=False, status=200)
 
+
 @csrf_exempt
 @login_required
 def getFollowing(request):
@@ -107,6 +125,7 @@ def getFollowing(request):
     # TODO: From the Follow object, get the "following" users and then retrieve all posts for those users with the most recent posts first.
 
     return HttpResponse("getFollowing!")
+
 
 @csrf_exempt
 def index(request):
