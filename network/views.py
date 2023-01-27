@@ -99,8 +99,8 @@ def getAllPosts(request):
 
     for post in posts:
 
-
-        post.serialize()
+        #FIXME: this only gets the last object.  Need to loop it.
+        test = post.serialize()
 
 
 
