@@ -27,6 +27,20 @@ def savePost(request):
 def updatePost(request, post_id):
     # TODO: This is for editing the post after clicking edit.
     print("In retrievePost")
+
+    try:
+        posts = Posts.objects.get(pk=post_id)
+    except Posts.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        if data.get("content") is not None:
+            posts.content = data["content"]
+        posts.save()
+
+        #FIXME: Put a delay here so that the database updates.
+        return HttpResponse(status=204)
     return HttpResponse("retrievePost!")
 
 

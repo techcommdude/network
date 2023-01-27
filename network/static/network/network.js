@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
     loadProfile();
   });
 
-
   //TODO: Event listener for the Post button.  Update to go to function.
   document.querySelector("#post-button").addEventListener("click", (event) => {
     event.preventDefault();
@@ -25,6 +24,12 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .querySelector("#following")
     .addEventListener("click", () => loadFollowing());
+
+  //timeout so that database is updated.
+  setTimeout(() => {
+    load_mailbox("sent");
+    console.log("Delayed for 100 milliseconds.");
+  }, "100");
 
   // By default, load the profile for the user
   loadAllPosts();
@@ -36,23 +41,11 @@ function loadAllPosts() {
   document.querySelector("#profile-view").style.display = "none";
   document.getElementById("allPostings").innerHTML = "";
 
-  //debugger;
-
-  //TODO: Load all the existing posts.
-
-  //TODO: Do not save if the post is empty?  Throw an error.
-
-  //TODO: Clear out what is there after you Post it.
-
-  //TODO: Add an event listener for the Post button.  Do it above.
-
   fetch(`/posts`)
     .then((response) => response.json())
     .then((posts) => {
       // TODO: this finally works!
       myJSONArray = JSON.parse(posts);
-      // test = myJSONArray[0]["content"];
-      // console.log(test);
 
       let counter = 0;
 
@@ -69,11 +62,23 @@ function loadAllPosts() {
         creator.innerHTML = obj.creator;
         document.querySelector(".post" + counter).append(creator);
 
+        //FIXME: create it as readonly.
         //create p within the div for the content
         content = document.createElement("p");
         content.className = "content" + counter;
         content.innerHTML = obj.content;
         document.querySelector(".post" + counter).append(content);
+        //document.getElementsByClassName(content.className).readOnly = true;
+
+        //Check that the text area exists.
+        const btn = document.getElementsByClassName(`content.className`);
+        //Returns an HTML collection.  Need the first in the list.
+        console.log(btn); // null
+
+        //Check that the h5 exists.
+        const h5 = document.getElementsByClassName(`creator.className`);
+        //Returns an HTML collection.  Need the first in the list.
+        console.log(h5); // null
 
         //TODO: create the button here.
         var button = document.createElement("button");
@@ -81,21 +86,6 @@ function loadAllPosts() {
         button.innerHTML = "Edit post";
         button.className = "btn btn-sm btn-outline-primary edit" + counter;
         document.querySelector(".post" + counter).append(button);
-
-        //FIXME:  Add the event listener her for the Edit Post button.
-        //TODO: event listener for Edit buttons. call the editPost function after clicking.
-        //   document.querySelector(".btn btn-sm btn-outline-primary edit").addEventListener("click" => {
-        //   // Find what was clicked on with a regular expression, test that it was the edit button, otherwise do nothing and continue.
-        //   // const element = event.target;
-        //   // const string = "^btn btn-sm btn-outline-primary edit";
-        //   // const regexp = new RegExp(string);
-        //   // if (regexp.test(element.className) === true) {
-        //   //   //Name of the post div class.
-        //   //   postClassName = element.parentElement.className;
-
-        //     editPost();
-
-        // });
 
         editButton = document.getElementsByClassName(button.className);
         editButton[0].addEventListener("click", (event) => {
@@ -141,7 +131,6 @@ function loadFollowing() {
 }
 
 function loadProfile() {
-  // debugger;
   document.querySelector("#post-view").style.display = "none";
   document.querySelector("#following-view").style.display = "none";
   document.querySelector("#profile-view").style.display = "block";
@@ -175,8 +164,8 @@ function editPost(postContent, postID) {
   //innerHTML
   newItem = document.createElement("div");
   //FIXME: May need to change the method to "POST".  Need to add an event listener to the button to save the post.
-  newItem.innerHTML = `<form action="" method="">  <textarea name="" id="editTextArea"
-  class="form-control">${postContent}</textarea><input type="submit" value="Save post"
+  newItem.innerHTML = `<form action="" method="POST">  <textarea name="" id="editTextArea"
+  class="form-control editTextArea" rows=5>${postContent}</textarea><input type="submit" value="Save post"
   class="btn btn-sm btn-outline-primary SavePostButton"></form>`;
   //FIXME: This just replaced the button with the text above.  Need to replace
   //the entire div.  Needs to be specific to Posts only.  Only replace the button if
@@ -200,32 +189,22 @@ function editPost(postContent, postID) {
   savePostbutton[0].addEventListener("click", () =>
     saveEditedPost(postContent, postID)
   );
+
+  return false;
 }
 
+//FIXME: need to get the CSRF token here to do a PUT, it will not show an error.  Rigth now I have set it to exempt in the python view.
 function saveEditedPost(postContent, postID) {
-  debugger;
   console.log("I'm in the SaveEdited Post!");
   console.log(postContent);
   console.log(postID);
-  //FIXME: Need to do a put here like in the reply function in mail project.
 
-  // fetch(`/posts/${postID}`)
-  //   .then((response) => response.json())
-  //   .then((posts) => {
-  //     // Print email
-  //     console.log(posts);
-  //     debugger;
-
-  postcontent = "test";
+  textAreaContentUpdate = document.querySelector("#editTextArea").value;
 
   fetch(`/posts/${postID}`, {
     method: "PUT",
     body: JSON.stringify({
-      content: postContent,
+      content: textAreaContentUpdate,
     }),
   });
-
-   }   //FIXME: Update the content of the post.
-
-
-      //document.querySelector("#compose-recipients").value = email.sender;
+}

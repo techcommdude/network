@@ -13,7 +13,7 @@ class Posts(models.Model):
     # The creator of the listing who can close it.
     creator = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="get_creator_listings", blank=False)
-    content = models.CharField(max_length=600)
+    content = models.TextField(max_length=600)
     createdDate = models.DateTimeField(auto_now_add=True)
     numberLikes = models.IntegerField(blank=True, default=0)
 
