@@ -20,6 +20,10 @@ def savePost(request):
     # TODO: This is for saving the post when clicking the POST button at the top of the page.
     user = request.user
     userLoggedIn = request.user.username
+    # Get the user ID of the logged in user for the User object
+    user_id = request.user.id
+    userName = User.objects.get(id=user_id)
+    print(userName)
     print(user)
     print(userLoggedIn)
 
@@ -28,13 +32,22 @@ def savePost(request):
 
     # Load the content of the POST request.
     data = json.loads(request.body)
+    postContent = data.get("content")
 
     if data.get("content") == "":
         return JsonResponse({
             "error": "You have not posted any content.  Please try again."
         }, status=400)
 
-    return HttpResponse("savePOST!")
+    newPost = Posts(
+        creator=userName,
+        content=postContent
+
+    )
+
+    newPost.save()
+
+    return JsonResponse({"message": "Post created successfully!"}, status=201)
 
 
 @csrf_exempt

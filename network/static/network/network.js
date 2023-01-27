@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setTimeout(() => {
     loadAllPosts();
     console.log("Delayed for 100 milliseconds.");
-  }, "50");
+  }, "100");
 });
 
 function loadAllPosts() {
@@ -226,8 +226,6 @@ function saveEditedPost(postContent, postID) {
 
 function savePost(){
   console.log("I'm in the savePost function!");
-
-  debugger;
 
   fetch("/post", {
     method: "POST",
