@@ -25,15 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
     .querySelector("#following")
     .addEventListener("click", () => loadFollowing());
 
-  //timeout so that database is updated.
-  //FIXME: Is this necessary???
+  // By default, load all posts  with a delay.
   setTimeout(() => {
     loadAllPosts();
     console.log("Delayed for 100 milliseconds.");
-  }, "10");
-
-  // By default, load the profile for the user
-  //loadAllPosts();
+  }, "50");
 });
 
 function loadAllPosts() {
@@ -67,6 +63,7 @@ function loadAllPosts() {
         //create p within the div for the content
         content = document.createElement("textarea");
         content.className = "form-control content" + counter;
+        content.id = "readonlyContent" + counter;
         content.innerHTML = obj.content;
         document.querySelector(".post" + counter).append(content);
 
@@ -100,12 +97,21 @@ function loadAllPosts() {
         counter++;
       }
 
-    //this returns a node list of all p elements.
-
       //Check that the text area exists.
-    const textarea = document.querySelectorAll("[class^='content']");
+      const textarea = document.querySelectorAll("[id^='readonly']");
       //Returns an HTML collection.  Need the first in the list.
-    console.log(textarea); // null
+      console.log(textarea); // null
+
+      let count = 0;
+
+      for (let i = 0; i < textarea.length; i++) {
+        //Set the text area to read only before the user edits.  Also change the number
+        //of rows.
+        document.getElementById("readonlyContent" + `${count}`).readOnly = true;
+        document.getElementById("readonlyContent" + `${count}`).rows = "5";
+
+        count++;
+      }
 
       return false;
     });
@@ -156,14 +162,11 @@ function editPost(postContent, postID) {
   //Select the button first.
   postdiv = document.getElementsByClassName(buttonClass);
   console.log(postdiv[0]);
-  test = postdiv[0].className
-
+  test = postdiv[0].className;
 
   var lastChar = test.substring(test.length - 1);
 
   textAreaClassRemove = "content" + lastChar;
-
-
 
   //create the new element.
   //TODO: update this to have a full form, div, text area and save button in it.  Do it in the
@@ -182,11 +185,10 @@ function editPost(postContent, postID) {
 
   postdiv[0].parentNode.replaceChild(newItem, postdiv[0]);
 
-
-  //TODO: remove the existing content for the post.  This just removes the first text area since it doesn't know where it clicked.  this works.
-
-
-  document.querySelector(`[class$=${CSS.escape(textAreaClassRemove)}]`).remove();
+  //remove the readonly textare for  existing content for the post.
+  document
+    .querySelector(`[class$=${CSS.escape(textAreaClassRemove)}]`)
+    .remove();
 
   //Check that the button exists.
   const btn = document.getElementsByClassName(
