@@ -26,13 +26,14 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", () => loadFollowing());
 
   //timeout so that database is updated.
+  //FIXME: Is this necessary???
   setTimeout(() => {
-    load_mailbox("sent");
+    loadAllPosts();
     console.log("Delayed for 100 milliseconds.");
-  }, "100");
+  }, "10");
 
   // By default, load the profile for the user
-  loadAllPosts();
+  //loadAllPosts();
 });
 
 function loadAllPosts() {
@@ -64,8 +65,8 @@ function loadAllPosts() {
 
         //FIXME: create it as readonly.
         //create p within the div for the content
-        content = document.createElement("p");
-        content.className = "content" + counter;
+        content = document.createElement("textarea");
+        content.className = "form-control content" + counter;
         content.innerHTML = obj.content;
         document.querySelector(".post" + counter).append(content);
 
@@ -99,8 +100,6 @@ function loadAllPosts() {
         counter++;
       }
 
-    debugger;
-
     //this returns a node list of all p elements.
 
       //Check that the text area exists.
@@ -116,7 +115,7 @@ function loadFollowing() {
   document.querySelector("#post-view").style.display = "none";
   document.querySelector("#following-view").style.display = "block";
   document.querySelector("#profile-view").style.display = "none";
-  document.getElementById("followingView").innerHTML = "";
+  //document.getElementById("#following-view").innerHTML = "";
 
   fetch(`/following`)
     .then((response) => response.json())
@@ -132,7 +131,7 @@ function loadProfile() {
   document.querySelector("#post-view").style.display = "none";
   document.querySelector("#following-view").style.display = "none";
   document.querySelector("#profile-view").style.display = "block";
-  document.getElementById("#profile-view").innerHTML = "";
+  //document.getElementById("#profile-view").innerHTML = "";
 
   fetch(`/profile`)
     .then((response) => response.json())
@@ -157,9 +156,19 @@ function editPost(postContent, postID) {
   //Select the button first.
   postdiv = document.getElementsByClassName(buttonClass);
   console.log(postdiv[0]);
+  test = postdiv[0].className
+
+
+  var lastChar = test.substring(test.length - 1);
+
+  textAreaClassRemove = "content" + lastChar;
+
+
+
   //create the new element.
   //TODO: update this to have a full form, div, text area and save button in it.  Do it in the
   //innerHTML
+
   newItem = document.createElement("div");
   //FIXME: May need to change the method to "POST".  Need to add an event listener to the button to save the post.
   newItem.innerHTML = `<form action="" method="POST">  <textarea name="" id="editTextArea"
@@ -168,10 +177,16 @@ function editPost(postContent, postID) {
   //FIXME: This just replaced the button with the text above.  Need to replace
   //the entire div.  Needs to be specific to Posts only.  Only replace the button if
   // it starts with a specific name that
+  // test = postdiv.className;
+  // console.log(test);
+
   postdiv[0].parentNode.replaceChild(newItem, postdiv[0]);
 
-  //TODO: remove the existing content for the post.
-  document.querySelector("[class^='content']").remove();
+
+  //TODO: remove the existing content for the post.  This just removes the first text area since it doesn't know where it clicked.  this works.
+
+
+  document.querySelector(`[class$=${CSS.escape(textAreaClassRemove)}]`).remove();
 
   //Check that the button exists.
   const btn = document.getElementsByClassName(
