@@ -102,6 +102,7 @@ def getAllPosts(request):
         #FIXME: this only gets the last object.  Need to loop it.
         test = post.serialize()
 
+    return JsonResponse([post.serialize() for post in posts], safe=False)
 
 
 

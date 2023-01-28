@@ -38,11 +38,16 @@ function loadAllPosts() {
   document.querySelector("#profile-view").style.display = "none";
   document.getElementById("allPostings").innerHTML = "";
 
+
+
   fetch(`/posts`)
     .then((response) => response.json())
     .then((posts) => {
       // TODO: this finally works!
-      myJSONArray = JSON.parse(posts);
+
+      console.log(posts)
+
+      myJSONArray = posts;
 
       let counter = 0;
 
