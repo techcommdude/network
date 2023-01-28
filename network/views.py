@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse
 import json
 from django.core.serializers.json import DjangoJSONEncoder
+from yaml import serialize_all
 
 #from yaml import serialize_all
 from .models import User, Posts, Follow
@@ -86,10 +87,10 @@ def getAllPosts(request):
 
     posts = Posts.objects.all().order_by('-createdDate')
 
-    for post in posts:
+    # for post in posts:
 
-        # FIXME: this only gets the last object.  Need to loop it.
-        test = post.serialize()
+    #     # FIXME: this only gets the last object.  Need to loop it.
+    #     test = post.serialize()
 
     return JsonResponse([post.serialize() for post in posts], safe=False)
 
@@ -121,14 +122,25 @@ def getAllPosts(request):
 @login_required
 def getProfile(request):
     print("In getProfile")
-    user = request.user
+    user_id = request.user.id
+    user_name= request.user.username
+
+
 
     # This returns a queryset which must be serialized to convert to JSON.
-    followQS = Follow.objects.filter(followUser=user)
+    currentObjects = Follow.objects.filter(followUser=user_id)
 
-    serialized_data = serialize("json", followQS)
-    serialized_data = json.loads(serialized_data)
-    print(serialized_data)
+
+    serialized_q = json.dumps(list(currentObjects), cls=DjangoJSONEncoder)
+
+    return JsonResponse([currentObject.serialize() for currentObject in currentObjects], safe=False)
+
+
+
+
+    # serialized_data = serialize("json", followQS)
+    # serialized_data = json.loads(serialized_data)
+    # print(serialized_data)
 
     # TODO: Need to handle the case where nothing is returned.  What do we display on the page.
 

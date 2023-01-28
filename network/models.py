@@ -29,10 +29,13 @@ class Posts(models.Model):
 
 
 class Follow(models.Model):
+    #The name of the user
     followUser = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="get_followUser_listings", blank=False)
+    #followers of the above
     followers = models.ManyToManyField(
         User, blank=True, related_name="get_follower_users")
+    #Users that are being followed by above user.
     following = models.ManyToManyField(
         User, blank=True, related_name="get_following_users")
 
@@ -51,3 +54,6 @@ def getUserName(userID):
     userName = User.objects.get(id=userID)
     test = userName.username
     return test
+
+def getFollowers(id):
+    pass
