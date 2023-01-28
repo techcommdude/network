@@ -88,14 +88,14 @@ def getAllPosts(request):
     # allPosts = Posts.objects.filter()
 
 
-    allPosts = Posts.objects.values(
-        'id', 'creator', 'content', 'createdDate', 'numberLikes').order_by('-createdDate')
+    # allPosts = Posts.objects.values(
+    #     'id', 'creator', 'content', 'createdDate', 'numberLikes').order_by('-createdDate')
 
     # modelcobmination = chain(allPosts, user)
     # modelcobmination2 = user.union(allPosts, all=True)
     # teet = list(modelcobmination2)
 
-    posts = Posts.objects.all()
+    posts = Posts.objects.all().order_by('-createdDate')
 
     for post in posts:
 
@@ -106,9 +106,9 @@ def getAllPosts(request):
 
 
 
-    serialized_q = json.dumps(
-        list(allPosts), cls=DjangoJSONEncoder, default=str)
-    print(serialized_q)
+    # serialized_q = json.dumps(
+    #     list(allPosts), cls=DjangoJSONEncoder, default=str)
+    # print(serialized_q)
 
     # serialized_data = serialize("json", allPosts)
     # serialized_data = json.loads(serialized_data)
@@ -120,14 +120,14 @@ def getAllPosts(request):
 
 #    createdDate.strftime("%b %d %Y, %I:%M %p")
     # //TODO: This converts the format of the date.
-    test = datetime.datetime.fromisoformat('2019-01-04T16:41:24+02:00')
-    print(test)
+    # test = datetime.datetime.fromisoformat('2019-01-04T16:41:24+02:00')
+    # print(test)
 
     # posts = json.dumps([dict(item) for item in Posts.objects.all().values('id', 'creator', 'content', 'createdDate', 'numberLikes')], default=str)
     # print(posts)
 
     # If you are returning anything other than a dict, you must use safe=False.
-    return JsonResponse(serialized_q, safe=False, status=200)
+    # return JsonResponse(serialized_q, safe=False, status=200)
 
 
 @csrf_exempt
