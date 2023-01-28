@@ -76,7 +76,6 @@ def updatePost(request, post_id):
 @login_required
 def getAllPosts(request):
 
-    # FIXME: Need to return the user name and possibly a better version of the date.
     print("In getAllPosts")
     # TODO: most recent posts first, how to do?  Need to sort the below.
 
@@ -85,26 +84,14 @@ def getAllPosts(request):
     userName = User.objects.get(id=1)
     test = userName.username
 
-    # allPosts = Posts.objects.filter()
-
-
-    # allPosts = Posts.objects.values(
-    #     'id', 'creator', 'content', 'createdDate', 'numberLikes').order_by('-createdDate')
-
-    # modelcobmination = chain(allPosts, user)
-    # modelcobmination2 = user.union(allPosts, all=True)
-    # teet = list(modelcobmination2)
-
     posts = Posts.objects.all().order_by('-createdDate')
 
     for post in posts:
 
-        #FIXME: this only gets the last object.  Need to loop it.
+        # FIXME: this only gets the last object.  Need to loop it.
         test = post.serialize()
 
     return JsonResponse([post.serialize() for post in posts], safe=False)
-
-
 
     # serialized_q = json.dumps(
     #     list(allPosts), cls=DjangoJSONEncoder, default=str)
