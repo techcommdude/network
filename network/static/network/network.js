@@ -9,11 +9,11 @@ document.addEventListener("DOMContentLoaded", function () {
     .querySelector(".navbar-brand")
     .addEventListener("click", () => loadAllPosts());
 
-  document.querySelector("#profile").addEventListener("click", (event) => {
-    event.preventDefault();
+  // document.querySelector("#profile").addEventListener("click", (event) => {
+  //   event.preventDefault();
 
-    loadProfile();
-  });
+  //   loadProfile();
+  // });
 
   //TODO: Event listener for the Post button.  Update to go to function.
   document.querySelector("#post-button").addEventListener("click", (event) => {
@@ -21,18 +21,20 @@ document.addEventListener("DOMContentLoaded", function () {
     savePost();
   });
 
-  document
-    .querySelector("#following")
-    .addEventListener("click", () => loadFollowing());
+  // document
+  //   .querySelector("#following")
+  //   .addEventListener("click", () => loadFollowing());
 
   // By default, load all posts  with a delay.
   setTimeout(() => {
     loadAllPosts();
     console.log("Delayed for 100 milliseconds.");
-  }, "100");
+  }, "10");
 });
 
 function loadAllPosts() {
+
+  //window.location.href = "post";
   document.querySelector("#post-view").style.display = "block";
   document.querySelector("#following-view").style.display = "none";
   document.querySelector("#profile-view").style.display = "none";
@@ -45,8 +47,7 @@ function loadAllPosts() {
     .then((posts) => {
       // TODO: this finally works!
 
-      console.log(posts)
-
+      console.log(posts)//
       myJSONArray = posts;
 
       let counter = 0;

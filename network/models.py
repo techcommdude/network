@@ -20,7 +20,9 @@ class Posts(models.Model):
 #TODO: get rid of this?
     def serialize(self):
         return {
+            #id of the post
             "id": self.id,
+            #This passes in the user id of the creator.
             "creator": getUserName(self.creator.id),
             "content": self.content,
             "createdDate": self.createdDate.strftime("%b %d %Y, %I:%M %p"),
@@ -47,13 +49,15 @@ class Follow(models.Model):
         return {
             "id": self.id,
             "followUser": self.followUser,
-            "followers": [user.username for user in self.followers.all()],
+            "followers": getFollowers(self.id),
             "following": [user.username for user in self.following.all()],
         }
 def getUserName(userID):
     userName = User.objects.get(id=userID)
     test = userName.username
+    #this returns the username as a string.  Not an object.
     return test
 
 def getFollowers(id):
-    pass
+    #Need to loop through and return all followers.
+    test = Follow.objects.filter(id=3)

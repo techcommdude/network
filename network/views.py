@@ -84,7 +84,7 @@ def getAllPosts(request):
 
     userName = User.objects.get(id=1)
     test = userName.username
-
+# this is a queryset of Posts objects only
     posts = Posts.objects.all().order_by('-createdDate')
 
     # for post in posts:
@@ -125,15 +125,25 @@ def getProfile(request):
     user_id = request.user.id
     user_name= request.user.username
 
+    currentOBJ = Follow.objects.get(id=user_id)
+    #Returns querysets of User objects.
+    followers = currentOBJ.followers.all()
+    following = currentOBJ.following.all()
+
+    #TODO: Possibly just combine these and then serialize?
+
 
 
     # This returns a queryset which must be serialized to convert to JSON.
     currentObjects = Follow.objects.filter(followUser=user_id)
 
 
-    serialized_q = json.dumps(list(currentObjects), cls=DjangoJSONEncoder)
+    #serialized_q = json.dumps(list(currentObjects), cls=DjangoJSONEncoder)
 
-    return JsonResponse([currentObject.serialize() for currentObject in currentObjects], safe=False)
+    # return JsonResponse([currentObject.serialize() for currentObject in currentObjects], safe=False)
+
+    return render(request, "network/profile.html", {"followers": followers, "following": following})
+    # return HttpResponse("In the getProfile function!")
 
 
 
@@ -156,7 +166,9 @@ def getFollowing(request):
 
     # TODO: From the Follow object, get the "following" users and then retrieve all posts for those users with the most recent posts first.
 
-    return HttpResponse("getFollowing!")
+    return render(request, "network/following.html", {"user": user})
+
+    #return HttpResponse("In the getFollowing function!")
 
 
 @csrf_exempt
