@@ -10,6 +10,8 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("profile", views.getProfile, name="getProfile"),
     path("following", views.getFollowing, name="getFollowing"),
+    path("allPosts", views.djangoAllPosts, name="djangoAllPosts"),
+    # path("postey", views.index, name="index"),
 
     # API Routes
     path("posts", views.getAllPosts, name="getAllPosts"),

@@ -13,7 +13,8 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Network</a>
+        <a class="navbar-brand" id="network" href="">Network</a>
+        <a class="navbar-brand" href="{% url 'djangoAllPosts' %}">Django Network</a>
 
         <div>
             <ul class="navbar-nav mr-auto">
@@ -22,11 +23,15 @@
                     <a class="nav-link" id="profile" href="#"><strong>{{ user.username }}</strong></a>
                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" id="djangoProfile" href="{% url 'getProfile' %}"><strong>Django profile {{ user.username }}</strong></a>
+                    <a class="nav-link" id="djangoProfile" href="{% url 'getProfile' %}"><strong>profile {{ user.username }}</strong></a>
                 </li>
 
+                <!-- <li class="nav-item">
+                    <a class="nav-link" id="allPosts" href="posts">All Posts</a>
+                </li> -->
+
                 <li class="nav-item">
-                    <a class="nav-link" id="allPosts" href="">All Posts</a>
+                    <a class="nav-link" id="djangoAllPosts" href="{% url 'djangoAllPosts' %}">All Posts</a>
                 </li>
                 {% endif %}
                 {% if user.is_authenticated %}
@@ -35,7 +40,7 @@
                 </li> -->
 
                 <li class="nav-item">
-                    <a class="nav-link" id="djangoFollowing" href="{% url 'getFollowing' %}">Django Following</a>
+                    <a class="nav-link" id="djangoFollowing" href="{% url 'getFollowing' %}">Following</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Log Out</a>

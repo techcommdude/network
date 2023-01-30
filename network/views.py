@@ -117,6 +117,27 @@ def getAllPosts(request):
     # If you are returning anything other than a dict, you must use safe=False.
     # return JsonResponse(serialized_q, safe=False, status=200)
 
+@login_required
+@csrf_exempt
+def djangoAllPosts(request):
+
+    print("In getAllPosts")
+    # TODO: most recent posts first, how to do?  Need to sort the below.
+
+    user = User.objects.values('username')
+
+    userName = User.objects.get(id=1)
+    test = userName.username
+# this is a queryset of Posts objects only
+    posts = Posts.objects.all().order_by('-createdDate')
+
+    # for post in posts:
+
+    #     # FIXME: this only gets the last object.  Need to loop it.
+    #     test = post.serialize()
+
+    return render(request, "network/allPosts.html")
+
 
 @csrf_exempt
 @login_required
@@ -154,7 +175,7 @@ def getProfile(request):
 
     # TODO: Need to handle the case where nothing is returned.  What do we display on the page.
 
-    return JsonResponse(serialized_data, safe=False, status=200)
+    # return JsonResponse(serialized_data, safe=False, status=200)
 
 
 @csrf_exempt
