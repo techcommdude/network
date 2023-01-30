@@ -1,14 +1,26 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+  // document
+  //   .querySelector("#djangoAllPosts")
+  //   .addEventListener("click", () => loadAllPosts());
+
+  // document
+  //   .querySelector(".navbar-brand")
+  //   .addEventListener("click", () => loadAllPosts());
+
+
   //TODO: Event listener for the Post button.  Update to go to function.
   document.querySelector("#post-button").addEventListener("click", (event) => {
     event.preventDefault();
     savePost();
   });
+
+
 });
 
 function loadAllPosts() {
   //window.location.href = "post";
-  document.querySelector("#post-view").style.display = "block";
+  // document.querySelector("#post-view").style.display = "block";
 
   fetch(`/posts`)
     .then((response) => response.json())
@@ -20,28 +32,30 @@ function loadAllPosts() {
 
       let counter = 0;
 
+      debugger;
+
       for (let i = 0; i < myJSONArray.length; i++) {
         let obj = myJSONArray[i];
-        postDiv = document.createElement("div");
-        postDiv.className = "post" + counter;
+        // postDiv = document.createElement("div");
+        // postDiv.className = "post" + counter;
 
-        document.querySelector("#allPostings").append(postDiv);
+        // document.querySelector("#allPostings").append(postDiv);
 
-        //create p within the div for
-        creator = document.createElement("h5");
-        creator.className = "creator";
-        creator.innerHTML = obj.creator;
-        document.querySelector(".post" + counter).append(creator);
+        // //create p within the div for
+        // creator = document.createElement("h5");
+        // creator.className = "creator";
+        // creator.innerHTML = obj.creator;
+        // document.querySelector(".post" + counter).append(creator);
 
         //FIXME: create it as readonly.
         //create p within the div for the content
-        content = document.createElement("textarea");
-        content.className = "form-control content" + counter;
-        content.id = "readonlyContent" + counter;
-        content.innerHTML = obj.content;
-        document.querySelector(".post" + counter).append(content);
+        // content = document.createElement("textarea");
+        // content.className = "form-control content" + counter;
+        // content.id = "readonlyContent" + counter;
+        // content.innerHTML = obj.content;
+        // document.querySelector(".post" + counter).append(content);
 
-        //TODO: create the button here.
+        //FIXME: need to put this where the user clicks the edit Post button.
         var button = document.createElement("button");
 
         button.innerHTML = "Edit post";
@@ -55,37 +69,39 @@ function loadAllPosts() {
         });
 
         //create p within the div for the subject
-        timestamp = document.createElement("p");
-        timestamp.className = "timestamp" + counter;
-        timestamp.innerHTML = obj.createdDate;
-        document.querySelector(".post" + counter).append(timestamp);
+        // timestamp = document.createElement("p");
+        // timestamp.className = "timestamp" + counter;
+        // timestamp.innerHTML = obj.createdDate;
+        // document.querySelector(".post" + counter).append(timestamp);
 
         //create p within the div for the subject
-        likes = document.createElement("p");
-        likes.className = "numberLikes" + counter;
-        likes.innerHTML = obj.numberLikes;
-        document.querySelector(".post" + counter).append(likes);
+        // likes = document.createElement("p");
+        // likes.className = "numberLikes" + counter;
+        // likes.innerHTML = obj.numberLikes;
+        // document.querySelector(".post" + counter).append(likes);
 
         // Need to update stylesheet here.  Flag to mark email as read.
 
         counter++;
       }
 
+      debugger;
+
       //Check that the text area exists.
-      const textarea = document.querySelectorAll("[id^='readonly']");
-      //Returns an HTML collection.  Need the first in the list.
-      console.log(textarea); // null
+      // const textarea = document.querySelectorAll("[id^='readonly']");
+      // //Returns an HTML collection.  Need the first in the list.
+      // console.log(textarea); // null
 
       let count = 0;
 
-      for (let i = 0; i < textarea.length; i++) {
-        //Set the text area to read only before the user edits.  Also change the number
-        //of rows.
-        document.getElementById("readonlyContent" + `${count}`).readOnly = true;
-        document.getElementById("readonlyContent" + `${count}`).rows = "5";
+      // for (let i = 0; i < textarea.length; i++) {
+      //   //Set the text area to read only before the user edits.  Also change the number
+      //   //of rows.
+      //   document.getElementById("readonlyContent" + `${count}`).readOnly = true;
+      //   document.getElementById("readonlyContent" + `${count}`).rows = "5";
 
-        count++;
-      }
+      //   count++;
+      // }
 
       return false;
     });
@@ -167,7 +183,7 @@ function saveEditedPost(postContent, postID) {
 }
 
 function savePost() {
-  debugger;
+
   console.log("I'm in the savePost function!");
 
   fetch("/post", {
@@ -183,8 +199,8 @@ function savePost() {
     });
 
   //timeout so that database is updated.
-  setTimeout(() => {
-    loadAllPosts();
-    console.log("Delayed for 100 milliseconds.");
-  }, "100");
+  // setTimeout(() => {
+  //   loadAllPosts();
+  //   console.log("Delayed for 100 milliseconds.");
+  // }, "100");
 }

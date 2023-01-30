@@ -77,6 +77,8 @@ def updatePost(request, post_id):
 @login_required
 def getAllPosts(request):
 
+    # TODO: Keep this for the API.  Perhaps create a button or document.  /posts route.
+
     print("In getAllPosts")
     # TODO: most recent posts first, how to do?  Need to sort the below.
 
@@ -121,7 +123,7 @@ def getAllPosts(request):
 @csrf_exempt
 def djangoAllPosts(request):
 
-    print("In getAllPosts")
+    print("In DjangoAllPosts")
     # TODO: most recent posts first, how to do?  Need to sort the below.
 
     user = User.objects.values('username')
