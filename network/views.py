@@ -75,6 +75,7 @@ def updatePost(request, post_id):
 
 
 @login_required
+
 def getAllPosts(request):
 
     # TODO: Keep this for the API.  Perhaps create a button or document.  /posts route.

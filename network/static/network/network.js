@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //TODO: Event listener for the Post button.  Update to go to function.
   document.querySelector("#post-button").addEventListener("click", (event) => {
     event.preventDefault();
+    debugger;
     savePost();
   });
 
