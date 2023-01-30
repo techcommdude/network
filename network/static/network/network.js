@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
 
 
-  document
-    .querySelector("#network")
-    .addEventListener("click", () => loadAllPosts());
+  // document
+  //   .querySelector("#network")
+  //   .addEventListener("click", () => loadAllPosts());
 
 
   //TODO: Event listener for the Post button.  Update to go to function.
@@ -17,10 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
   //   .addEventListener("click", () => loadFollowing());
 
   // By default, load all posts  with a delay.
-  setTimeout(() => {
-    loadAllPosts();
-    console.log("Delayed for 100 milliseconds.");
-  }, "10");
+  // setTimeout(() => {
+  //   loadAllPosts();
+  //   console.log("Delayed for 100 milliseconds.");
+  // }, "10");
 });
 
 function loadAllPosts() {
@@ -109,37 +109,37 @@ function loadAllPosts() {
     });
 }
 
-function loadFollowing() {
-  document.querySelector("#post-view").style.display = "none";
-  document.querySelector("#following-view").style.display = "block";
-  document.querySelector("#profile-view").style.display = "none";
-  //document.getElementById("#following-view").innerHTML = "";
+// function loadFollowing() {
+//   document.querySelector("#post-view").style.display = "none";
+//   document.querySelector("#following-view").style.display = "block";
+//   document.querySelector("#profile-view").style.display = "none";
+//   //document.getElementById("#following-view").innerHTML = "";
 
-  fetch(`/following`)
-    .then((response) => response.json())
-    .then((following) => {
-      // Print email
-      console.log(following);
-    });
+//   fetch(`/following`)
+//     .then((response) => response.json())
+//     .then((following) => {
+//       // Print email
+//       console.log(following);
+//     });
 
-  return false;
-}
+//   return false;
+// }
 
-function loadProfile() {
-  document.querySelector("#post-view").style.display = "none";
-  document.querySelector("#following-view").style.display = "none";
-  document.querySelector("#profile-view").style.display = "block";
-  //document.getElementById("#profile-view").innerHTML = "";
+// function loadProfile() {
+//   document.querySelector("#post-view").style.display = "none";
+//   document.querySelector("#following-view").style.display = "none";
+//   document.querySelector("#profile-view").style.display = "block";
+//   //document.getElementById("#profile-view").innerHTML = "";
 
-  fetch(`/profile`)
-    .then((response) => response.json())
-    .then((profile) => {
-      // Print email
-      console.log(profile);
-    });
+//   fetch(`/profile`)
+//     .then((response) => response.json())
+//     .then((profile) => {
+//       // Print email
+//       console.log(profile);
+//     });
 
-  return false;
-}
+//   return false;
+// }
 
 //FIXME: need to get the CSRF token here to do a POST.
 
