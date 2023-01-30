@@ -194,6 +194,7 @@ def getFollowing(request):
 
 
 @csrf_exempt
+# @login_required
 def index(request):
     # Authenticated users view their inbox
     if request.user.is_authenticated:
