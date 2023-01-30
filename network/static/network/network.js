@@ -57,10 +57,10 @@ function loadAllPosts() {
         // document.querySelector(".post" + counter).append(content);
 
         //FIXME: need to put this where the user clicks the edit Post button.
-        var button = document.createElement("button");
+        // var button = document.createElement("button");
 
-        button.innerHTML = "Edit post";
-        button.className = "btn btn-sm btn-outline-primary edit" + counter;
+        // button.innerHTML = "Edit post";
+        // button.className = "btn btn-sm btn-outline-primary edit" + counter;
         document.querySelector(".post" + counter).append(button);
 
         editButton = document.getElementsByClassName(button.className);
@@ -112,6 +112,10 @@ function loadAllPosts() {
 
 function editPost(postContent, postID) {
   // This is the edit button that was clicked on.
+
+  //FIXME: need to send the Postcontent and the ID from the event listener.
+
+  debugger;
   const element = event.target;
   //Post div class name.
   buttonParentClassName = element.parentElement.className;
