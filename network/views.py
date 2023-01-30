@@ -198,7 +198,9 @@ def getFollowing(request):
 def index(request):
     # Authenticated users view their inbox
     if request.user.is_authenticated:
-        return render(request, "network/index.html")
+        # return render(request, "network/allPosts.html")
+        return HttpResponseRedirect(reverse("djangoAllPosts"))
+
 
     # Everyone else is prompted to sign in
     else:
