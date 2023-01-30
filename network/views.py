@@ -129,14 +129,15 @@ def djangoAllPosts(request):
     userName = User.objects.get(id=1)
     test = userName.username
 # this is a queryset of Posts objects only
-    posts = Posts.objects.all().order_by('-createdDate')
+    # postings = Posts.objects.all().order_by('-createdDate')
+    postings = Posts.objects.filter().order_by('-createdDate')
 
     # for post in posts:
 
     #     # FIXME: this only gets the last object.  Need to loop it.
     #     test = post.serialize()
 
-    return render(request, "network/allPosts.html", {"posts": posts})
+    return render(request, "network/allPosts.html", {"postings": postings})
 
 
 @csrf_exempt
