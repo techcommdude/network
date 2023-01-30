@@ -1,29 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Use buttons to toggle between views
-
-  // document
-  //   .querySelector("#allPosts")
-  //   .addEventListener("click", () => loadAllPosts());
-
-
-
 
 
   document
     .querySelector("#network")
     .addEventListener("click", () => loadAllPosts());
 
-
-
-
-
-  // document.querySelector(".navbar-brand").addEventListener("click", (event) => {
-  //     event.preventDefault();
-  //     window.location.href = "/";
-
-  //     loadAllPosts();
-
-  //   });
 
   //TODO: Event listener for the Post button.  Update to go to function.
   document.querySelector("#post-button").addEventListener("click", (event) => {
@@ -46,9 +27,6 @@ function loadAllPosts() {
 
   //window.location.href = "post";
   document.querySelector("#post-view").style.display = "block";
-  document.querySelector("#following-view").style.display = "none";
-  document.querySelector("#profile-view").style.display = "none";
-  document.getElementById("allPostings").innerHTML = "";
 
   fetch(`/posts`)
     .then((response) => response.json())
@@ -239,6 +217,7 @@ function saveEditedPost(postContent, postID) {
 }
 
 function savePost(){
+  debugger;
   console.log("I'm in the savePost function!");
 
   fetch("/post", {
