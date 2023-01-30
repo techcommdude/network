@@ -136,7 +136,7 @@ def djangoAllPosts(request):
     #     # FIXME: this only gets the last object.  Need to loop it.
     #     test = post.serialize()
 
-    return render(request, "network/allPosts.html")
+    return render(request, "network/allPosts.html", {"posts": posts})
 
 
 @csrf_exempt
