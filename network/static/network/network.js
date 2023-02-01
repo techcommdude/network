@@ -12,6 +12,17 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
     savePost();
   });
+
+
+  // document.querySelector("[id^='editButton']").addEventListener("click", (event) => {
+  //   event.preventDefault();
+  //   editPost();
+  // });
+
+
+
+
+
 });
 
 function loadAllPosts() {
@@ -142,37 +153,50 @@ function editPost(postContent, postID) {
 
   //const editFormClassName = "editForm";
 
-  debugger;
 
+  const editForm = "editForm" + lastChar;
   //This unhides the form for editing the post and the save button.
-  document.getElementById("editForm0").className = "editForm";
+  document.getElementById(editForm).className = "editForm";
 
+
+    //Set the original value in the text area.
+  const TextArea = "textArea" + lastChar;
+  document.getElementById(TextArea).value = postContent;
+
+
+  const readOnlyContent = "readonlyContent" + lastChar;
   //Get the value of the text area before it is hidden.
-  const originalText = document.querySelector("#readonlyContent0").value
-
-   //Set the original value in the text area.
-   document.getElementById("textArea0").value = originalText;
+  // const originalText = document.querySelector(readOnlyContent).value()
 
 
-    //hide the read only text area and edit post button
-    //hide the text  area.
-    (document.getElementById("readonlyContent0").className = "hidden");
+
+
+  //hide the read only text area and edit post button
+  //hide the text  area.
+
+  document.getElementById(readOnlyContent).className = "hidden";
+
   //hide the button
-  document.getElementById("editButton0").className = "hidden";
-
+  const editButton = "editButton" + lastChar;
+  document.getElementById(editButton).className = "hidden";
 
   //FIXME: The SavePost button does not exist at this point?
-    //Add an event listener for the Save post button.
+  //Add an event listener for the Save post button.
   //   savePostbutton[0].addEventListener("click", () =>
   //   saveEditedPost(postID)
   // );
 
-  // savePostbutton[0].addEventListener("click", () =>
-  saveEditedPost(postID)
+  // savePostbutton.addEventListener("click", () => saveEditedPost(postID));
 
 
+  const savePostbutton = "#" + "savePostButton" + lastChar;
+
+  document
+    .querySelector(savePostbutton)
+    .addEventListener("click", () => saveEditedPost(postID, lastChar));
 
 
+  //FIXME: Need to add the original content back to the editable text area.
 
 
 
@@ -201,17 +225,20 @@ function editPost(postContent, postID) {
   //   saveEditedPost(postContent, postID)
   // );
 
-  return false;
+  //return false;
 }
 
 //FIXME: need to get the CSRF token here to do a PUT, it will not show an error.  Rigth now I have set it to exempt in the python view.
-function saveEditedPost(postID) {
-  debugger;
+function saveEditedPost(postID, lastChar) {
+
   console.log("I'm in the SaveEdited Post function!");
   // console.log(postContent);
   console.log(postID);
+  console.log(lastChar);
 
-  textAreaContentUpdate = document.querySelector("#textArea0").value;
+  textAreaContentUpdate = document.querySelector("#textArea" + lastChar).value;
+
+
 
   fetch(`/posts/${postID}`, {
     method: "PUT",
