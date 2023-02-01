@@ -1,5 +1,6 @@
 import datetime
 from itertools import chain
+import time
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -19,7 +20,7 @@ from django.views.decorators.csrf import csrf_exempt
 @login_required
 @csrf_exempt
 def savePost(request):
-    # TODO: This is for saving the post when clicking the POST button at the top of the page.
+    # TODO: Use this to return the JSON for a particular post.
     user = request.user
     userLoggedIn = request.user.username
     # Get the user ID of the logged in user for the User object
@@ -51,26 +52,80 @@ def savePost(request):
 
     return JsonResponse({"message": "Post created successfully!"}, status=201)
 
+def saveDjangoNewPost (request):
+        # TODO: This is for saving the post when clicking the POST button at the top of the page.
+    user = request.user
+    userLoggedIn = request.user.username
+    # Get the user ID of the logged in user for the User object
+    user_id = request.user.id
+    userName = User.objects.get(id=user_id)
+    print(userName)
+    print(user)
+    print(userLoggedIn)
+
+    if request.method == "POST":
+
+        postContent = request.POST.get("postContent")
+
+    if request.POST.get("postContent") == "":
+        #FIXME: Return an error message at this point.
+        return HttpResponse("Nothing in your Post!")
+
+
+    newPost = Posts(
+        creator=userName,
+        content=postContent
+
+    )
+
+    newPost.save()
+    return HttpResponseRedirect(reverse("djangoAllPosts"))
+
+
+
 
 @csrf_exempt
 @login_required
 def updatePost(request, post_id):
+
+
     # TODO: This is for editing the post after clicking edit.
     print("In updatePost")
 
-    try:
-        posts = Posts.objects.get(pk=post_id)
-    except Posts.DoesNotExist:
-        return JsonResponse({"error": "Post not found."}, status=404)
+    post = Posts.objects.get(pk=post_id)
+
+    # TODO: Use this to return the JSON for a particular post.
+    # user = request.user
+    # userLoggedIn = request.user.username
+    # Get the user ID of the logged in user for the User object
+    # user_id = request.user.id
+    # userName = User.objects.get(id=user_id)
+    # print(userName)
+    # print(user)
+    # print(userLoggedIn)
+
+    # try:
+    #     test = Posts.objects.get(pk=post_id)
+    # except Posts.DoesNotExist:
+    #     return JsonResponse({"error": "Post not found."}, status=404)
 
     if request.method == "PUT":
         data = json.loads(request.body)
-        if data.get("content") is not None:
-            posts.content = data["content"]
-        posts.save()
+        test = data.get("content")
+        if test is not None:
+
+            post.content = test
+
+            post.save()
+
+            #FIXME: Put a delay here
+
+            time.sleep(5)
+
+            return HttpResponseRedirect(reverse("djangoAllPosts"))
 
         # FIXME: Put a delay here so that the database updates.
-        return HttpResponse(status=204)
+    return HttpResponse(status=204)
     return HttpResponse("retrievePost!")
 
 
@@ -127,10 +182,10 @@ def djangoAllPosts(request):
     print("In DjangoAllPosts")
     # TODO: most recent posts first, how to do?  Need to sort the below.
 
-    user = User.objects.values('username')
+    #user = User.objects.values('username')
 
-    userName = User.objects.get(id=1)
-    test = userName.username
+    # userName = User.objects.get(id=1)
+    # test = userName.username
 # this is a queryset of Posts objects only
     # postings = Posts.objects.all().order_by('-createdDate')
     postings = Posts.objects.filter().order_by('-createdDate')

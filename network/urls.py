@@ -11,6 +11,7 @@ urlpatterns = [
     path("profile", views.getProfile, name="getProfile"),
     path("following", views.getFollowing, name="getFollowing"),
     path("allPosts", views.djangoAllPosts, name="djangoAllPosts"),
+    path("newPost", views.saveDjangoNewPost, name="saveDjangoNewPost"),
 
 
     # API Routes

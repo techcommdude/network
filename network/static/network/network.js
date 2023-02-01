@@ -8,10 +8,11 @@ document.addEventListener("DOMContentLoaded", function () {
   //   .addEventListener("click", () => loadAllPosts());
 
   //TODO: Event listener for the Post button.  Update to go to function.
-  document.querySelector("#post-button").addEventListener("click", (event) => {
-    event.preventDefault();
-    savePost();
-  });
+  //FIXME: Enable this again when you want to product JSON for a new Post.
+  // document.querySelector("#post-button").addEventListener("click", (event) => {
+  //   event.preventDefault();
+  //   savePost();
+  // });
 
 
   // document.querySelector("[id^='editButton']").addEventListener("click", (event) => {
@@ -114,6 +115,7 @@ function loadAllPosts() {
 
 function editPost(postContent, postID) {
   // This is the edit button that was clicked on.
+
 
   //FIXME: need to send the Postcontent and the ID from the event listener.
 
@@ -238,6 +240,16 @@ function saveEditedPost(postID, lastChar) {
 
   textAreaContentUpdate = document.querySelector("#textArea" + lastChar).value;
 
+  //readonly area to reenable:
+  document.getElementById("readonlyContent" + lastChar).className = "form-control content0";
+
+  document.getElementById("editButton" + lastChar).className = "btn btn-sm btn-outline-primary edit0";
+
+  document.querySelector("#" + "readonlyContent" + lastChar).value = textAreaContentUpdate;
+
+  document.getElementById("textArea" + lastChar).className = "hidden";
+
+  document.getElementById("savePostButton" + lastChar).className = "hidden";
 
 
   fetch(`/posts/${postID}`, {
@@ -246,6 +258,7 @@ function saveEditedPost(postID, lastChar) {
       content: textAreaContentUpdate,
     }),
   });
+
 }
 
 function savePost() {
@@ -262,6 +275,8 @@ function savePost() {
       // Print result
       console.log(result);
     });
+
+
 
   //timeout so that database is updated.
   // setTimeout(() => {

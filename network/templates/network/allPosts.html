@@ -9,10 +9,11 @@
     <div id="posty">
 
 
-        <form id="post-form">
+        <form id="post-form" action="{% url 'saveDjangoNewPost' %}" method="post">
             {% csrf_token %}
             <h5>New Post</h5>
-            <textarea class="form-control" id="post-body" placeholder="What are you thinking?"></textarea>
+            <textarea class="form-control" id="post-body" placeholder="What are you thinking?"
+                name="postContent"></textarea>
             <input type="submit" id="post-button" class="btn btn-primary" value="Post" />
         </form>
 
@@ -27,8 +28,8 @@
             <h5 class="creator">Posted by <a href="{% url 'getProfile' %}">{{post.creator.username}}</a></h5><textarea
                 class="form-control content{{forloop.counter0}}" id="readonlyContent{{forloop.counter0}}" rows="5"
                 readonly="true">{{post.content}}</textarea><button
-                class="btn btn-sm btn-outline-primary edit{{forloop.counter0}}" id="editButton{{forloop.counter0}}" onclick="editPost('{{post.content}}','{{post.id}}')">Edit
-                post</button>
+                class="btn btn-sm btn-outline-primary edit{{forloop.counter0}}" id="editButton{{forloop.counter0}}"
+                onclick="editPost('{{post.content}}','{{post.id}}')">Edit post</button>
 
             <form action="" method="POST" class="hidden" id=editForm{{forloop.counter0}}> <textarea name=""
                     id="textArea{{forloop.counter0}}" class="form-control editTextArea" rows=5></textarea><input
