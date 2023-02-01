@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
   // document
   //   .querySelector("#djangoAllPosts")
   //   .addEventListener("click", () => loadAllPosts());
@@ -8,15 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
   //   .querySelector(".navbar-brand")
   //   .addEventListener("click", () => loadAllPosts());
 
-
   //TODO: Event listener for the Post button.  Update to go to function.
   document.querySelector("#post-button").addEventListener("click", (event) => {
     event.preventDefault();
-    debugger;
     savePost();
   });
-
-
 });
 
 function loadAllPosts() {
@@ -32,8 +27,6 @@ function loadAllPosts() {
       myJSONArray = posts;
 
       let counter = 0;
-
-      debugger;
 
       for (let i = 0; i < myJSONArray.length; i++) {
         let obj = myJSONArray[i];
@@ -86,8 +79,6 @@ function loadAllPosts() {
         counter++;
       }
 
-      debugger;
-
       //Check that the text area exists.
       // const textarea = document.querySelectorAll("[id^='readonly']");
       // //Returns an HTML collection.  Need the first in the list.
@@ -115,7 +106,6 @@ function editPost(postContent, postID) {
 
   //FIXME: need to send the Postcontent and the ID from the event listener.
 
-  debugger;
   const element = event.target;
   //Post div class name.
   buttonParentClassName = element.parentElement.className;
@@ -127,53 +117,93 @@ function editPost(postContent, postID) {
   console.log(postdiv[0]);
   test = postdiv[0].className;
 
-  var lastChar = test.substring(test.length - 1);
+  //last char of each of the elements.
+  const lastChar = test.substring(test.length - 1);
 
-  textAreaClassRemove = "content" + lastChar;
+  //existing content text area class name.
+  const textAreaClassRemove = "content" + lastChar;
 
   //create the new element.
   //TODO: update this to have a full form, div, text area and save button in it.  Do it in the
   //innerHTML
 
-  newItem = document.createElement("div");
+  // newItem = document.createElement("div");
   //FIXME: May need to change the method to "POST".  Need to add an event listener to the button to save the post.
-  newItem.innerHTML = `<form action="" method="POST">  <textarea name="" id="editTextArea"
-  class="form-control editTextArea" rows=5>${postContent}</textarea><input type="submit" value="Save post"
-  class="btn btn-sm btn-outline-primary SavePostButton"></form>`;
+
+  // newItem.innerHTML = `<form action="" method="POST" class="editForm" id=editForm>  <textarea name="" id="editTextArea"
+  // class="form-control editTextArea" rows=5>${postContent}</textarea><input type="submit" value="Save post"
+  // class="btn btn-sm btn-outline-primary SavePostButton"></form>`;
+
   //FIXME: This just replaced the button with the text above.  Need to replace
   //the entire div.  Needs to be specific to Posts only.  Only replace the button if
   // it starts with a specific name that
   // test = postdiv.className;
   // console.log(test);
 
-  postdiv[0].parentNode.replaceChild(newItem, postdiv[0]);
+  //const editFormClassName = "editForm";
 
-  //remove the readonly textare for  existing content for the post.
-  document
-    .querySelector(`[class$=${CSS.escape(textAreaClassRemove)}]`)
-    .remove();
+  debugger;
 
-  //Check that the button exists.
-  const btn = document.getElementsByClassName(
-    "btn btn-sm btn-outline-primary SavePostButton"
-  );
-  //Returns an HTML collection.  Need the first in the list.
-  console.log(btn); // null
+  //This unhides the form for editing the post and the save button.
+  document.getElementById("editForm0").className = "editForm";
 
-  savePostbutton = document.getElementsByClassName(
-    "btn btn-sm btn-outline-primary SavePostButton"
-  );
-  //Add an event listener for the Save post button.
-  savePostbutton[0].addEventListener("click", () =>
+  //Get the value of the text area before it is hidden.
+  const originalText = document.querySelector("#readonlyContent0").value
+
+   //Set the original value in the text area.
+   document.getElementById("textArea0").value = originalText;
+
+
+    //hide the read only text area and edit post button
+    //hide the text  area.
+    (document.getElementById("readonlyContent0").className = "hidden");
+  //hide the button
+  document.getElementById("editButton0").className = "hidden";
+
+
+
+    //Add an event listener for the Save post button.
+    savePostbutton[0].addEventListener("click", () =>
     saveEditedPost(postContent, postID)
   );
+
+
+
+
+
+
+  //Change the button.
+  // postdiv[0].parentNode.replaceChild(newItem, postdiv[0]);
+
+  //remove the readonly textare for  existing content for the post.
+  //FIXME: rather than remove here, just make it hidden.
+
+  // document
+  //   .querySelector(`[class$=${CSS.escape(textAreaClassRemove)}]`)
+  //   .remove();
+
+  //Check that the button exists.
+  // const btn = document.getElementsByClassName(
+  //   "btn btn-sm btn-outline-primary SavePostButton"
+  // );
+  //Returns an HTML collection.  Need the first in the list.
+  // console.log(btn); // null
+
+  // savePostbutton = document.getElementsByClassName(
+  //   "btn btn-sm btn-outline-primary SavePostButton"
+  // );
+  //Add an event listener for the Save post button.
+  // savePostbutton[0].addEventListener("click", () =>
+  //   saveEditedPost(postContent, postID)
+  // );
 
   return false;
 }
 
 //FIXME: need to get the CSRF token here to do a PUT, it will not show an error.  Rigth now I have set it to exempt in the python view.
 function saveEditedPost(postContent, postID) {
-  console.log("I'm in the SaveEdited Post!");
+  debugger;
+  console.log("I'm in the SaveEdited Post function!");
   console.log(postContent);
   console.log(postID);
 
@@ -188,7 +218,6 @@ function saveEditedPost(postContent, postID) {
 }
 
 function savePost() {
-
   console.log("I'm in the savePost function!");
 
   fetch("/post", {

@@ -35,10 +35,10 @@ document.addEventListener("DOMContentLoaded", function () {
 function loadAllPosts() {
 
   //window.location.href = "post";
-  document.querySelector("#post-view").style.display = "block";
-  document.querySelector("#following-view").style.display = "none";
-  document.querySelector("#profile-view").style.display = "none";
-  document.getElementById("allPostings").innerHTML = "";
+  // document.querySelector("#post-view").style.display = "block";
+  // document.querySelector("#following-view").style.display = "none";
+  // document.querySelector("#profile-view").style.display = "none";
+  // document.getElementById("allPostings").innerHTML = "";
 
 
 
@@ -114,7 +114,7 @@ function loadAllPosts() {
         //Set the text area to read only before the user edits.  Also change the number
         //of rows.
         document.getElementById("readonlyContent" + `${count}`).readOnly = true;
-        document.getElementById("readonlyContent" + `${count}`).rows = "5";
+        // document.getElementById("readonlyContent" + `${count}`).rows = "5";
 
         count++;
       }
