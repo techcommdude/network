@@ -161,11 +161,15 @@ function editPost(postContent, postID) {
   document.getElementById("editButton0").className = "hidden";
 
 
-
+  //FIXME: The SavePost button does not exist at this point?
     //Add an event listener for the Save post button.
-    savePostbutton[0].addEventListener("click", () =>
-    saveEditedPost(postContent, postID)
-  );
+  //   savePostbutton[0].addEventListener("click", () =>
+  //   saveEditedPost(postID)
+  // );
+
+  // savePostbutton[0].addEventListener("click", () =>
+  saveEditedPost(postID)
+
 
 
 
@@ -201,13 +205,13 @@ function editPost(postContent, postID) {
 }
 
 //FIXME: need to get the CSRF token here to do a PUT, it will not show an error.  Rigth now I have set it to exempt in the python view.
-function saveEditedPost(postContent, postID) {
+function saveEditedPost(postID) {
   debugger;
   console.log("I'm in the SaveEdited Post function!");
-  console.log(postContent);
+  // console.log(postContent);
   console.log(postID);
 
-  textAreaContentUpdate = document.querySelector("#editTextArea").value;
+  textAreaContentUpdate = document.querySelector("#textArea0").value;
 
   fetch(`/posts/${postID}`, {
     method: "PUT",
