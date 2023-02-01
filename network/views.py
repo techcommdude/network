@@ -120,7 +120,7 @@ def updatePost(request, post_id):
 
             #FIXME: Put a delay here
 
-            time.sleep(5)
+            time.sleep(1.0)
 
             return HttpResponseRedirect(reverse("djangoAllPosts"))
 

@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // document.querySelector("[id^='editButton']").addEventListener("click", (event) => {
   //   event.preventDefault();
-  //   editPost();
+  //   editPost(post.content, post.id);
   // });
 
 
@@ -113,8 +113,9 @@ function loadAllPosts() {
 
 //FIXME: need to get the CSRF token here to do a POST.
 
-function editPost(postContent, postID) {
+function editPost(postID) {
   // This is the edit button that was clicked on.
+
 
 
   //FIXME: need to send the Postcontent and the ID from the event listener.
@@ -160,15 +161,20 @@ function editPost(postContent, postID) {
   //This unhides the form for editing the post and the save button.
   document.getElementById(editForm).className = "editForm";
 
+  // FIXME: need to set the value of the
+
+
+  const readOnlyContent = "#" + "readonlyContent" + lastChar;
+  //Get the value of the text area before it is hidden.
+  const originalText = document.querySelector(readOnlyContent).value
+
 
     //Set the original value in the text area.
   const TextArea = "textArea" + lastChar;
-  document.getElementById(TextArea).value = postContent;
+  document.getElementById(TextArea).value = originalText;
 
 
-  const readOnlyContent = "readonlyContent" + lastChar;
-  //Get the value of the text area before it is hidden.
-  // const originalText = document.querySelector(readOnlyContent).value()
+
 
 
 
@@ -176,7 +182,9 @@ function editPost(postContent, postID) {
   //hide the read only text area and edit post button
   //hide the text  area.
 
-  document.getElementById(readOnlyContent).className = "hidden";
+  const readonly = "readonlyContent" + lastChar
+
+  document.getElementById(readonly).className = "hidden";
 
   //hide the button
   const editButton = "editButton" + lastChar;
@@ -189,7 +197,6 @@ function editPost(postContent, postID) {
   // );
 
   // savePostbutton.addEventListener("click", () => saveEditedPost(postID));
-
 
   const savePostbutton = "#" + "savePostButton" + lastChar;
 
