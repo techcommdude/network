@@ -68,6 +68,7 @@ def saveDjangoNewPost(request):
 
         postContent = request.POST.get("postContent")
 
+    # //Need to issue an error message here.
     if request.POST.get("postContent") == "":
         # FIXME: Return an error message at this point.
         return HttpResponse("Nothing in your Post!")
@@ -75,7 +76,6 @@ def saveDjangoNewPost(request):
     newPost = Posts(
         creator=userName,
         content=postContent
-
     )
 
     newPost.save()
@@ -241,20 +241,17 @@ def getFollowing(request):
     user_id = request.user.id
     user_name = request.user.username
 
-    # creators = User.objects.filter(id=3) | filter(id=4)
-
     currentOBJ = Follow.objects.get(id=user_id)
-    # Returns querysets of User objects.
-    # followers = currentOBJ.followers.all()
+
     following = currentOBJ.following.all()
 
-    test = following.order_by().values('id')
+    qs = following.order_by().values('id')
 
-    test = list(test)
+    qs = list(qs)
 
     # //Empty queryset.
-    s1 = Posts.objects.filter(creator=0)
-    for dic in test:
+    emptyQueryset = Posts.objects.filter(creator=0)
+    for dic in qs:
         for val in dic.values():
             print(val)
             listings = Posts.objects.filter(creator=val)
@@ -262,20 +259,16 @@ def getFollowing(request):
 
             # Merge the queryset with the existing queryset with the new queryset.
             # If the queryset is not empty.
-            if s1.exists():
-                s2 = s2 | listings
+            if emptyQueryset.exists():
+                newQueryset = newQueryset | listings
 
             else:
 
-                s2 = s1 | listings
-                s1 = s2
+                newQueryset = emptyQueryset | listings
+                emptyQueryset = newQueryset
 
-            # listings_prev = listings
-
-
-    PostsByDate = s2.order_by('-createdDate')
-
-
+# Sort by created date.
+    PostsByDate = newQueryset.order_by('-createdDate')
 
     return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject})
 
