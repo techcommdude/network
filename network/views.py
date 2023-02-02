@@ -207,24 +207,36 @@ def getProfile(request, username):
 
     #Information of the user that we need to retrieve posts for.
     print(username)
+    user = User.objects.get(username=username)
+    print(user.id)
+    profileUser =user.id
 
     #FIXME: Need to think about clicking on links and  on the title bar.  there is a difference.
 
-    currentOBJ = Follow.objects.get(id=user_id)
-    # Returns querysets of User objects.
-    followers = currentOBJ.followers.all()
-    following = currentOBJ.following.all()
+    # All of the listings we need to display in the profile page.
+    currentOBJ = Posts.objects.filter(creator=profileUser)
 
-    # TODO: Possibly just combine these and then serialize?
+    # Returns querysets of User objects.
+    follow = Follow.objects.get(followUser=profileUser)
+
+    followers = follow.followers.all()
+    following = follow.following.all()
+
+
+
+    return render(request, "network/profile.html", {"followers": followers, "following": following})
+
+
+
 
     # This returns a queryset which must be serialized to convert to JSON.
-    currentObjects = Follow.objects.filter(followUser=user_id)
+    # currentObjects = Follow.objects.filter(followUser=user_id)
 
     #serialized_q = json.dumps(list(currentObjects), cls=DjangoJSONEncoder)
 
     # return JsonResponse([currentObject.serialize() for currentObject in currentObjects], safe=False)
 
-    return render(request, "network/profile.html", {"followers": followers, "following": following})
+
     # return HttpResponse("In the getProfile function!")
 
     # serialized_data = serialize("json", followQS)
