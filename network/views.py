@@ -200,31 +200,61 @@ def djangoAllPosts(request):
 @login_required
 def getProfile(request, username):
     print("In getProfile")
-    #Information for the logged in user.  Not really relevant for the most part.
-    #if the logged in user is different then link clicked user, then display the folllow and  unfollow buttons.
+    # Information for the logged in user.  Not really relevant for the most part.
+    # if the logged in user is different then link clicked user, then display the folllow and  unfollow buttons.
     user_id = request.user.id
     user_name = request.user.username
 
-    #Information of the user that we need to retrieve posts for.
+    # Information of the user that we need to retrieve posts for.
     print(username)
     user = User.objects.get(username=username)
     print(user.id)
-    profileUser =user.id
+    profileUser = user.id
 
-    #FIXME: Need to think about clicking on links and  on the title bar.  there is a difference.
+    # FIXME: Need to think about clicking on links and  on the title bar.  there is a difference.
 
     # All of the listings we need to display in the profile page.
-    currentOBJ = Posts.objects.filter(creator=profileUser)
+    # Need to check for empty queryset.  Doesnotexist error.
+
+    try:
+        postsUser = Posts.objects.filter(creator=profileUser)
+    except Posts.DoesNotExist:
+        print("blah")
+
+    # Need to pass a value if the user has no postings.
 
     # Returns querysets of User objects.
-    follow = Follow.objects.get(followUser=profileUser)
 
-    followers = follow.followers.all()
-    following = follow.following.all()
+    noListings = False
+    try:
+        follow = Follow.objects.get(followUser=profileUser)
+    except:
+        Follow.DoesNotExist
+        noListings = True
+        follow = False
 
+    if postsUser:
 
+        followers = follow.followers.all()
+        following = follow.following.all()
 
-    return render(request, "network/profile.html", {"followers": followers, "following": following})
+    countFollowers = 0
+    countFollowing = 0
+
+#FIXME: error here for no listings and no followers.
+    if follow != False:
+
+        if followers:
+            countFollowers = follow.followers.all().count()
+        if following:
+            countFollowing = follow.following.all().count()
+
+    if follow == False:
+        #This one does not return the users that are following and followers.  May or may not use that.
+        return render(request, "network/profile.html", {"noListings": noListings,"postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username})
+    else:
+        return render(request, "network/profile.html", {"noListings": noListings,"postings": postsUser, "followers": followers, "following": following, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username})
+
 
 
 
@@ -235,7 +265,6 @@ def getProfile(request, username):
     #serialized_q = json.dumps(list(currentObjects), cls=DjangoJSONEncoder)
 
     # return JsonResponse([currentObject.serialize() for currentObject in currentObjects], safe=False)
-
 
     # return HttpResponse("In the getProfile function!")
 
@@ -260,36 +289,50 @@ def getFollowing(request):
     user_id = request.user.id
     user_name = request.user.username
 
-    currentOBJ = Follow.objects.get(id=user_id)
+    #FIXME: If the user doesnlt have any followers, following or posts it will throw an error.
 
-    following = currentOBJ.following.all()
+    try:
+        currentOBJ = Follow.objects.get(id=user_id)
+    except Follow.DoesNotExist:
+        print("This user follows no one!")
+        displayNothing = True
 
-    qs = following.order_by().values('id')
+    if displayNothing != True:
 
-    qs = list(qs)
 
-    # //Empty queryset.
-    emptyQueryset = Posts.objects.filter(creator=0)
-    for dic in qs:
-        for val in dic.values():
-            print(val)
-            listings = Posts.objects.filter(creator=val)
-            UserObject = User.objects.filter(id=val)
+        following = currentOBJ.following.all()
 
-            # Merge the queryset with the existing queryset with the new queryset.
-            # If the queryset is not empty.
-            if emptyQueryset.exists():
-                newQueryset = newQueryset | listings
+        qs = following.order_by().values('id')
 
-            else:
+        qs = list(qs)
 
-                newQueryset = emptyQueryset | listings
-                emptyQueryset = newQueryset
+        # //Empty queryset.
+        emptyQueryset = Posts.objects.filter(creator=0)
+        for dic in qs:
+            for val in dic.values():
+                print(val)
+                listings = Posts.objects.filter(creator=val)
+                UserObject = User.objects.filter(id=val)
 
-# Sort by created date.
-    PostsByDate = newQueryset.order_by('-createdDate')
+                # Merge the queryset with the existing queryset with the new queryset.
+                # If the queryset is not empty.
+                if emptyQueryset.exists():
+                    newQueryset = newQueryset | listings
 
-    return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject})
+                else:
+
+                    newQueryset = emptyQueryset | listings
+                    emptyQueryset = newQueryset
+
+    # Sort by created date.
+        PostsByDate = newQueryset.order_by('-createdDate')
+
+        return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing,})
+
+    else:
+
+        return render(request, "network/following.html", {"displayNothing": displayNothing})
+
 
 
 def appendQueryset(postings):

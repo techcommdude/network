@@ -5,9 +5,14 @@
 <h3>Following</h3>
 
 
+
+
 {% for list in listings %}
 
 <div id="followingPostings">
+
+
+
 
 
 
@@ -22,5 +27,11 @@
 </div>
 
 {% endfor %}
+
+{% if displayNothing == True %}
+
+<h5>This user is not following anyone.</h5>
+
+{% endif %}
 
 {% endblock %}
