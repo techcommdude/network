@@ -240,6 +240,7 @@ function editPost(postID) {
 //FIXME: need to get the CSRF token here to do a PUT, it will not show an error.  Rigth now I have set it to exempt in the python view.
 function saveEditedPost(postID, lastChar) {
 
+
   console.log("I'm in the SaveEdited Post function!");
   // console.log(postContent);
   console.log(postID);

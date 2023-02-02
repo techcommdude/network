@@ -52,8 +52,9 @@ def savePost(request):
 
     return JsonResponse({"message": "Post created successfully!"}, status=201)
 
-def saveDjangoNewPost (request):
-        # TODO: This is for saving the post when clicking the POST button at the top of the page.
+
+def saveDjangoNewPost(request):
+    # TODO: This is for saving the post when clicking the POST button at the top of the page.
     user = request.user
     userLoggedIn = request.user.username
     # Get the user ID of the logged in user for the User object
@@ -68,9 +69,8 @@ def saveDjangoNewPost (request):
         postContent = request.POST.get("postContent")
 
     if request.POST.get("postContent") == "":
-        #FIXME: Return an error message at this point.
+        # FIXME: Return an error message at this point.
         return HttpResponse("Nothing in your Post!")
-
 
     newPost = Posts(
         creator=userName,
@@ -82,17 +82,12 @@ def saveDjangoNewPost (request):
     return HttpResponseRedirect(reverse("djangoAllPosts"))
 
 
-
-
 @csrf_exempt
 @login_required
 def updatePost(request, post_id):
 
-
     # TODO: This is for editing the post after clicking edit.
     print("In updatePost")
-
-    post = Posts.objects.get(pk=post_id)
 
     # TODO: Use this to return the JSON for a particular post.
     # user = request.user
@@ -110,27 +105,29 @@ def updatePost(request, post_id):
     #     return JsonResponse({"error": "Post not found."}, status=404)
 
     if request.method == "PUT":
-        data = json.loads(request.body)
-        test = data.get("content")
-        if test is not None:
 
-            post.content = test
+        data = json.loads(request.body)
+        # FIXME: This is where teh webpage changes for some reason.
+        post = Posts.objects.get(pk=post_id)
+        if data.get("content") is not None:
+            post.content = data["content"]
 
             post.save()
 
-            #FIXME: Put a delay here
+            post = Posts.objects.get(pk=post_id)
+
+            # FIXME: Put a delay here
 
             time.sleep(1.0)
 
-            return HttpResponseRedirect(reverse("djangoAllPosts"))
+            # return HttpResponseRedirect(reverse("djangoAllPosts"))
 
         # FIXME: Put a delay here so that the database updates.
     return HttpResponse(status=204)
-    return HttpResponse("retrievePost!")
+    # return HttpResponse("retrievePost!")
 
 
 @login_required
-
 def getAllPosts(request):
 
     # TODO: Keep this for the API.  Perhaps create a button or document.  /posts route.
@@ -175,6 +172,7 @@ def getAllPosts(request):
     # If you are returning anything other than a dict, you must use safe=False.
     # return JsonResponse(serialized_q, safe=False, status=200)
 
+
 @login_required
 @csrf_exempt
 def djangoAllPosts(request):
@@ -203,20 +201,17 @@ def djangoAllPosts(request):
 def getProfile(request):
     print("In getProfile")
     user_id = request.user.id
-    user_name= request.user.username
+    user_name = request.user.username
 
     currentOBJ = Follow.objects.get(id=user_id)
-    #Returns querysets of User objects.
+    # Returns querysets of User objects.
     followers = currentOBJ.followers.all()
     following = currentOBJ.following.all()
 
-    #TODO: Possibly just combine these and then serialize?
-
-
+    # TODO: Possibly just combine these and then serialize?
 
     # This returns a queryset which must be serialized to convert to JSON.
     currentObjects = Follow.objects.filter(followUser=user_id)
-
 
     #serialized_q = json.dumps(list(currentObjects), cls=DjangoJSONEncoder)
 
@@ -224,9 +219,6 @@ def getProfile(request):
 
     return render(request, "network/profile.html", {"followers": followers, "following": following})
     # return HttpResponse("In the getProfile function!")
-
-
-
 
     # serialized_data = serialize("json", followQS)
     # serialized_data = json.loads(serialized_data)
@@ -246,9 +238,51 @@ def getFollowing(request):
 
     # TODO: From the Follow object, get the "following" users and then retrieve all posts for those users with the most recent posts first.
 
-    return render(request, "network/following.html", {"user": user})
+    user_id = request.user.id
+    user_name = request.user.username
 
-    #return HttpResponse("In the getFollowing function!")
+    # creators = User.objects.filter(id=3) | filter(id=4)
+
+    currentOBJ = Follow.objects.get(id=user_id)
+    # Returns querysets of User objects.
+    # followers = currentOBJ.followers.all()
+    following = currentOBJ.following.all()
+
+    test = following.order_by().values('id')
+
+    test = list(test)
+
+    # //Empty queryset.
+    s1 = Posts.objects.filter(creator=0)
+    for dic in test:
+        for val in dic.values():
+            print(val)
+            listings = Posts.objects.filter(creator=val)
+            UserObject = User.objects.filter(id=val)
+
+            # Merge the queryset with the existing queryset with the new queryset.
+            # If the queryset is not empty.
+            if s1.exists():
+                s2 = s2 | listings
+
+            else:
+
+                s2 = s1 | listings
+                s1 = s2
+
+            # listings_prev = listings
+
+
+    PostsByDate = s2.order_by('-createdDate')
+
+
+
+    return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject})
+
+
+def appendQueryset(postings):
+
+    s1 = Posts.objects.filter(creator=0)
 
 
 @csrf_exempt
@@ -258,7 +292,6 @@ def index(request):
     if request.user.is_authenticated:
         # return render(request, "network/allPosts.html")
         return HttpResponseRedirect(reverse("djangoAllPosts"))
-
 
     # Everyone else is prompted to sign in
     else:
