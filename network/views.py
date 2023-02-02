@@ -198,10 +198,17 @@ def djangoAllPosts(request):
 
 @csrf_exempt
 @login_required
-def getProfile(request):
+def getProfile(request, username):
     print("In getProfile")
+    #Information for the logged in user.  Not really relevant for the most part.
+    #if the logged in user is different then link clicked user, then display the folllow and  unfollow buttons.
     user_id = request.user.id
     user_name = request.user.username
+
+    #Information of the user that we need to retrieve posts for.
+    print(username)
+
+    #FIXME: Need to think about clicking on links and  on the title bar.  there is a difference.
 
     currentOBJ = Follow.objects.get(id=user_id)
     # Returns querysets of User objects.

@@ -7,28 +7,30 @@
     <h3>Profile</h3>
     <div id="posty">
 
-    {% for post in postings %}
+        {% for post in postings %}
 
-    <div id="allPostings">
+        <div id="ProfilePostings">
 
-        <div class="post{{forloop.counter0}}">
-            <!-- FIXME: Redirect the userr to the login if they are not authenticated and click on link. -->
-            <h5 class="creator">Posted by <a href="{% url 'getProfile' %}">{{post.creator.username}}</a></h5><textarea class="form-control content{{forloop.counter0}}" id="readonlyContent{{forloop.counter0}}"
-                rows="5" readonly="true">{{post.content}}</textarea><button class="btn btn-sm btn-outline-primary edit{{forloop.counter0}}" onclick="editPost('{{post.content}}', '{{post.id}}')">Edit post</button>
-            <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
-            <p class="numberLikes0">Likes for this post: {{post.numberLikes}}</p>
+            <div class="post">
+                <!-- FIXME: Redirect the userr to the login if they are not authenticated and click on link. -->
+                <h5 class="creator">Posted by {{post.creator.username}}</a></h5><textarea
+                    class="form-control content" id="readonlyContent" rows="5"
+                    readonly="true">{{post.content}}</textarea><button
+                    class="btn btn-sm btn-outline-primary edit">Edit post</button>
+                <p class="timestamp">Posted on {{post.createdDate}}</p>
+                <p class="numberLikes">Likes for this post: {{post.numberLikes}}</p>
+            </div>
+
+
+
         </div>
 
-
-
+        {% endfor %}
     </div>
 
-    {% endfor %}
-</div>
 
 
 
 
 
-
-{% endblock %}
+    {% endblock %}

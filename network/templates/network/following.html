@@ -6,9 +6,9 @@
 
     {% for list in listings %}
 
-    <div id="allPostings">
+    <div id="followigPostings">
 
-        <div class="post{{forloop.counter0}}">
+        <div class="post">
             <!-- FIXME: Redirect the userr to the login if they are not authenticated and click on link. -->
             <h5 class="creator">Posted by {{list.creator.username}}</h5><textarea
                 class="form-control content" id="readonlyContent" rows="5"
@@ -20,10 +20,5 @@
     </div>
 
     {% endfor %}
-
-
-
-
-
 
 {% endblock %}
