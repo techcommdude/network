@@ -44,7 +44,7 @@ class Follow(models.Model):
         User, blank=True, related_name="get_following_users")
 
     def __str__(self) -> str:
-        return f"ID: {self.id} - User: {self.followUser} - Followers: {self.followers.all()} Following: {self.following.all()}"
+        return f"User: {self.followUser} - Followers: {self.followers.all()} Following: {self.following.all()}"
 
     #TODO: get rid of this?
     def serialize(self):

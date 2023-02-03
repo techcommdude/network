@@ -13,7 +13,7 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 from yaml import serialize_all
 
-#from yaml import serialize_all
+# from yaml import serialize_all
 from .models import User, Posts, Follow
 from django.views.decorators.csrf import csrf_exempt
 
@@ -74,7 +74,8 @@ def saveDjangoNewPost(request):
         # FIXME: Return an error message at this point.
         # return HttpResponse("Nothing in your Post!")
 
-        messages.error(request, 'You cannot submit an empty message. Please try again.')
+        messages.error(
+            request, 'You cannot submit an empty message. Please try again.')
         # Redirect to activeListings page.
         return HttpResponseRedirect(reverse("index"))
 
@@ -118,9 +119,10 @@ def updatePost(request, post_id):
             post.content = data["content"]
 
             if post.content == "":
-                messages.error(request, 'You cannot submit an empty post. Please try again.')
+                messages.error(
+                    request, 'You cannot submit an empty post. Please try again.')
                 # Redirect to activeListings page.
-                #time.sleep(1.5)
+                # time.sleep(1.5)
                 return HttpResponseRedirect(reverse("index"))
 
             post.save()
@@ -193,7 +195,7 @@ def djangoAllPosts(request):
     print("In DjangoAllPosts")
     # TODO: most recent posts first, how to do?  Need to sort the below.
 
-    #user = User.objects.values('username')
+    # user = User.objects.values('username')
 
     # userName = User.objects.get(id=1)
     # test = userName.username
@@ -281,7 +283,7 @@ def getProfile(request, username):
     # This returns a queryset which must be serialized to convert to JSON.
     # currentObjects = Follow.objects.filter(followUser=user_id)
 
-    #serialized_q = json.dumps(list(currentObjects), cls=DjangoJSONEncoder)
+    # serialized_q = json.dumps(list(currentObjects), cls=DjangoJSONEncoder)
 
     # return JsonResponse([currentObject.serialize() for currentObject in currentObjects], safe=False)
 
@@ -298,6 +300,51 @@ def getProfile(request, username):
 
 def user_Follow(request, username):
     print("in Follow")
+    # Current user that wants to add a follower.  this is the User object.
+    user = request.user
+    print(user)
+    # This is the user that the logged in user wants to follow.
+    #Need the ID of this user
+    print(username)
+
+    user = User.objects.get(username=username)
+
+    test = Follow.objects.get(followUser=user)
+
+    # user id and username of the logged in user.
+    user_id = request.user.id
+    user_name = request.user.username
+
+    try:
+        follow = Follow.objects.get(id=user_id)
+        followObject = True
+    except Follow.DoesNotExist:
+        print("This user has no folow objects!")
+        # In this case we don't need to check for existing
+        # followers and following
+        followObject = False
+
+    if followObject == True:
+        # returns a Qs of followers.
+        followers = follow.followers.all()
+        try:
+            pass
+
+        except:
+            pass
+
+    if followObject == True:
+
+        # returns a Qs of those theat the user follows.
+        following = follow.following.all()
+        try:
+            test = Follow.objects.get(following=username)
+        except:
+            print("Not in the list and need to add to the list.")
+            following = Follow.objects.get(following=username)
+            following.following = username
+            following.save()
+
     return HttpResponse("In foloow")
 
 
@@ -321,7 +368,7 @@ def getFollowing(request):
     # If the user doesnlt have any followers, following or posts it will throw an error.
 
     try:
-        currentOBJ = Follow.objects.get(id=user_id)
+        currentOBJ = Follow.objects.get(followUser=user_id)
         displayNothing = False
     except Follow.DoesNotExist:
         print("This user follows no one!")
