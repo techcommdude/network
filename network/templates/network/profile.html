@@ -10,12 +10,20 @@
         <li>Total number of followers: {{countFollowers}}</li>
         <li>Total number following: {{countFollowing}}</li>
     </ul>
+<div>
+
+
+
+</div>
+
+
+
 
     <div id="posty">
 
         {% for post in postings %}
 
-        <div id="ProfilePostings">
+
 
             <div class="post">
                 <!-- FIXME: Redirect the userr to the login if they are not authenticated and click on link. -->
@@ -24,8 +32,12 @@
                     readonly="true">{{post.content}}</textarea>
                 <p class="timestamp">Posted on {{post.createdDate}}</p>
                 <p class="numberLikes">Likes for this post: {{post.numberLikes}}</p>
+                <a class="btn btn-sm btn-outline-primary" href="{% url 'user_Follow' post.creator.username %}">Follow</a>
+                <a class="btn btn-sm btn-outline-primary" href="{% url 'user_UnFollow' post.creator.username %}">Unfollow</a>
             </div>
-        </div>
+
+
+
 
         {% empty %}
         <h5>This user does not have any posts.</h5>

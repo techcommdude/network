@@ -277,6 +277,15 @@ def getProfile(request, username):
     # return JsonResponse(serialized_data, safe=False, status=200)
 
 
+def user_Follow(request, username):
+    print("in Follow")
+    return HttpResponse("In foloow")
+
+def user_UnFollow(request, username):
+    print("Un Follow")
+    return HttpResponse("In Unfoloow")
+
+
 @csrf_exempt
 @login_required
 def getFollowing(request):
@@ -293,6 +302,7 @@ def getFollowing(request):
 
     try:
         currentOBJ = Follow.objects.get(id=user_id)
+        displayNothing = False
     except Follow.DoesNotExist:
         print("This user follows no one!")
         displayNothing = True
@@ -333,11 +343,6 @@ def getFollowing(request):
 
         return render(request, "network/following.html", {"displayNothing": displayNothing})
 
-
-
-def appendQueryset(postings):
-
-    s1 = Posts.objects.filter(creator=0)
 
 
 @csrf_exempt
