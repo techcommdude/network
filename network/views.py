@@ -218,7 +218,8 @@ def getProfile(request, username):
     # Need to check for empty queryset.  Doesnotexist error.
 
     try:
-        postsUser = Posts.objects.filter(creator=profileUser)
+        posts = Posts.objects.filter(creator=profileUser)
+        postsUser = posts.order_by('-createdDate')
         noListings = False
     except Posts.DoesNotExist:
         print("blah")
@@ -235,7 +236,6 @@ def getProfile(request, username):
         Follow.DoesNotExist
         followObject = False
 
-
     # if follow.followers.all().count() != 0:
     #     countFollowers = follow.followers.all().count()
 
@@ -247,6 +247,7 @@ def getProfile(request, username):
 
     if followObject == True:
 
+        # Do not use this at the moment.  May add in future./
         followers = follow.followers.all()
 
     if followObject == True:
@@ -255,11 +256,9 @@ def getProfile(request, username):
     else:
         countFollowing = 0
 
-
+      # Do not use this at the moment.  May add in future.
     if followObject == True:
         following = follow.following.all()
-
-
 
     if followObject == False:
         # This one does not return the users that are following and followers.  May or may not use that.
@@ -302,12 +301,12 @@ def getFollowing(request):
     user = request.user
     print(user)
 
-    # TODO: From the Follow object, get the "following" users and then retrieve all posts for those users with the most recent posts first.
+    # From the Follow object, get the "following" users and then retrieve all posts for those users with the most recent posts first.
 
     user_id = request.user.id
     user_name = request.user.username
 
-    # FIXME: If the user doesnlt have any followers, following or posts it will throw an error.
+    # If the user doesnlt have any followers, following or posts it will throw an error.
 
     try:
         currentOBJ = Follow.objects.get(id=user_id)
@@ -342,7 +341,7 @@ def getFollowing(request):
                     newQueryset = emptyQueryset | listings
                     emptyQueryset = newQueryset
 
-    # Sort by created date.
+        # Sort by created date.
         PostsByDate = newQueryset.order_by('-createdDate')
 
         return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, })
