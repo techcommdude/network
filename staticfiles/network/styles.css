@@ -1,0 +1,41 @@
+
+body {
+    margin: 1.1em;
+}
+#posty {
+
+    margin: 1.0em;
+    border-style: solid;
+    border-width: thin;
+    border-color: lightgray;
+}
+
+/* This is for each post */
+[class*="post"] {
+
+    margin: 1.0em;
+    border-style: solid;
+    border-width: thin;
+    border-color: lightgray;
+}
+
+[id*="readonlyContent"] {
+
+
+    background-color: whitesmoke
+}
+
+#post-form {
+
+    margin: 1em;
+}
+
+#post-button {
+
+    margin-top: 0.4em;
+}
+
+.hidden {
+
+    display: none;
+}
