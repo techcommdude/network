@@ -219,46 +219,53 @@ def getProfile(request, username):
 
     try:
         postsUser = Posts.objects.filter(creator=profileUser)
+        noListings = False
     except Posts.DoesNotExist:
         print("blah")
+        noListings = True
 
     # Need to pass a value if the user has no postings.
 
     # Returns querysets of User objects.
 
-    noListings = False
     try:
         follow = Follow.objects.get(followUser=profileUser)
+        followObject = True
     except:
         Follow.DoesNotExist
-        noListings = True
-        follow = False
+        followObject = False
 
-    if postsUser:
+
+    # if follow.followers.all().count() != 0:
+    #     countFollowers = follow.followers.all().count()
+
+    if followObject != False:
+        countFollowers = follow.followers.all().count()
+
+    else:
+        countFollowers = 0
+
+    if followObject == True:
 
         followers = follow.followers.all()
+
+    if followObject == True:
+
+        countFollowing = follow.following.all().count()
+    else:
+        countFollowing = 0
+
+
+    if followObject == True:
         following = follow.following.all()
 
-    countFollowers = 0
-    countFollowing = 0
 
-#FIXME: error here for no listings and no followers.
-    if follow != False:
 
-        if followers:
-            countFollowers = follow.followers.all().count()
-        if following:
-            countFollowing = follow.following.all().count()
-
-    if follow == False:
-        #This one does not return the users that are following and followers.  May or may not use that.
-        return render(request, "network/profile.html", {"noListings": noListings,"postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username})
+    if followObject == False:
+        # This one does not return the users that are following and followers.  May or may not use that.
+        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username})
     else:
-        return render(request, "network/profile.html", {"noListings": noListings,"postings": postsUser, "followers": followers, "following": following, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username})
-
-
-
-
+        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username})
 
     # This returns a queryset which must be serialized to convert to JSON.
     # currentObjects = Follow.objects.filter(followUser=user_id)
@@ -282,6 +289,7 @@ def user_Follow(request, username):
     print("in Follow")
     return HttpResponse("In foloow")
 
+
 def user_UnFollow(request, username):
     print("Un Follow")
     return HttpResponse("In Unfoloow")
@@ -299,7 +307,7 @@ def getFollowing(request):
     user_id = request.user.id
     user_name = request.user.username
 
-    #FIXME: If the user doesnlt have any followers, following or posts it will throw an error.
+    # FIXME: If the user doesnlt have any followers, following or posts it will throw an error.
 
     try:
         currentOBJ = Follow.objects.get(id=user_id)
@@ -309,7 +317,6 @@ def getFollowing(request):
         displayNothing = True
 
     if displayNothing != True:
-
 
         following = currentOBJ.following.all()
 
@@ -338,12 +345,11 @@ def getFollowing(request):
     # Sort by created date.
         PostsByDate = newQueryset.order_by('-createdDate')
 
-        return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing,})
+        return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, })
 
     else:
 
         return render(request, "network/following.html", {"displayNothing": displayNothing})
-
 
 
 @csrf_exempt
