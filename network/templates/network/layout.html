@@ -25,7 +25,7 @@
                     <a class="nav-link" id="profile" href="#"><strong>{{ user.username }}</strong></a>
                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" id="djangoProfile" href="{% url 'getProfile' user.username %}"><strong>profile {{ user.username }}</strong></a>
+                    <a class="nav-link" id="djangoProfile" href="{% url 'getProfile' user.username %}"><strong>{{ user.username }} profile</strong></a>
                 </li>
 
                 <!-- <li class="nav-item">

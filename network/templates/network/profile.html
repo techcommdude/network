@@ -12,17 +12,13 @@
     </ul>
 <div>
 
+    <div>
+        <a class="btn btn-sm btn-outline-primary" href="{% url 'user_Follow' username %}">Follow</a>
+        <a class="btn btn-sm btn-outline-primary" href="{% url 'user_UnFollow' username %}">Unfollow</a>
 
+    </div>
 
-</div>
-
-
-
-
-    <div id="posty">
-
-        {% for post in postings %}
-
+    {% for post in postings %}
 
 
             <div class="post">
@@ -36,20 +32,11 @@
                 <a class="btn btn-sm btn-outline-primary" href="{% url 'user_UnFollow' post.creator.username %}">Unfollow</a>
             </div>
 
-
-
-
         {% empty %}
         <h5>This user does not have any posts.</h5>
 
-        {% endfor %}
 
-
-    </div>
-
-
-
-
+    {% endfor %}
 
 
     {% endblock %}
