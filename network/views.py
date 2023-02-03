@@ -117,7 +117,15 @@ def updatePost(request, post_id):
         if data.get("content") is not None:
             post.content = data["content"]
 
+            if post.content == "":
+                messages.error(request, 'You cannot submit an empty post. Please try again.')
+                # Redirect to activeListings page.
+                #time.sleep(1.5)
+                return HttpResponseRedirect(reverse("index"))
+
             post.save()
+
+            time.sleep(1.0)
 
             post = Posts.objects.get(pk=post_id)
 
@@ -127,7 +135,7 @@ def updatePost(request, post_id):
 
             # return HttpResponseRedirect(reverse("djangoAllPosts"))
 
-        # FIXME: Put a delay here so that the database updates.
+        # FIXME: Put a delay here so that the database updates.  Why does it go to all Posts and refresh everything after this.
     return HttpResponse(status=204)
     # return HttpResponse("retrievePost!")
 
