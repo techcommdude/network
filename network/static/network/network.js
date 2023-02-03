@@ -2,28 +2,19 @@ document.addEventListener("DOMContentLoaded", function () {
   // document
   //   .querySelector("#djangoAllPosts")
   //   .addEventListener("click", () => loadAllPosts());
-
   // document
   //   .querySelector(".navbar-brand")
   //   .addEventListener("click", () => loadAllPosts());
-
   //TODO: Event listener for the Post button.  Update to go to function.
   //FIXME: Enable this again when you want to product JSON for a new Post.
   // document.querySelector("#post-button").addEventListener("click", (event) => {
   //   event.preventDefault();
   //   savePost();
   // });
-
-
   // document.querySelector("[id^='editButton']").addEventListener("click", (event) => {
   //   event.preventDefault();
   //   editPost(post.content, post.id);
   // });
-
-
-
-
-
 });
 
 function loadAllPosts() {
@@ -116,8 +107,6 @@ function loadAllPosts() {
 function editPost(postID) {
   // This is the edit button that was clicked on.
 
-
-
   //FIXME: need to send the Postcontent and the ID from the event listener.
 
   const element = event.target;
@@ -156,33 +145,24 @@ function editPost(postID) {
 
   //const editFormClassName = "editForm";
 
-
   const editForm = "editForm" + lastChar;
   //This unhides the form for editing the post and the save button.
   document.getElementById(editForm).className = "editForm";
 
   // FIXME: need to set the value of the
 
-
   const readOnlyContent = "#" + "readonlyContent" + lastChar;
   //Get the value of the text area before it is hidden.
-  const originalText = document.querySelector(readOnlyContent).value
+  const originalText = document.querySelector(readOnlyContent).value;
 
-
-    //Set the original value in the text area.
+  //Set the original value in the text area.
   const TextArea = "textArea" + lastChar;
   document.getElementById(TextArea).value = originalText;
-
-
-
-
-
-
 
   //hide the read only text area and edit post button
   //hide the text  area.
 
-  const readonly = "readonlyContent" + lastChar
+  const readonly = "readonlyContent" + lastChar;
 
   document.getElementById(readonly).className = "hidden";
 
@@ -204,10 +184,7 @@ function editPost(postID) {
     .querySelector(savePostbutton)
     .addEventListener("click", () => saveEditedPost(postID, lastChar));
 
-
   //FIXME: Need to add the original content back to the editable text area.
-
-
 
   //Change the button.
   // postdiv[0].parentNode.replaceChild(newItem, postdiv[0]);
@@ -239,8 +216,6 @@ function editPost(postID) {
 
 //FIXME: need to get the CSRF token here to do a PUT, it will not show an error.  Rigth now I have set it to exempt in the python view.
 function saveEditedPost(postID, lastChar) {
-
-
   console.log("I'm in the SaveEdited Post function!");
   // console.log(postContent);
   console.log(postID);
@@ -249,16 +224,18 @@ function saveEditedPost(postID, lastChar) {
   textAreaContentUpdate = document.querySelector("#textArea" + lastChar).value;
 
   //readonly area to reenable:
-  document.getElementById("readonlyContent" + lastChar).className = "form-control content0";
+  document.getElementById("readonlyContent" + lastChar).className =
+    "form-control content0";
 
-  document.getElementById("editButton" + lastChar).className = "btn btn-sm btn-outline-primary edit0";
+  document.getElementById("editButton" + lastChar).className =
+    "btn btn-sm btn-outline-primary edit0";
 
-  document.querySelector("#" + "readonlyContent" + lastChar).value = textAreaContentUpdate;
+  document.querySelector("#" + "readonlyContent" + lastChar).value =
+    textAreaContentUpdate;
 
   document.getElementById("textArea" + lastChar).className = "hidden";
 
   document.getElementById("savePostButton" + lastChar).className = "hidden";
-
 
   fetch(`/posts/${postID}`, {
     method: "PUT",
@@ -266,7 +243,6 @@ function saveEditedPost(postID, lastChar) {
       content: textAreaContentUpdate,
     }),
   });
-
 }
 
 function savePost() {
@@ -284,11 +260,13 @@ function savePost() {
       console.log(result);
     });
 
-
-
   //timeout so that database is updated.
   // setTimeout(() => {
   //   loadAllPosts();
   //   console.log("Delayed for 100 milliseconds.");
   // }, "100");
+}
+
+function likePost(postID, creatorOfPost, currentUser) {
+  console.log("In Like Post function!");
 }

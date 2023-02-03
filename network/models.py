@@ -15,6 +15,7 @@ class Posts(models.Model):
         User, on_delete=models.PROTECT, related_name="get_creator_listings", blank=False)
     content = models.TextField(max_length=600)
     createdDate = models.DateTimeField(auto_now_add=True)
+    liked = models.BooleanField(default=False)
     numberLikes = models.IntegerField(blank=True, default=0)
 
 #TODO: get rid of this?
@@ -26,7 +27,8 @@ class Posts(models.Model):
             "creator": getUserName(self.creator.id),
             "content": self.content,
             "createdDate": self.createdDate.strftime("%b %d %Y, %I:%M %p"),
-            "numberLikes": self.numberLikes,
+            "liked": self.liked,
+            "numberLikes": self.likes.count()
         }
 
 

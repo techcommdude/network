@@ -17,13 +17,11 @@
         <div>
             <a class="btn btn-sm btn-outline-primary" href="{% url 'user_Follow' username %}">Follow</a>
             <a class="btn btn-sm btn-outline-primary" href="{% url 'user_UnFollow' username %}">Unfollow</a>
-
         </div>
 
         {% endif %}
 
         {% for post in postings %}
-
 
         <div class="post{{forloop.counter0}}">
             <!-- FIXME: Redirect the userr to the login if they are not authenticated and click on link. -->
@@ -46,7 +44,6 @@
                     class="btn btn-sm btn-outline-primary SavePostButton{{forloop.counter0}}"
                     id="savePostButton{{forloop.counter0}}">
             </form>
-
 
             <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
             <p class="numberLikes{{forloop.counter0}}">Likes for this post: {{post.numberLikes}}</p>
