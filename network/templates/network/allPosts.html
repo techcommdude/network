@@ -27,9 +27,19 @@
             <!-- FIXME: Redirect the userr to the login if they are not authenticated and click on link. -->
             <h5 class="creator">Posted by <a href="{% url 'getProfile' post.creator.username %}">{{post.creator.username}}</a></h5><textarea
                 class="form-control content{{forloop.counter0}}" id="readonlyContent{{forloop.counter0}}" rows="5"
-                readonly="true">{{post.content}}</textarea><button
+                readonly="true">{{post.content}}</textarea>
+
+                <!-- Put an if statement here,  Display button if the post.creator.username == request.username -->
+
+                {% if post.creator.username == user.username %}
+
+                <button
                 class="btn btn-sm btn-outline-primary edit{{forloop.counter0}}" id="editButton{{forloop.counter0}}" onclick="editPost('{{post.id}}')">Edit
                 post</button>
+
+                {% endif %}
+
+
 
             <form action="" method="POST" class="hidden" id=editForm{{forloop.counter0}}>
                 {% csrf_token %}
