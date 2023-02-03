@@ -72,7 +72,11 @@ def saveDjangoNewPost(request):
     # //Need to issue an error message here.
     if request.POST.get("postContent") == "":
         # FIXME: Return an error message at this point.
-        return HttpResponse("Nothing in your Post!")
+        # return HttpResponse("Nothing in your Post!")
+
+        messages.error(request, 'You cannot submit an empty message. Please try again.')
+        # Redirect to activeListings page.
+        return HttpResponseRedirect(reverse("index"))
 
     newPost = Posts(
         creator=userName,
