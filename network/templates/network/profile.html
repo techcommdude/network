@@ -21,13 +21,31 @@
     {% for post in postings %}
 
 
-            <div class="post">
+            <div class="post{{forloop.counter0}}">
                 <!-- FIXME: Redirect the userr to the login if they are not authenticated and click on link. -->
                 <h5 class="creator">Posted by {{post.creator.username}}</a></h5><textarea
-                    class="form-control content" id="readonlyContent" rows="5"
+                    class="form-control content{{forloop.counter0}}" id="readonlyContent{{forloop.counter0}}" rows="5"
                     readonly="true">{{post.content}}</textarea>
-                <p class="timestamp">Posted on {{post.createdDate}}</p>
-                <p class="numberLikes">Likes for this post: {{post.numberLikes}}</p>
+
+                {% if post.creator.username == user.username %}
+
+                    <button
+                    class="btn btn-sm btn-outline-primary edit{{forloop.counter0}}" id="editButton{{forloop.counter0}}" onclick="editPost('{{post.id}}')">Edit
+                    post</button>
+
+                {% endif %}
+
+                <form action="" method="POST" class="hidden" id=editForm{{forloop.counter0}}>
+                    {% csrf_token %}
+                    <textarea name=""
+                        id="textArea{{forloop.counter0}}" class="form-control editTextArea" rows=5></textarea><input
+                        type="submit" value="Save post"
+                        class="btn btn-sm btn-outline-primary SavePostButton{{forloop.counter0}}"
+                        id="savePostButton{{forloop.counter0}}"></form>
+
+
+                <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
+                <p class="numberLikes{{forloop.counter0}}">Likes for this post: {{post.numberLikes}}</p>
                 <a class="btn btn-sm btn-outline-primary" href="{% url 'user_Follow' post.creator.username %}">Follow</a>
                 <a class="btn btn-sm btn-outline-primary" href="{% url 'user_UnFollow' post.creator.username %}">Unfollow</a>
             </div>
@@ -40,3 +58,7 @@
 
 
     {% endblock %}
+
+    {% block script %}
+<script src="{% static 'network/network.js' %}"></script>
+{% endblock %}
