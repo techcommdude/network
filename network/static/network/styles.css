@@ -19,6 +19,12 @@ body {
     border-color: lightgray;
 }
 
+[id*="readonlyContent"] {
+
+
+    background-color: whitesmoke
+}
+
 #post-form {
 
     margin: 1em;

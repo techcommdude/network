@@ -12,11 +12,15 @@
     </ul>
     <div>
 
+        {% if username != user.username %}
+
         <div>
             <a class="btn btn-sm btn-outline-primary" href="{% url 'user_Follow' username %}">Follow</a>
             <a class="btn btn-sm btn-outline-primary" href="{% url 'user_UnFollow' username %}">Unfollow</a>
 
         </div>
+
+        {% endif %}
 
         {% for post in postings %}
 
@@ -46,9 +50,13 @@
 
             <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
             <p class="numberLikes{{forloop.counter0}}">Likes for this post: {{post.numberLikes}}</p>
+
+            {% if post.creator.username != user.username %}
             <a class="btn btn-sm btn-outline-primary" href="{% url 'user_Follow' post.creator.username %}">Follow</a>
             <a class="btn btn-sm btn-outline-primary"
                 href="{% url 'user_UnFollow' post.creator.username %}">Unfollow</a>
+
+            {% endif %}
         </div>
 
         {% empty %}
