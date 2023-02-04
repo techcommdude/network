@@ -228,7 +228,7 @@ def getProfile(request, username):
     print(user.id)
     profileUser = user.id
     #FIXME:
-    #isFollowing = getFollowingFlag(request, username)
+    isFollowing = getFollowingFlag(request, username)
 
     # FIXME: Need to think about clicking on links and  on the title bar.  there is a difference.
 
@@ -280,9 +280,9 @@ def getProfile(request, username):
 
     if followObject == False:
         # This one does not return the users that are following and followers.  May or may not use that.
-        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username})
+        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "isFollowing": isFollowing})
     else:
-        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username})
+        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username, "isFollowing": isFollowing})
 
     # This returns a queryset which must be serialized to convert to JSON.
     # currentObjects = Follow.objects.filter(followUser=user_id)
