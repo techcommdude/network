@@ -301,6 +301,7 @@ def getProfile(request, username):
 #The username here is the user that the logged in user wants to follow.
 def user_Follow(request, username):
     print("in Follow")
+    isFollowing = False
     # Current user that wants to add a follower.  this is the User object.
     userLoggedin = request.user
     print(userLoggedin)
@@ -320,7 +321,7 @@ def user_Follow(request, username):
 
     try:
         #Follow object of the logged in user.
-        follow = Follow.objects.get(id=user_id)
+        follow = Follow.objects.get(followUser_id=user_id)
         followObject = True
     except Follow.DoesNotExist:
         print("This user has no folow objects!")
@@ -341,25 +342,34 @@ def user_Follow(request, username):
 
         #FIXME: returns a Qs of those theat the user follows. Need to test this to see if the new user is in this QS.  If it is not, then add it.
         following = follow.following.all()
+        #test = Follow.objects.filter(followUser_id=user_id)
 
-        if userIDNewFollowing in following:
-            pass
-            #add the new user to the following,
+        #FIXME: Needs to find the value in the list.
+        # if userIDNewFollowing in following:
+        if userID in following:
+
+            #remove the user as a follower.
+            follow.following.remove(userIDNewFollowing)
+            isFollowing = False
+
         else:
-            pass
-            #else do nothing and set the isFollowing flag to False.
-        try:
-            pass
-            #this is not right.
-            # test = Follow.objects.get(following=userIDNewFollowing)
-        except:
-            pass
-            print("Not in the list and need to add to the list.")
-            following = Follow.objects.get(following=userIDNewFollowing)
-            following.following = username
-            following.save()
 
-    return HttpResponse("In foloow")
+            #add the user to to the following list.
+            follow.following.add(userIDNewFollowing)
+            isFollowing = True
+
+        # try:
+        #     pass
+        #     #this is not right.
+        #     # test = Follow.objects.get(following=userIDNewFollowing)
+        # except:
+        #     pass
+        #     print("Not in the list and need to add to the list.")
+        #     following = Follow.objects.get(following=userIDNewFollowing)
+        #     following.following = username
+        #     following.save()
+
+    return HttpResponseRedirect(reverse("index"))
 
 
 def user_UnFollow(request, username):
@@ -414,14 +424,21 @@ def getFollowing(request):
                     newQueryset = emptyQueryset | listings
                     emptyQueryset = newQueryset
 
-        # Sort by created date.
+
+    if not emptyQueryset:
+
+        return render(request, "network/following.html", {"displayNothing": displayNothing})
+
+
+
+
+    else:
+                # Sort by created date.
         PostsByDate = newQueryset.order_by('-createdDate')
 
         return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, })
 
-    else:
 
-        return render(request, "network/following.html", {"displayNothing": displayNothing})
 
 
 @csrf_exempt
