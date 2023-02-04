@@ -299,7 +299,7 @@ def getProfile(request, username):
 
 
 #The username here is the user that the logged in user wants to follow.
-def user_Follow(request, username):
+def follow(request, username):
     print("in Follow")
     isFollowing = False
     # Current user that wants to add a follower.  this is the User object.
@@ -372,8 +372,11 @@ def user_Follow(request, username):
     return HttpResponseRedirect(reverse("index"))
 
 
-def user_UnFollow(request, username):
-    print("Un Follow")
+def getFollowingFlag(request, username):
+    print("In getFollowingFlag")
+
+
+
     return HttpResponse("In Unfoloow")
 
 

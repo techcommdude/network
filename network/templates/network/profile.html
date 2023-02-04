@@ -15,8 +15,8 @@
         {% if username != user.username %}
 
         <div>
-            <a class="btn btn-sm btn-outline-primary" href="{% url 'user_Follow' username %}">Follow</a>
-            <a class="btn btn-sm btn-outline-primary" href="{% url 'user_Follow' username %}">Unfollow</a>
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' username %}">Follow</a>
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' username %}">Unfollow</a>
         </div>
 
         {% endif %}
@@ -49,9 +49,9 @@
             <p class="numberLikes{{forloop.counter0}}">Likes for this post: {{post.numberLikes}}</p>
 
             {% if post.creator.username != user.username %}
-            <a class="btn btn-sm btn-outline-primary" href="{% url 'user_Follow' post.creator.username %}">Follow</a>
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' post.creator.username %}">Follow</a>
             <a class="btn btn-sm btn-outline-primary"
-                href="{% url 'user_Follow' post.creator.username %}">Unfollow</a>
+                href="{% url 'follow' post.creator.username %}">Unfollow</a>
 
             {% endif %}
         </div>
