@@ -12,10 +12,6 @@
 <div id="followingPostings">
 
 
-
-
-
-
     <div class="post">
         <!-- FIXME: Redirect the userr to the login if they are not authenticated and click on link. -->
         <h5 class="creator">Posted by <a
@@ -26,6 +22,9 @@
     </div>
 
 </div>
+
+{% empty %}
+<h5>This user is not following anyone.</h5>
 
 {% endfor %}
 

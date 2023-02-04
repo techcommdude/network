@@ -16,7 +16,7 @@
 
         <div>
             <a class="btn btn-sm btn-outline-primary" href="{% url 'user_Follow' username %}">Follow</a>
-            <a class="btn btn-sm btn-outline-primary" href="{% url 'user_UnFollow' username %}">Unfollow</a>
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'user_Follow' username %}">Unfollow</a>
         </div>
 
         {% endif %}
@@ -51,7 +51,7 @@
             {% if post.creator.username != user.username %}
             <a class="btn btn-sm btn-outline-primary" href="{% url 'user_Follow' post.creator.username %}">Follow</a>
             <a class="btn btn-sm btn-outline-primary"
-                href="{% url 'user_UnFollow' post.creator.username %}">Unfollow</a>
+                href="{% url 'user_Follow' post.creator.username %}">Unfollow</a>
 
             {% endif %}
         </div>
