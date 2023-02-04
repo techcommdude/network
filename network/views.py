@@ -430,8 +430,8 @@ def getFollowingFlag(request, username):
         else:
 
             # add the user to to the following list.
-            follow.following.add(userIDNewFollowing)
-            isFollowing = False
+            # follow.following.add(userIDNewFollowing)
+            # isFollowing = False
             return isFollowing
     else:
         isFollowing = False
