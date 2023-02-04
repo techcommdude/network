@@ -18,7 +18,9 @@
 
         <!-- This works when a user is not a follower. -->
 
-        {% else %}
+        {% endif %}
+
+        {% if isFollowing == 'False' %}
 
         <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' username %}">isfollowing = false = Follow</a>
 
