@@ -298,7 +298,8 @@ def getProfile(request, username):
     # return JsonResponse(serialized_data, safe=False, status=200)
 
 
-#The username here is the user that the logged in user wants to follow.
+# The username here is the user that the logged in user wants to follow.
+# This method does both following and unfollowing.
 def follow(request, username):
     print("in Follow")
     isFollowing = False
@@ -307,9 +308,9 @@ def follow(request, username):
     print(userLoggedin)
     # This is the user that the logged in user wants to follow.
 
-    #Need the ID of the user you want to add to your following list.
+    # Need the ID of the user you want to add to your following list.
     print(username)
-    #user id of the user to be added to following list.
+    # user id of the user to be added to following list.
     userID = User.objects.get(username=username)
     userIDNewFollowing = userID.id
 
@@ -320,7 +321,7 @@ def follow(request, username):
     user_name = request.user.username
 
     try:
-        #Follow object of the logged in user.
+        # Follow object of the logged in user.
         follow = Follow.objects.get(followUser_id=user_id)
         followObject = True
     except Follow.DoesNotExist:
@@ -332,42 +333,26 @@ def follow(request, username):
     if followObject == True:
         # returns a Qs of followers.
         followers = follow.followers.all()
-        try:
-            pass
-
-        except:
-            pass
 
     if followObject == True:
 
-        #FIXME: returns a Qs of those theat the user follows. Need to test this to see if the new user is in this QS.  If it is not, then add it.
+        # FIXME: returns a Qs of those theat the user follows. Need to test this to see if the new user is in this QS.  If it is not, then add it.
         following = follow.following.all()
         #test = Follow.objects.filter(followUser_id=user_id)
 
-        #FIXME: Needs to find the value in the list.
+        # FIXME: Needs to find the value in the list.
         # if userIDNewFollowing in following:
         if userID in following:
 
-            #remove the user as a follower.
+            # remove the user as a follower.
             follow.following.remove(userIDNewFollowing)
             isFollowing = False
 
         else:
 
-            #add the user to to the following list.
+            # add the user to to the following list.
             follow.following.add(userIDNewFollowing)
             isFollowing = True
-
-        # try:
-        #     pass
-        #     #this is not right.
-        #     # test = Follow.objects.get(following=userIDNewFollowing)
-        # except:
-        #     pass
-        #     print("Not in the list and need to add to the list.")
-        #     following = Follow.objects.get(following=userIDNewFollowing)
-        #     following.following = username
-        #     following.save()
 
     return HttpResponseRedirect(reverse("index"))
 
@@ -375,9 +360,63 @@ def follow(request, username):
 def getFollowingFlag(request, username):
     print("In getFollowingFlag")
 
+    isFollowing = False
+    # Current user that wants to add a follower.  this is the User object.
+    userLoggedin = request.user
+    print(userLoggedin)
+    # This is the user that the logged in user wants to follow.
 
+    # Need the ID of the user you want to add to your following list.
+    print(username)
+    # user id of the user to be added to following list.
+    userID = User.objects.get(username=username)
+    userIDNewFollowing = userID.id
+    UserLoggedIn = Follow.objects.get(followUser=userLoggedin)
 
-    return HttpResponse("In Unfoloow")
+    # user id and username of the logged in user.
+    user_id = request.user.id
+    user_name = request.user.username
+
+    try:
+        # Follow object of the logged in user.
+        follow = Follow.objects.get(followUser_id=user_id)
+        followObject = True
+    except Follow.DoesNotExist:
+        print("This user has no folow objects!")
+        # In this case we don't need to check for existing
+        # followers and following
+        followObject = False
+
+    if followObject == True:
+        # returns a Qs of followers.
+        followers = follow.followers.all()
+
+    if followObject == True:
+
+        # FIXME: returns a Qs of those theat the user follows. Need to test this to see if the new user is in this QS.  If it is not, then add it.
+        following = follow.following.all()
+        #test = Follow.objects.filter(followUser_id=user_id)
+
+        # FIXME: Needs to find the value in the list.
+        # if userIDNewFollowing in following:
+        if userID in following:
+
+            # remove the user as a follower.
+            # follow.following.remove(userIDNewFollowing)
+            isFollowing = True
+            return isFollowing
+
+        else:
+
+            # add the user to to the following list.
+            follow.following.add(userIDNewFollowing)
+            isFollowing = False
+            return isFollowing
+    else:
+        isFollowing = False
+        return isFollowing
+
+    # return HttpResponseRedirect(reverse("index"))
 
 
 @csrf_exempt
@@ -427,21 +466,15 @@ def getFollowing(request):
                     newQueryset = emptyQueryset | listings
                     emptyQueryset = newQueryset
 
-
     if not emptyQueryset:
 
         return render(request, "network/following.html", {"displayNothing": displayNothing})
 
-
-
-
     else:
-                # Sort by created date.
+        # Sort by created date.
         PostsByDate = newQueryset.order_by('-createdDate')
 
         return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, })
-
-
 
 
 @csrf_exempt
