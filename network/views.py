@@ -220,11 +220,15 @@ def getProfile(request, username):
     user_id = request.user.id
     user_name = request.user.username
 
-    # Information of the user that we need to retrieve posts for.
+    # Information of the user that we need to retrieve posts for.  This is the user that we need to check
+    # if they are in the following list and then display the Follow  Unfollow buttons appropriately
+    # on the profile.
     print(username)
     user = User.objects.get(username=username)
     print(user.id)
     profileUser = user.id
+
+    isFollowing = getFollowingFlag(request, username)
 
     # FIXME: Need to think about clicking on links and  on the title bar.  there is a difference.
 
@@ -276,9 +280,9 @@ def getProfile(request, username):
 
     if followObject == False:
         # This one does not return the users that are following and followers.  May or may not use that.
-        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username})
+        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username, "isFollowing": isFollowing})
     else:
-        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username})
+        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username, "isFollowing": isFollowing})
 
     # This returns a queryset which must be serialized to convert to JSON.
     # currentObjects = Follow.objects.filter(followUser=user_id)
@@ -346,12 +350,17 @@ def follow(request, username):
 
             # remove the user as a follower.
             follow.following.remove(userIDNewFollowing)
+            follow.save()
+            print(follow.following.all())
             isFollowing = False
 
         else:
 
             # add the user to to the following list.
             follow.following.add(userIDNewFollowing)
+
+            follow.save()
+            print(follow.following.all())
             isFollowing = True
 
     return HttpResponseRedirect(reverse("index"))
