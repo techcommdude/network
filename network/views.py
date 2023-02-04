@@ -298,24 +298,28 @@ def getProfile(request, username):
     # return JsonResponse(serialized_data, safe=False, status=200)
 
 
+#The username here is the user that the logged in user wants to follow.
 def user_Follow(request, username):
     print("in Follow")
     # Current user that wants to add a follower.  this is the User object.
-    user = request.user
-    print(user)
+    userLoggedin = request.user
+    print(userLoggedin)
     # This is the user that the logged in user wants to follow.
-    #Need the ID of this user
+
+    #Need the ID of the user you want to add to your following list.
     print(username)
+    #user id of the user to be added to following list.
+    userID = User.objects.get(username=username)
+    userIDNewFollowing = userID.id
 
-    user = User.objects.get(username=username)
-
-    test = Follow.objects.get(followUser=user)
+    UserLoggedIn = Follow.objects.get(followUser=userLoggedin)
 
     # user id and username of the logged in user.
     user_id = request.user.id
     user_name = request.user.username
 
     try:
+        #Follow object of the logged in user.
         follow = Follow.objects.get(id=user_id)
         followObject = True
     except Follow.DoesNotExist:
@@ -335,13 +339,23 @@ def user_Follow(request, username):
 
     if followObject == True:
 
-        # returns a Qs of those theat the user follows.
+        #FIXME: returns a Qs of those theat the user follows. Need to test this to see if the new user is in this QS.  If it is not, then add it.
         following = follow.following.all()
+
+        if userIDNewFollowing in following:
+            pass
+            #add the new user to the following,
+        else:
+            pass
+            #else do nothing and set the isFollowing flag to False.
         try:
-            test = Follow.objects.get(following=username)
+            pass
+            #this is not right.
+            # test = Follow.objects.get(following=userIDNewFollowing)
         except:
+            pass
             print("Not in the list and need to add to the list.")
-            following = Follow.objects.get(following=username)
+            following = Follow.objects.get(following=userIDNewFollowing)
             following.following = username
             following.save()
 
