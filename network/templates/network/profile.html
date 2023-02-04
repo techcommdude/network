@@ -12,14 +12,18 @@
     </ul>
     <div>
 
-        {% if username != user.username %}
+        {% if isFollowing %}
 
-        <div>
-            <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' username %}">Follow</a>
-            <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' username %}">Unfollow</a>
-        </div>
+        <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' username %}">isfollowing = true = Unfollow</a>
+
+        <!-- This works when a user is not a follower. -->
+
+        {% else %}
+
+        <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' username %}">isfollowing = false = Follow</a>
 
         {% endif %}
+
 
         {% for post in postings %}
 
@@ -48,12 +52,24 @@
             <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
             <p class="numberLikes{{forloop.counter0}}">Likes for this post: {{post.numberLikes}}</p>
 
-            {% if post.creator.username != user.username %}
+
+            <!-- This works when a user is already a follower. -->
+
+            {% if isFollowing %}
+
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' post.creator.username %}">Unfollow</a>
+
+
+            <!-- This works when a user is not a follower. -->
+
+            {% else %}
+
             <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' post.creator.username %}">Follow</a>
-            <a class="btn btn-sm btn-outline-primary"
-                href="{% url 'follow' post.creator.username %}">Unfollow</a>
 
             {% endif %}
+
+
+
         </div>
 
         {% empty %}

@@ -412,6 +412,14 @@ def getFollowingFlag(request, username):
         # returns a Qs of followers.
         followers = follow.followers.all()
 
+#FIXME: This condition is not working.
+
+    test = User.objects.get(username=username)
+
+    if test == userLoggedin:
+        isFollowing = None
+        return isFollowing
+
     if followObject == True:
 
         # FIXME: returns a Qs of those theat the user follows. Need to test this to see if the new user is in this QS.  If it is not, then add it.
