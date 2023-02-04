@@ -227,8 +227,8 @@ def getProfile(request, username):
     user = User.objects.get(username=username)
     print(user.id)
     profileUser = user.id
-
-    isFollowing = getFollowingFlag(request, username)
+    #FIXME:
+    #isFollowing = getFollowingFlag(request, username)
 
     # FIXME: Need to think about clicking on links and  on the title bar.  there is a difference.
 
@@ -280,9 +280,9 @@ def getProfile(request, username):
 
     if followObject == False:
         # This one does not return the users that are following and followers.  May or may not use that.
-        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username, "isFollowing": isFollowing})
+        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username})
     else:
-        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username, "isFollowing": isFollowing})
+        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username})
 
     # This returns a queryset which must be serialized to convert to JSON.
     # currentObjects = Follow.objects.filter(followUser=user_id)
@@ -343,6 +343,18 @@ def follow(request, username):
         # FIXME: returns a Qs of those theat the user follows. Need to test this to see if the new user is in this QS.  If it is not, then add it.
         following = follow.following.all()
         #test = Follow.objects.filter(followUser_id=user_id)
+
+        # test = Follow.objects.get(followUser_id=user_id)
+
+        # for userID in range(test):
+        #     test.following.remove(userIDNewFollowing)
+        #     test.save()
+        #     isFollowing = False
+
+
+
+
+
 
         # FIXME: Needs to find the value in the list.
         # if userIDNewFollowing in following:
