@@ -315,16 +315,17 @@ def follow(request, username):
     userLoggedin = request.user
     IDOfUserLoggedIn = userLoggedin.id
 
-    test = User.objects.get(id=IDOfUserLoggedIn)
+
+    #test = User.objects.get(id=IDOfUserLoggedIn)
 
     print(userLoggedin)
     # This is the user that the logged in user wants to follow.
 
     # Need the ID of the user you want to add to your following list.
     print(username)
-    test = username
+    un = username
     # user id of the user to be added to following list.
-    userID = User.objects.get(username=test)
+    userID = User.objects.get(username=un)
     userIDNewFollowing = userID.id
 
     # userIDTest = User.objects.get(username=userLoggedin)
@@ -334,6 +335,7 @@ def follow(request, username):
     try:
         UserLoggedIn = Follow.objects.get(followUser=IDOfUserLoggedIn)
     except:
+        #If they don't have a Folow object, need to create one.
         UserLoggedIn = Follow(followUser_id=IDOfUserLoggedIn)
         UserLoggedIn.save()
 
@@ -342,23 +344,26 @@ def follow(request, username):
     user_name = request.user.username
 
     try:
-        # Follow object of the logged in user.
+        # Follow object of the logged in user. You want the id of the followUser, not the id of the Follow object itself.
         follow = Follow.objects.get(followUser_id=user_id)
+        #Some users that have not created a follower or following anyone will not have a Follow object instantiated and therefore
+        #need to create one.
         followObject = True
     except Follow.DoesNotExist:
         print("This user has no folow objects!")
         # In this case we don't need to check for existing
-        # followers and following
+        # followers and following but must create a Follow object.
         followObject = False
 
     if followObject == True:
-        # returns a Qs of followers.
+        # returns a Qs of followers.  Right now I don't list the follwers by name, but could be an enhancement.
         followers = follow.followers.all()
 
     if followObject == True:
 
         # FIXME: returns a Qs of those theat the user follows. Need to test this to see if the new user is in this QS.  If it is not, then add it.
         following = follow.following.all()
+
         #test = Follow.objects.filter(followUser_id=user_id)
 
         # test = Follow.objects.get(followUser_id=user_id)
@@ -373,7 +378,7 @@ def follow(request, username):
         # if userIDNewFollowing in following:
         if userID in following:
 
-            # remove the user as a follower.
+            # remove the user as a follower if they are already in the list. Set the flag for use in the template.
             follow.following.remove(userIDNewFollowing)
             follow.save()
             print(follow.following.all())
@@ -381,14 +386,15 @@ def follow(request, username):
 
         else:
 
-            # add the user to to the following list.
+            # add the user to to the following list if they are not already there.  Set the flag for use in the template.
             follow.following.add(userIDNewFollowing)
 
             follow.save()
             print(follow.following.all())
             isFollowing = True
 
-    return HttpResponseRedirect(reverse("index"))
+    #TODO: Or should I display the Following list here?
+    return HttpResponseRedirect(reverse("getFollowing"))
 
 
 def getFollowingFlag(request, username):
@@ -453,12 +459,11 @@ def getFollowingFlag(request, username):
             # add the user to to the following list.
             # follow.following.add(userIDNewFollowing)
             # isFollowing = False
+            #TODO: Is this else actually used.
             return isFollowing
     else:
         isFollowing = False
         return isFollowing
-
-    # return HttpResponseRedirect(reverse("index"))
 
 
 @csrf_exempt
