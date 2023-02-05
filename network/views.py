@@ -54,6 +54,7 @@ def savePost(request):
     return JsonResponse({"message": "Post created successfully!"}, status=201)
 
 
+@login_required
 def saveDjangoNewPost(request):
     # TODO: This is for saving the post when clicking the POST button at the top of the page.
     user = request.user
@@ -189,7 +190,7 @@ def getAllPosts(request):
 
 
 @login_required
-@csrf_exempt
+# @csrf_exempt
 def djangoAllPosts(request):
 
     print("In DjangoAllPosts")
@@ -211,7 +212,7 @@ def djangoAllPosts(request):
     return render(request, "network/allPosts.html", {"postings": postings})
 
 
-@csrf_exempt
+# @csrf_exempt
 @login_required
 def getProfile(request, username):
     print("In getProfile")
@@ -227,7 +228,7 @@ def getProfile(request, username):
     user = User.objects.get(username=username)
     print(user.id)
     profileUser = user.id
-    #FIXME:
+    # FIXME:
     try:
         isFollowing = getFollowingFlag(request, username)
     except:
@@ -308,13 +309,13 @@ def getProfile(request, username):
 
 # The username here is the user that the logged in user wants to follow.
 # This method does both following and unfollowing.
+@login_required
 def follow(request, username):
     print("in Follw")
     isFollowing = False
     # Current user that wants to add a follower.  this is the User object.
     userLoggedin = request.user
     IDOfUserLoggedIn = userLoggedin.id
-
 
     #test = User.objects.get(id=IDOfUserLoggedIn)
 
@@ -331,11 +332,11 @@ def follow(request, username):
     # userIDTest = User.objects.get(username=userLoggedin)
     # IDTst = userIDTest.id
 
-#FIXME:
+# FIXME:
     try:
         UserLoggedIn = Follow.objects.get(followUser=IDOfUserLoggedIn)
     except:
-        #If they don't have a Folow object, need to create one.
+        # If they don't have a Folow object, need to create one.
         UserLoggedIn = Follow(followUser_id=IDOfUserLoggedIn)
         UserLoggedIn.save()
 
@@ -346,8 +347,8 @@ def follow(request, username):
     try:
         # Follow object of the logged in user. You want the id of the followUser, not the id of the Follow object itself.
         follow = Follow.objects.get(followUser_id=user_id)
-        #Some users that have not created a follower or following anyone will not have a Follow object instantiated and therefore
-        #need to create one.
+        # Some users that have not created a follower or following anyone will not have a Follow object instantiated and therefore
+        # need to create one.
         followObject = True
     except Follow.DoesNotExist:
         print("This user has no folow objects!")
@@ -373,7 +374,6 @@ def follow(request, username):
         #     test.save()
         #     isFollowing = False
 
-
         # FIXME: Needs to find the value in the list.
         # if userIDNewFollowing in following:
         if userID in following:
@@ -393,10 +393,11 @@ def follow(request, username):
             print(follow.following.all())
             isFollowing = True
 
-    #TODO: Or should I display the Following list here?
+    # TODO: Or should I display the Following list here?
     return HttpResponseRedirect(reverse("getFollowing"))
 
 
+@login_required
 def getFollowingFlag(request, username):
     print("In getFollowingFlag")
 
@@ -431,7 +432,7 @@ def getFollowingFlag(request, username):
         # returns a Qs of followers.
         followers = follow.followers.all()
 
-#FIXME: This condition is not working.
+# FIXME: This condition is not working.
 
     test = User.objects.get(username=username)
 
@@ -459,14 +460,14 @@ def getFollowingFlag(request, username):
             # add the user to to the following list.
             # follow.following.add(userIDNewFollowing)
             # isFollowing = False
-            #TODO: Is this else actually used.
+            # TODO: Is this else actually used.
             return isFollowing
     else:
         isFollowing = False
         return isFollowing
 
 
-@csrf_exempt
+# @csrf_exempt
 @login_required
 def getFollowing(request):
     print("In getFollowing")
@@ -495,7 +496,7 @@ def getFollowing(request):
         if following.count() == 0:
             noFollowersForUser = True
 
-        #FIXME: if this amounts to zero, then need to set noFollowersForUser = True
+        # FIXME: if this amounts to zero, then need to set noFollowersForUser = True
 
         qs = following.order_by().values('id')
 
@@ -520,7 +521,6 @@ def getFollowing(request):
                     emptyQueryset = newQueryset
                     # displayNothing = True
 
-
     if noFollowersForUser == True:
         return render(request, "network/following.html", {"displayNothing": displayNothing})
 
@@ -529,19 +529,14 @@ def getFollowing(request):
         if noFollowersForUser:
             return render(request, "network/following.html", {"displayNothing": displayNothing})
 
-
         else:
 
             PostsByDate = newQueryset.order_by('-createdDate')
 
             return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, })
 
-
-    if not emptyQueryset:
-        return render(request, "network/following.html", {"displayNothing": displayNothing})
-
-
-
+    # if not emptyQueryset:
+    #     return render(request, "network/following.html", {"displayNothing": displayNothing})
 
 
 @csrf_exempt
