@@ -12,19 +12,6 @@
     </ul>
     <div>
 
-        {% if isFollowing %}
-
-        <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' username %}">isfollowing = true = Unfollow</a>
-
-        <!-- This works when a user is not a follower. -->
-
-        {% endif %}
-
-        {% if isFollowing == 'False' %}
-
-        <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' username %}">isfollowing = false = Follow</a>
-
-        {% endif %}
 
 
         {% for post in postings %}
@@ -62,7 +49,10 @@
             <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' post.creator.username %}">Unfollow</a>
 
 
+            {% elif isFollowing == None %}
+
             <!-- This works when a user is not a follower. -->
+
 
             {% else %}
 

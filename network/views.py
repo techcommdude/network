@@ -228,7 +228,11 @@ def getProfile(request, username):
     print(user.id)
     profileUser = user.id
     #FIXME:
-    isFollowing = getFollowingFlag(request, username)
+    try:
+        isFollowing = getFollowingFlag(request, username)
+    except:
+        print("This user is following no one!")
+        isFollowing = False
 
     # FIXME: Need to think about clicking on links and  on the title bar.  there is a difference.
 
@@ -309,16 +313,29 @@ def follow(request, username):
     isFollowing = False
     # Current user that wants to add a follower.  this is the User object.
     userLoggedin = request.user
+    IDOfUserLoggedIn = userLoggedin.id
+
+    test = User.objects.get(id=IDOfUserLoggedIn)
+
     print(userLoggedin)
     # This is the user that the logged in user wants to follow.
 
     # Need the ID of the user you want to add to your following list.
     print(username)
+    test = username
     # user id of the user to be added to following list.
-    userID = User.objects.get(username=username)
+    userID = User.objects.get(username=test)
     userIDNewFollowing = userID.id
 
-    UserLoggedIn = Follow.objects.get(followUser=userLoggedin)
+    # userIDTest = User.objects.get(username=userLoggedin)
+    # IDTst = userIDTest.id
+
+#FIXME:
+    try:
+        UserLoggedIn = Follow.objects.get(followUser=IDOfUserLoggedIn)
+    except:
+        UserLoggedIn = Follow(followUser_id=IDOfUserLoggedIn)
+        UserLoggedIn.save()
 
     # user id and username of the logged in user.
     user_id = request.user.id
@@ -350,10 +367,6 @@ def follow(request, username):
         #     test.following.remove(userIDNewFollowing)
         #     test.save()
         #     isFollowing = False
-
-
-
-
 
 
         # FIXME: Needs to find the value in the list.
@@ -465,13 +478,19 @@ def getFollowing(request):
     try:
         currentOBJ = Follow.objects.get(followUser=user_id)
         displayNothing = False
+        noFollowersForUser = False
     except Follow.DoesNotExist:
         print("This user follows no one!")
         displayNothing = True
+        noFollowersForUser = True
 
     if displayNothing != True:
 
         following = currentOBJ.following.all()
+        if following.count() == 0:
+            noFollowersForUser = True
+
+        #FIXME: if this amounts to zero, then need to set noFollowersForUser = True
 
         qs = following.order_by().values('id')
 
@@ -494,16 +513,30 @@ def getFollowing(request):
 
                     newQueryset = emptyQueryset | listings
                     emptyQueryset = newQueryset
+                    # displayNothing = True
 
-    if not emptyQueryset:
 
+    if noFollowersForUser == True:
         return render(request, "network/following.html", {"displayNothing": displayNothing})
 
     else:
         # Sort by created date.
-        PostsByDate = newQueryset.order_by('-createdDate')
+        if noFollowersForUser:
+            return render(request, "network/following.html", {"displayNothing": displayNothing})
 
-        return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, })
+
+        else:
+
+            PostsByDate = newQueryset.order_by('-createdDate')
+
+            return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, })
+
+
+    if not emptyQueryset:
+        return render(request, "network/following.html", {"displayNothing": displayNothing})
+
+
+
 
 
 @csrf_exempt
