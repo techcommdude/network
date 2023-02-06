@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function loadAllPosts() {
   //window.location.href = "post";
   // document.querySelector("#post-view").style.display = "block";
+  //Only use this as an API.
 
   fetch(`/posts`)
     .then((response) => response.json())
@@ -215,6 +216,8 @@ function editPost(postID) {
 }
 
 //FIXME: need to get the CSRF token here to do a PUT, it will not show an error.  Rigth now I have set it to exempt in the python view.
+//This is currently what I'm using to update the text area without refreshing.
+//This sends to updatePost route in Django
 function saveEditedPost(postID, lastChar) {
   console.log("I'm in the SaveEdited Post function!");
   // console.log(postContent);
@@ -230,6 +233,7 @@ function saveEditedPost(postID, lastChar) {
   document.getElementById("editButton" + lastChar).className =
     "btn btn-sm btn-outline-primary edit0";
 
+  //Get the updated value.
   document.querySelector("#" + "readonlyContent" + lastChar).value =
     textAreaContentUpdate;
 
@@ -237,14 +241,38 @@ function saveEditedPost(postID, lastChar) {
 
   document.getElementById("savePostButton" + lastChar).className = "hidden";
 
+  // debugger;
+
+  // test = getCookie("csrftoken")
+  // getCookie("csrftoken")
+
+  test = getCookie("csrftoken");
+
   fetch(`/posts/${postID}`, {
-    method: "PUT",
+    method: "POST",
+    headers: { "Content-type": "application/json" },
     body: JSON.stringify({
       content: textAreaContentUpdate,
     }),
-  });
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      debugger;
+
+      // Get rate from data
+      console.log(data);
+      console.log("I'm here.");
+      event.preventDefault();
+    })
+
+    .catch((error) => {
+      console.log(error);
+    });
+
+
 }
 
+//This for creating a new post.  This goes to savePost view in Django.
 function savePost() {
   console.log("I'm in the savePost function!");
 
@@ -269,4 +297,10 @@ function savePost() {
 
 function likePost(postID, creatorOfPost, currentUser) {
   console.log("In Like Post function!");
+}
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
 }

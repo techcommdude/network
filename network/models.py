@@ -22,8 +22,12 @@ class Posts(models.Model):
     #This is the total number of likes, regardless of the user.
     numberLikes = models.IntegerField(blank=True, default=0)
 
+    # def __str__(self) -> str:
+    #     return f"User: {self.creator} - user likes: {self.likedUser.all()}"
+
 
 #TODO: get rid of this?
+#FIXME: This is broken right now due to the additional fields. the /posts API doesn't work right now.
     def serialize(self):
         return {
             #id of the post
@@ -32,8 +36,8 @@ class Posts(models.Model):
             "creator": getUserName(self.creator.id),
             "content": self.content,
             "createdDate": self.createdDate.strftime("%b %d %Y, %I:%M %p"),
-            "liked": self.liked,
-            "numberLikes": self.likes.count()
+            "likedUser": self.likedUser,
+            "numberLikes": self.numberLikes
         }
 
 
@@ -68,4 +72,5 @@ def getUserName(userID):
 
 def getFollowers(id):
     #Need to loop through and return all followers.
-    test = Follow.objects.filter(id=3)
+    test = Follow.objects.filter(id=id)
+    return test

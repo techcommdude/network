@@ -21,6 +21,7 @@ from django.views.decorators.csrf import csrf_exempt
 @login_required
 @csrf_exempt
 def savePost(request):
+    print("In savePost")
     # TODO: Use this to return the JSON for a particular post.
     user = request.user
     userLoggedIn = request.user.username
@@ -35,6 +36,8 @@ def savePost(request):
         return JsonResponse({"error": "POST request required."}, status=400)
 
     # Load the content of the POST request.
+    # It's not necessary to send back the entire model by serializing it if you just
+    # need one field or more.
     data = json.loads(request.body)
     postContent = data.get("content")
 
@@ -88,7 +91,6 @@ def saveDjangoNewPost(request):
     newPost.save()
     return HttpResponseRedirect(reverse("djangoAllPosts"))
 
-
 @csrf_exempt
 @login_required
 def updatePost(request, post_id):
@@ -111,36 +113,32 @@ def updatePost(request, post_id):
     # except Posts.DoesNotExist:
     #     return JsonResponse({"error": "Post not found."}, status=404)
 
-    if request.method == "PUT":
+    if request.method != "POST":
+        return JsonResponse({"error": "PUT request required."}, status=400)
+
+    if request.method == "POST":
 
         data = json.loads(request.body)
         # FIXME: This is where teh webpage changes for some reason.
         post = Posts.objects.get(pk=post_id)
         if data.get("content") is not None:
-            post.content = data["content"]
+            postContent = data["content"]
 
-            if post.content == "":
-                messages.error(
-                    request, 'You cannot submit an empty post. Please try again.')
+            if data.get("content") == "":
+
+                return JsonResponse({
+                    "error": "You have not posted any content.  Please try again."
+                }, status=400)
                 # Redirect to activeListings page.
                 # time.sleep(1.5)
-                return HttpResponseRedirect(reverse("index"))
+                # return HttpResponseRedirect(reverse("index"))
 
+            post.content = postContent
             post.save()
+            time.sleep(0.5)
 
-            time.sleep(1.0)
+            return JsonResponse({"message": "Post created successfully!", "data": data["content"]}, status=201)
 
-            post = Posts.objects.get(pk=post_id)
-
-            # FIXME: Put a delay here
-
-            time.sleep(1.0)
-
-            # return HttpResponseRedirect(reverse("djangoAllPosts"))
-
-        # FIXME: Put a delay here so that the database updates.  Why does it go to all Posts and refresh everything after this.
-    return HttpResponse(status=204)
-    # return HttpResponse("retrievePost!")
 
 
 @login_required
