@@ -12,11 +12,16 @@ class User(AbstractUser):
 class Posts(models.Model):
     # The creator of the listing who can close it.
     creator = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name="get_creator_listings", blank=False)
+        User, on_delete=models.PROTECT, related_name="get_creator", blank=False)
     content = models.TextField(max_length=600)
     createdDate = models.DateTimeField(auto_now_add=True)
-    liked = models.BooleanField(default=False)
+    # liked = models.BooleanField(default=False)
+    #If the user liked it then above is automatically True.  If they are not in this list then they haven't liked it.
+    likedUser = models.ManyToManyField(
+        User, blank=True, related_name="get_liked_users")
+    #This is the total number of likes, regardless of the user.
     numberLikes = models.IntegerField(blank=True, default=0)
+
 
 #TODO: get rid of this?
     def serialize(self):
@@ -42,6 +47,7 @@ class Follow(models.Model):
     #Users that are being followed by above user.
     following = models.ManyToManyField(
         User, blank=True, related_name="get_following_users")
+
 
     def __str__(self) -> str:
         return f"User: {self.followUser} - Followers: {self.followers.all()} Following: {self.following.all()}"
