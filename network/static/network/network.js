@@ -110,6 +110,8 @@ function editPost(postID) {
 
   //FIXME: need to send the Postcontent and the ID from the event listener.
 
+  debugger;
+
   const element = event.target;
   //Post div class name.
   buttonParentClassName = element.parentElement.className;
@@ -224,12 +226,16 @@ function saveEditedPost(postID, lastChar) {
   console.log(postID);
   console.log(lastChar);
 
+  debugger;
+
   textAreaContentUpdate = document.querySelector("#textArea" + lastChar).value;
 
   //readonly area to reenable:
   document.getElementById("readonlyContent" + lastChar).className =
     "form-control content0";
 
+    //This is hard-coded, what does it do?  perhaps  delete.
+    //FIXME:
   document.getElementById("editButton" + lastChar).className =
     "btn btn-sm btn-outline-primary edit0";
 
@@ -249,7 +255,7 @@ function saveEditedPost(postID, lastChar) {
   test = getCookie("csrftoken");
 
   fetch(`/posts/${postID}`, {
-    method: "POST",
+    method: "PUT",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({
       content: textAreaContentUpdate,
@@ -257,17 +263,35 @@ function saveEditedPost(postID, lastChar) {
   })
     .then((response) => response.json())
     .then((data) => {
-      debugger;
 
-      // Get rate from data
       console.log(data);
       console.log("I'm here.");
-      event.preventDefault();
+
     })
 
-    .catch((error) => {
+     .catch((error) => {
       console.log(error);
     });
+
+    debugger;
+    //FIXME: Do I need to add an event listener for the edit post button again.
+    document.getElementById("editButton" + lastChar).className =
+    "btn btn-sm btn-outline-primary edit0";
+
+    // document.querySelector("[id^='editButton0']").addEventListener("click", (event) => {
+    //   event.preventDefault();
+    //   debugger;
+    //   editPost(postID);
+    // });
+
+    debugger;
+
+    //FIXME: Need to put this back the way it was.
+
+    const editForm = "editForm" + lastChar;
+  //This unhides the form for editing the post and the save button.
+    document.getElementById(editForm).className = "hidden";
+
 
 
 }

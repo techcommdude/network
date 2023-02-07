@@ -113,10 +113,10 @@ def updatePost(request, post_id):
     # except Posts.DoesNotExist:
     #     return JsonResponse({"error": "Post not found."}, status=404)
 
-    if request.method != "POST":
+    if request.method != "PUT":
         return JsonResponse({"error": "PUT request required."}, status=400)
 
-    if request.method == "POST":
+    if request.method == "PUT":
 
         data = json.loads(request.body)
         # FIXME: This is where teh webpage changes for some reason.
@@ -135,9 +135,10 @@ def updatePost(request, post_id):
 
             post.content = postContent
             post.save()
-            time.sleep(0.5)
+            # time.sleep(0.5)
 
-            return JsonResponse({"message": "Post created successfully!", "data": data["content"]}, status=201)
+            # return JsonResponse({"message": "Post created successfully!", "data": data["content"]}, safe=False)
+            return JsonResponse({"data": data["content"]}, safe=False)
 
 
 
