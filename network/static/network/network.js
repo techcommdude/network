@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+  // const controller = new AbortController()
+  // const signal = controller.signal
   // document
   //   .querySelector("#djangoAllPosts")
   //   .addEventListener("click", () => loadAllPosts());
@@ -262,9 +265,8 @@ function saveEditedPost(postID, lastChar, originalText) {
       console.log(data);
       console.log("I'm here.");
 
-      debugger;
-
       test2 = data.responseCode;
+      debugger;
 
       if (test2 === "400") {
           console.log("400code");
@@ -317,11 +319,19 @@ function saveEditedPost(postID, lastChar, originalText) {
 
       document.getElementById("savePostButton" + lastChar).className =
         savePostbutton;
+
+      return false;
+      event.preventDefault();
     })
 
-    .catch((error) => {
-      console.log(error);
-    });
+    // .catch((error) => {
+    //   console.log(error);
+    // });
+
+    return false;
+
+    // return false;
+    // event.preventDefault()
 
   //FIXME: Do I need to add an event listener for the edit post button again.
   // document.getElementById("editButton" + lastChar).className =
@@ -391,4 +401,10 @@ function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
+function abortFetching() {
+  console.log('Now aborting');
+  // Abort.
+  controller.abort()
 }

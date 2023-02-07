@@ -128,7 +128,7 @@ def updatePost(request, post_id):
 
                 return JsonResponse({
                     "error": "You have not posted any content.  Please try again.", "responseCode": "400"
-                }, status=400)
+                })
 
             post.content = postContent
             post.save()
