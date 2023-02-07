@@ -183,7 +183,7 @@ function editPost(postID) {
 
   document
     .querySelector(savePostbutton)
-    .addEventListener("click", () => saveEditedPost(postID, lastChar));
+    .addEventListener("click", () => saveEditedPost(postID, lastChar, originalText));
 
   //FIXME: Need to add the original content back to the editable text area.
 
@@ -218,7 +218,7 @@ function editPost(postID) {
 //FIXME: need to get the CSRF token here to do a PUT, it will not show an error.  Rigth now I have set it to exempt in the python view.
 //This is currently what I'm using to update the text area without refreshing.
 //This sends to updatePost route in Django
-function saveEditedPost(postID, lastChar) {
+function saveEditedPost(postID, lastChar, originalText) {
   console.log("I'm in the SaveEdited Post function!");
   // console.log(postContent);
   console.log(postID);
@@ -226,14 +226,16 @@ function saveEditedPost(postID, lastChar) {
 
   textAreaContentUpdate = document.querySelector("#textArea" + lastChar).value;
 
+
+  const formControl = "form-control content" + lastChar;
   //readonly area to reenable:
-  document.getElementById("readonlyContent" + lastChar).className =
-    "form-control content0";
+  document.getElementById("readonlyContent" + lastChar).className = formControl;
 
   //This is hard-coded, what does it do?  perhaps  delete.
   //FIXME:
-  document.getElementById("editButton" + lastChar).className =
-    "btn btn-sm btn-outline-primary edit0";
+
+  const editButton = "btn btn-sm btn-outline-primary edit" + lastChar;
+  document.getElementById("editButton" + lastChar).className = editButton;
 
   //Get the updated value.
   document.querySelector("#" + "readonlyContent" + lastChar).value =
@@ -269,6 +271,12 @@ function saveEditedPost(postID, lastChar) {
           //the user didn't enter any text.  If the user gets this error.  the readonly area will
           //have to be re-populated with the text that was submitted.  Pop an alert here.
           alert("Empty posts are not permitted.  Please try again.");
+          //Need to add this back to teh form.
+          console.log(originalText);
+
+           const readOnlyContent = "#" + "readonlyContent" + lastChar;
+  //Get the value of the text area before it is hidden.
+          document.querySelector(readOnlyContent).value = originalText;
 
       }
 

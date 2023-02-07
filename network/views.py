@@ -79,7 +79,7 @@ def saveDjangoNewPost(request):
         # return HttpResponse("Nothing in your Post!")
 
         messages.error(
-            request, 'You cannot submit an empty message. Please try again.')
+            request, 'You cannot submit an empty post. Please try again.')
         # Redirect to activeListings page.
         return HttpResponseRedirect(reverse("index"))
 
