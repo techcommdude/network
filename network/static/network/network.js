@@ -262,12 +262,13 @@ function saveEditedPost(postID, lastChar) {
 
       debugger;
 
-      test = data.error;
       test2 = data.responseCode;
 
       if (test2 === "400") {
           console.log("400code");
-          //the user didn't enter any text.
+          //the user didn't enter any text.  If the user gets this error.  the readonly area will
+          //have to be re-populated with the text that was submitted.  Pop an alert here.
+          alert("Empty posts are not permitted.  Please try again.");
 
       }
 
