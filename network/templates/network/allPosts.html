@@ -36,8 +36,7 @@
             {% if post.creator.username == user.username %}
 
             <button class="btn btn-sm btn-outline-primary edit{{forloop.counter0}}" id="editButton{{forloop.counter0}}"
-                onclick="editPost('{{post.id}}')">Edit
-                post</button>
+                onclick="editPost('{{post.id}}')">Edit post</button>
 
             {% endif %}
 

@@ -110,7 +110,6 @@ function editPost(postID) {
 
   //FIXME: need to send the Postcontent and the ID from the event listener.
 
-  debugger;
 
   const element = event.target;
   //Post div class name.
@@ -226,8 +225,6 @@ function saveEditedPost(postID, lastChar) {
   console.log(postID);
   console.log(lastChar);
 
-  debugger;
-
   textAreaContentUpdate = document.querySelector("#textArea" + lastChar).value;
 
   //readonly area to reenable:
@@ -247,7 +244,6 @@ function saveEditedPost(postID, lastChar) {
 
   document.getElementById("savePostButton" + lastChar).className = "hidden";
 
-  // debugger;
 
   // test = getCookie("csrftoken")
   // getCookie("csrftoken")
@@ -267,16 +263,47 @@ function saveEditedPost(postID, lastChar) {
       console.log(data);
       console.log("I'm here.");
 
+      // const readonly = "readonlyContent" + lastChar;
+
+      // newClassName = "form-control content" + lastChar;
+
+      // document.getElementById(readonly).className = newClassName;
+
+      //reinstate the button
+      // const editButton = "editButton" + lastChar;
+      // clssName = "btn btn-sm btn-outline-primary edit" + lastChar;
+      // document.getElementById(editButton).className = clssName;
+
+
+      const editForm = "editForm" + lastChar;
+  // Need to set the savePost form text area and button class to hidden
+  // again, so that it  can be reset.
+      document.getElementById(editForm).className = "hidden";
+
+
+           //Set the original value in the text area.
+      const TextArea = "textArea" + lastChar;
+      document.getElementById(TextArea).value = textAreaContentUpdate;
+
+      document.getElementById("textArea" + lastChar).className = "form-control editTextArea";
+
+      const savePostbutton = "btn btn-sm btn-outline-primary SavePostButton" + lastChar;
+
+      document.getElementById("savePostButton" + lastChar).className = savePostbutton;
+
+
+
+
+
     })
 
      .catch((error) => {
       console.log(error);
     });
 
-    debugger;
     //FIXME: Do I need to add an event listener for the edit post button again.
-    document.getElementById("editButton" + lastChar).className =
-    "btn btn-sm btn-outline-primary edit0";
+    // document.getElementById("editButton" + lastChar).className =
+    // "btn btn-sm btn-outline-primary edit0";
 
     // document.querySelector("[id^='editButton0']").addEventListener("click", (event) => {
     //   event.preventDefault();
@@ -284,13 +311,37 @@ function saveEditedPost(postID, lastChar) {
     //   editPost(postID);
     // });
 
-    debugger;
-
     //FIXME: Need to put this back the way it was.
 
-    const editForm = "editForm" + lastChar;
-  //This unhides the form for editing the post and the save button.
-    document.getElementById(editForm).className = "hidden";
+    // const editForm = "editForm" + lastChar;
+  //Need to set the savePost form text area and button class to hidden
+  // again, so that it  can be reset.
+    // document.getElementById(editForm).className = "hidden";
+
+     //Set the original value in the text area.
+    // const TextArea = "textArea" + lastChar;
+    // document.getElementById(TextArea).value = originalText;
+
+    // document.getElementById("textArea" + lastChar).className = "form-control editTextArea";
+
+    // const savePostbutton = "savePostButton" + lastChar;
+
+    // const readonly = "readonlyContent" + lastChar;
+
+    // newClassName = "form-control content" + lastChar;
+
+    // document.getElementById(readonly).className = newClassName;
+
+    // //reinstate the button
+    // const editButton = "editButton" + lastChar;
+    // clssName = "btn btn-sm btn-outline-primary edit" + lastChar;
+    // document.getElementById(editButton).className = clssName;
+
+
+
+
+
+
 
 
 
