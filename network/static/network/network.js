@@ -260,7 +260,25 @@ function saveEditedPost(postID, lastChar) {
       console.log(data);
       console.log("I'm here.");
 
-      console.log(response.status);
+      debugger;
+
+      test = data.error;
+      test2 = data.responseCode;
+
+      if (test2 === "400") {
+          console.log("400code");
+          //the user didn't enter any text.
+
+      }
+
+
+
+
+
+
+      // if(!response.ok) {
+      //   return response.text().then(text => { throw new Error(text) })
+      //  }
 
       // const readonly = "readonlyContent" + lastChar;
 
