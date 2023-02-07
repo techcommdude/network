@@ -110,7 +110,6 @@ function editPost(postID) {
 
   //FIXME: need to send the Postcontent and the ID from the event listener.
 
-
   const element = event.target;
   //Post div class name.
   buttonParentClassName = element.parentElement.className;
@@ -231,8 +230,8 @@ function saveEditedPost(postID, lastChar) {
   document.getElementById("readonlyContent" + lastChar).className =
     "form-control content0";
 
-    //This is hard-coded, what does it do?  perhaps  delete.
-    //FIXME:
+  //This is hard-coded, what does it do?  perhaps  delete.
+  //FIXME:
   document.getElementById("editButton" + lastChar).className =
     "btn btn-sm btn-outline-primary edit0";
 
@@ -243,7 +242,6 @@ function saveEditedPost(postID, lastChar) {
   document.getElementById("textArea" + lastChar).className = "hidden";
 
   document.getElementById("savePostButton" + lastChar).className = "hidden";
-
 
   // test = getCookie("csrftoken")
   // getCookie("csrftoken")
@@ -259,9 +257,10 @@ function saveEditedPost(postID, lastChar) {
   })
     .then((response) => response.json())
     .then((data) => {
-
       console.log(data);
       console.log("I'm here.");
+
+      console.log(response.status);
 
       // const readonly = "readonlyContent" + lastChar;
 
@@ -274,77 +273,64 @@ function saveEditedPost(postID, lastChar) {
       // clssName = "btn btn-sm btn-outline-primary edit" + lastChar;
       // document.getElementById(editButton).className = clssName;
 
-
       const editForm = "editForm" + lastChar;
-  // Need to set the savePost form text area and button class to hidden
-  // again, so that it  can be reset.
+      // Need to set the savePost form text area and button class to hidden
+      // again, so that it  can be reset.
       document.getElementById(editForm).className = "hidden";
 
-
-           //Set the original value in the text area.
+      //Set the original value in the text area.
       const TextArea = "textArea" + lastChar;
       document.getElementById(TextArea).value = textAreaContentUpdate;
 
-      document.getElementById("textArea" + lastChar).className = "form-control editTextArea";
+      document.getElementById("textArea" + lastChar).className =
+        "form-control editTextArea";
 
-      const savePostbutton = "btn btn-sm btn-outline-primary SavePostButton" + lastChar;
+      const savePostbutton =
+        "btn btn-sm btn-outline-primary SavePostButton" + lastChar;
 
-      document.getElementById("savePostButton" + lastChar).className = savePostbutton;
-
-
-
-
-
+      document.getElementById("savePostButton" + lastChar).className =
+        savePostbutton;
     })
 
-     .catch((error) => {
+    .catch((error) => {
       console.log(error);
     });
 
-    //FIXME: Do I need to add an event listener for the edit post button again.
-    // document.getElementById("editButton" + lastChar).className =
-    // "btn btn-sm btn-outline-primary edit0";
+  //FIXME: Do I need to add an event listener for the edit post button again.
+  // document.getElementById("editButton" + lastChar).className =
+  // "btn btn-sm btn-outline-primary edit0";
 
-    // document.querySelector("[id^='editButton0']").addEventListener("click", (event) => {
-    //   event.preventDefault();
-    //   debugger;
-    //   editPost(postID);
-    // });
+  // document.querySelector("[id^='editButton0']").addEventListener("click", (event) => {
+  //   event.preventDefault();
+  //   debugger;
+  //   editPost(postID);
+  // });
 
-    //FIXME: Need to put this back the way it was.
+  //FIXME: Need to put this back the way it was.
 
-    // const editForm = "editForm" + lastChar;
+  // const editForm = "editForm" + lastChar;
   //Need to set the savePost form text area and button class to hidden
   // again, so that it  can be reset.
-    // document.getElementById(editForm).className = "hidden";
+  // document.getElementById(editForm).className = "hidden";
 
-     //Set the original value in the text area.
-    // const TextArea = "textArea" + lastChar;
-    // document.getElementById(TextArea).value = originalText;
+  //Set the original value in the text area.
+  // const TextArea = "textArea" + lastChar;
+  // document.getElementById(TextArea).value = originalText;
 
-    // document.getElementById("textArea" + lastChar).className = "form-control editTextArea";
+  // document.getElementById("textArea" + lastChar).className = "form-control editTextArea";
 
-    // const savePostbutton = "savePostButton" + lastChar;
+  // const savePostbutton = "savePostButton" + lastChar;
 
-    // const readonly = "readonlyContent" + lastChar;
+  // const readonly = "readonlyContent" + lastChar;
 
-    // newClassName = "form-control content" + lastChar;
+  // newClassName = "form-control content" + lastChar;
 
-    // document.getElementById(readonly).className = newClassName;
+  // document.getElementById(readonly).className = newClassName;
 
-    // //reinstate the button
-    // const editButton = "editButton" + lastChar;
-    // clssName = "btn btn-sm btn-outline-primary edit" + lastChar;
-    // document.getElementById(editButton).className = clssName;
-
-
-
-
-
-
-
-
-
+  // //reinstate the button
+  // const editButton = "editButton" + lastChar;
+  // clssName = "btn btn-sm btn-outline-primary edit" + lastChar;
+  // document.getElementById(editButton).className = clssName;
 }
 
 //This for creating a new post.  This goes to savePost view in Django.

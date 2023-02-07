@@ -129,9 +129,6 @@ def updatePost(request, post_id):
                 return JsonResponse({
                     "error": "You have not posted any content.  Please try again."
                 }, status=400)
-                # Redirect to activeListings page.
-                # time.sleep(1.5)
-                # return HttpResponseRedirect(reverse("index"))
 
             post.content = postContent
             post.save()
