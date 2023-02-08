@@ -51,11 +51,16 @@
             </form>
 
             <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
+
             <p class="numberLikes{{forloop.counter0}}">Likes for this post: {{post.numberLikes}}</p>
+
+            {% if post.creator.username != user.username %}
 
             <button class="btn btn-sm btn-outline-primary likeButton{{forloop.counter0}}"
                 id="likeButton{{forloop.counter0}}"
                 onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')">Like!</button>
+
+            {% endif %}
 
         </div>
 
