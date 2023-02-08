@@ -17,6 +17,7 @@ class Posts(models.Model):
     createdDate = models.DateTimeField(auto_now_add=True)
     # liked = models.BooleanField(default=False)
     #If the user liked it then above is automatically True.  If they are not in this list then they haven't liked it.
+    # If the user is already in this list, then display the thumbs down.
     likedUser = models.ManyToManyField(
         User, blank=True, related_name="get_liked_users")
     #This is the total number of likes, regardless of the user.

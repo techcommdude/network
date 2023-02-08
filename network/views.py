@@ -55,6 +55,11 @@ def savePost(request):
 
     return JsonResponse({"message": "Post created successfully!"}, status=201)
 
+@csrf_exempt
+@login_required
+def likePost(request, postID, creatorOfPost, currentUser):
+    pass
+
 
 @login_required
 def saveDjangoNewPost(request):
@@ -146,7 +151,7 @@ def getAllPosts(request):
 
     userName = User.objects.get(id=1)
     test = userName.username
-# this is a queryset of Posts objects only
+    # this is a queryset of Posts objects only
     posts = Posts.objects.all().order_by('-createdDate')
 
     # for post in posts:

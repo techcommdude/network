@@ -400,8 +400,12 @@ function savePost() {
   // }, "100");
 }
 
+//likely only need postID and currentUser here because Like button is filtered out if the creator of post and current user are the
+//same.
 function likePost(postID, creatorOfPost, currentUser) {
   console.log("In Like Post function!");
+  console.log(postID);
+  console.log(currentUser);
 }
 
 function getCookie(name) {
