@@ -408,10 +408,13 @@ function disableNewPostButton() {
   }
 }
 
-function disableEditPostButton() {
-  if (document.getElementById("").value === "") {
-    document.getElementById("").disabled = true;
+function disableEditPostButton(counter) {
+
+  const textAreaID = "textArea" + counter;
+  const buttonID = "savePostButton" + counter;
+  if (document.getElementById(textAreaID).value === "") {
+    document.getElementById(buttonID).disabled = true;
   } else {
-    document.getElementById("").disabled = false;
+    document.getElementById(buttonID).disabled = false;
   }
 }
