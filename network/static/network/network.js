@@ -18,7 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
   //   editPost(post.content, post.id);
   // });
 
-  disableNewPostButton();
+  let element = document.querySelector('#post-body')
+
+  if (element != null) {
+      // Do something with the element
+      disableNewPostButton();
+  }
 
 });
 

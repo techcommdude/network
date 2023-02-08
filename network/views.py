@@ -124,12 +124,6 @@ def updatePost(request, post_id):
         if data.get("content") is not None:
             postContent = data["content"]
 
-            if data.get("content") == "":
-
-                return JsonResponse({
-                    "error": "You have not posted any content.  Please try again.", "responseCode": "400"
-                })
-
             post.content = postContent
             post.save()
             # time.sleep(0.5)
