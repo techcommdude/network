@@ -94,7 +94,7 @@ def saveDjangoNewPost(request):
     return HttpResponseRedirect(reverse("djangoAllPosts"))
 
 
-@csrf_exempt
+# @csrf_exempt
 @login_required
 def updatePost(request, post_id):
 

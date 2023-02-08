@@ -259,11 +259,12 @@ function saveEditedPost(postID, lastChar, originalText) {
   // test = getCookie("csrftoken")
   // getCookie("csrftoken")
 
-  test = getCookie("csrftoken");
+  //Get the cookie so the application is secure.
+  csrfCookie = getCookie("csrftoken");
 
   fetch(`/posts/${postID}`, {
     method: "PUT",
-    headers: { "Content-type": "application/json" },
+    headers: { "Content-type": "application/json", "X-CSRFToken": csrfCookie },
     body: JSON.stringify({
       content: textAreaContentUpdate,
     }),
@@ -275,6 +276,7 @@ function saveEditedPost(postID, lastChar, originalText) {
 
       test2 = data.responseCode;
 
+      //This is no longer necessary since I validate the front end for empty posts.
       if (test2 === "400") {
         console.log("400code");
         //the user didn't enter any text.  If the user gets this error.  the readonly area will
@@ -322,7 +324,7 @@ function saveEditedPost(postID, lastChar, originalText) {
         savePostbutton;
 
       return false;
-      event.preventDefault();
+      // event.preventDefault();
     });
 
   // .catch((error) => {
