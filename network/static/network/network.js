@@ -19,13 +19,12 @@ document.addEventListener("DOMContentLoaded", function () {
   // });
 
   //Only disable the new post button if it exists.  This will throw an error otherwise.
-  let element = document.querySelector('#post-body')
+  let element = document.querySelector("#post-body");
 
   if (element != null) {
-      // Do something with the element
-      disableNewPostButton();
+    // Do something with the element
+    disableNewPostButton();
   }
-
 });
 
 function loadAllPosts() {
@@ -406,7 +405,6 @@ function getCookie(name) {
 }
 
 function disableNewPostButton() {
-
   if (document.getElementById("post-body").value === "") {
     document.getElementById("post-button").disabled = true;
   } else {
@@ -415,7 +413,6 @@ function disableNewPostButton() {
 }
 
 function disableEditPostButton(counter) {
-
   const textAreaID = "textArea" + counter;
   const buttonID = "savePostButton" + counter;
   if (document.getElementById(textAreaID).value === "") {

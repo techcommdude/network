@@ -12,8 +12,6 @@
     </ul>
     <div>
 
-
-
         {% for post in postings %}
 
         <div class="post{{forloop.counter0}}">
@@ -32,9 +30,9 @@
 
             <form action="" method="POST" class="hidden" id=editForm{{forloop.counter0}}>
                 {% csrf_token %}
-                <textarea name="" id="textArea{{forloop.counter0}}" class="form-control editTextArea"
-                    rows=5 onkeyup="disableEditPostButton('{{forloop.counter0}}')"></textarea><input type="button" value="Save post"
-                    class="btn btn-sm btn-outline-primary SavePostButton{{forloop.counter0}}"
+                <textarea name="" id="textArea{{forloop.counter0}}" class="form-control editTextArea" rows=5
+                    onkeyup="disableEditPostButton('{{forloop.counter0}}')"></textarea><input type="button"
+                    value="Save post" class="btn btn-sm btn-outline-primary SavePostButton{{forloop.counter0}}"
                     id="savePostButton{{forloop.counter0}}">
             </form>
 
@@ -59,7 +57,6 @@
             <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' post.creator.username %}">Follow</a>
 
             {% endif %}
-
 
 
         </div>

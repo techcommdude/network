@@ -73,7 +73,7 @@ def saveDjangoNewPost(request):
 
         postContent = request.POST.get("postContent")
 
-    # //Need to issue an error message here.
+    # //This is validated on the front end, so no longer necessary.  Should never happen.
     if request.POST.get("postContent") == "":
         # FIXME: Return an error message at this point.
         # return HttpResponse("Nothing in your Post!")
@@ -89,7 +89,10 @@ def saveDjangoNewPost(request):
     )
 
     newPost.save()
+    messages.info(
+            request, 'Your post has been submitted.' )
     return HttpResponseRedirect(reverse("djangoAllPosts"))
+
 
 @csrf_exempt
 @login_required
@@ -130,7 +133,6 @@ def updatePost(request, post_id):
 
             # return JsonResponse({"message": "Post created successfully!", "data": data["content"]}, safe=False)
             return JsonResponse({"data": data["content"]}, safe=False)
-
 
 
 @login_required
