@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
   // const controller = new AbortController()
   // const signal = controller.signal
   // document
@@ -18,6 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
   //   event.preventDefault();
   //   editPost(post.content, post.id);
   // });
+
+  disableNewPostButton();
+
 });
 
 function loadAllPosts() {
@@ -186,7 +188,9 @@ function editPost(postID) {
 
   document
     .querySelector(savePostbutton)
-    .addEventListener("click", () => saveEditedPost(postID, lastChar, originalText));
+    .addEventListener("click", () =>
+      saveEditedPost(postID, lastChar, originalText)
+    );
 
   //FIXME: Need to add the original content back to the editable text area.
 
@@ -229,7 +233,6 @@ function saveEditedPost(postID, lastChar, originalText) {
 
   textAreaContentUpdate = document.querySelector("#textArea" + lastChar).value;
 
-
   const formControl = "form-control content" + lastChar;
   //readonly area to reenable:
   document.getElementById("readonlyContent" + lastChar).className = formControl;
@@ -266,26 +269,19 @@ function saveEditedPost(postID, lastChar, originalText) {
       console.log("I'm here.");
 
       test2 = data.responseCode;
-      debugger;
 
       if (test2 === "400") {
-          console.log("400code");
-          //the user didn't enter any text.  If the user gets this error.  the readonly area will
-          //have to be re-populated with the text that was submitted.  Pop an alert here.
-          alert("Empty posts are not permitted.  Please try again.");
-          //Need to add this back to teh form.
-          console.log(originalText);
+        console.log("400code");
+        //the user didn't enter any text.  If the user gets this error.  the readonly area will
+        //have to be re-populated with the text that was submitted.  Pop an alert here.
+        alert("Empty posts are not permitted.  Please try again.");
+        //Need to add this back to teh form.
+        console.log(originalText);
 
-           const readOnlyContent = "#" + "readonlyContent" + lastChar;
-  //Get the value of the text area before it is hidden.
-          document.querySelector(readOnlyContent).value = originalText;
-
+        const readOnlyContent = "#" + "readonlyContent" + lastChar;
+        //Get the value of the text area before it is hidden.
+        document.querySelector(readOnlyContent).value = originalText;
       }
-
-
-
-
-
 
       // if(!response.ok) {
       //   return response.text().then(text => { throw new Error(text) })
@@ -322,16 +318,16 @@ function saveEditedPost(postID, lastChar, originalText) {
 
       return false;
       event.preventDefault();
-    })
+    });
 
-    // .catch((error) => {
-    //   console.log(error);
-    // });
+  // .catch((error) => {
+  //   console.log(error);
+  // });
 
-    return false;
+  return false;
 
-    // return false;
-    // event.preventDefault()
+  // return false;
+  // event.preventDefault()
 
   //FIXME: Do I need to add an event listener for the edit post button again.
   // document.getElementById("editButton" + lastChar).className =
@@ -403,8 +399,19 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-function abortFetching() {
-  console.log('Now aborting');
-  // Abort.
-  controller.abort()
+function disableNewPostButton() {
+
+  if (document.getElementById("post-body").value === "") {
+    document.getElementById("post-button").disabled = true;
+  } else {
+    document.getElementById("post-button").disabled = false;
+  }
+}
+
+function disableEditPostButton() {
+  if (document.getElementById("").value === "") {
+    document.getElementById("").disabled = true;
+  } else {
+    document.getElementById("").disabled = false;
+  }
 }

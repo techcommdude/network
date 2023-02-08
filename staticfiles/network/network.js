@@ -1,34 +1,29 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+  // const controller = new AbortController()
+  // const signal = controller.signal
   // document
   //   .querySelector("#djangoAllPosts")
   //   .addEventListener("click", () => loadAllPosts());
-
   // document
   //   .querySelector(".navbar-brand")
   //   .addEventListener("click", () => loadAllPosts());
-
   //TODO: Event listener for the Post button.  Update to go to function.
   //FIXME: Enable this again when you want to product JSON for a new Post.
   // document.querySelector("#post-button").addEventListener("click", (event) => {
   //   event.preventDefault();
   //   savePost();
   // });
-
-
   // document.querySelector("[id^='editButton']").addEventListener("click", (event) => {
   //   event.preventDefault();
   //   editPost(post.content, post.id);
   // });
-
-
-
-
-
 });
 
 function loadAllPosts() {
   //window.location.href = "post";
   // document.querySelector("#post-view").style.display = "block";
+  //Only use this as an API.
 
   fetch(`/posts`)
     .then((response) => response.json())
@@ -116,8 +111,6 @@ function loadAllPosts() {
 function editPost(postID) {
   // This is the edit button that was clicked on.
 
-
-
   //FIXME: need to send the Postcontent and the ID from the event listener.
 
   const element = event.target;
@@ -156,33 +149,24 @@ function editPost(postID) {
 
   //const editFormClassName = "editForm";
 
-
   const editForm = "editForm" + lastChar;
   //This unhides the form for editing the post and the save button.
   document.getElementById(editForm).className = "editForm";
 
   // FIXME: need to set the value of the
 
-
   const readOnlyContent = "#" + "readonlyContent" + lastChar;
   //Get the value of the text area before it is hidden.
-  const originalText = document.querySelector(readOnlyContent).value
+  const originalText = document.querySelector(readOnlyContent).value;
 
-
-    //Set the original value in the text area.
+  //Set the original value in the text area.
   const TextArea = "textArea" + lastChar;
   document.getElementById(TextArea).value = originalText;
-
-
-
-
-
-
 
   //hide the read only text area and edit post button
   //hide the text  area.
 
-  const readonly = "readonlyContent" + lastChar
+  const readonly = "readonlyContent" + lastChar;
 
   document.getElementById(readonly).className = "hidden";
 
@@ -202,12 +186,9 @@ function editPost(postID) {
 
   document
     .querySelector(savePostbutton)
-    .addEventListener("click", () => saveEditedPost(postID, lastChar));
-
+    .addEventListener("click", () => saveEditedPost(postID, lastChar, originalText));
 
   //FIXME: Need to add the original content back to the editable text area.
-
-
 
   //Change the button.
   // postdiv[0].parentNode.replaceChild(newItem, postdiv[0]);
@@ -238,9 +219,9 @@ function editPost(postID) {
 }
 
 //FIXME: need to get the CSRF token here to do a PUT, it will not show an error.  Rigth now I have set it to exempt in the python view.
-function saveEditedPost(postID, lastChar) {
-
-
+//This is currently what I'm using to update the text area without refreshing.
+//This sends to updatePost route in Django
+function saveEditedPost(postID, lastChar, originalText) {
   console.log("I'm in the SaveEdited Post function!");
   // console.log(postContent);
   console.log(postID);
@@ -248,27 +229,147 @@ function saveEditedPost(postID, lastChar) {
 
   textAreaContentUpdate = document.querySelector("#textArea" + lastChar).value;
 
+
+  const formControl = "form-control content" + lastChar;
   //readonly area to reenable:
-  document.getElementById("readonlyContent" + lastChar).className = "form-control content0";
+  document.getElementById("readonlyContent" + lastChar).className = formControl;
 
-  document.getElementById("editButton" + lastChar).className = "btn btn-sm btn-outline-primary edit0";
+  //This is hard-coded, what does it do?  perhaps  delete.
+  //FIXME:
 
-  document.querySelector("#" + "readonlyContent" + lastChar).value = textAreaContentUpdate;
+  const editButton = "btn btn-sm btn-outline-primary edit" + lastChar;
+  document.getElementById("editButton" + lastChar).className = editButton;
+
+  //Get the updated value.
+  document.querySelector("#" + "readonlyContent" + lastChar).value =
+    textAreaContentUpdate;
 
   document.getElementById("textArea" + lastChar).className = "hidden";
 
   document.getElementById("savePostButton" + lastChar).className = "hidden";
 
+  // test = getCookie("csrftoken")
+  // getCookie("csrftoken")
+
+  test = getCookie("csrftoken");
 
   fetch(`/posts/${postID}`, {
     method: "PUT",
+    headers: { "Content-type": "application/json" },
     body: JSON.stringify({
       content: textAreaContentUpdate,
     }),
-  });
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      console.log("I'm here.");
 
+      test2 = data.responseCode;
+
+      if (test2 === "400") {
+          console.log("400code");
+          //the user didn't enter any text.  If the user gets this error.  the readonly area will
+          //have to be re-populated with the text that was submitted.  Pop an alert here.
+          alert("Empty posts are not permitted.  Please try again.");
+          //Need to add this back to teh form.
+          console.log(originalText);
+
+           const readOnlyContent = "#" + "readonlyContent" + lastChar;
+  //Get the value of the text area before it is hidden.
+          document.querySelector(readOnlyContent).value = originalText;
+
+      }
+
+
+
+
+
+
+      // if(!response.ok) {
+      //   return response.text().then(text => { throw new Error(text) })
+      //  }
+
+      // const readonly = "readonlyContent" + lastChar;
+
+      // newClassName = "form-control content" + lastChar;
+
+      // document.getElementById(readonly).className = newClassName;
+
+      //reinstate the button
+      // const editButton = "editButton" + lastChar;
+      // clssName = "btn btn-sm btn-outline-primary edit" + lastChar;
+      // document.getElementById(editButton).className = clssName;
+
+      const editForm = "editForm" + lastChar;
+      // Need to set the savePost form text area and button class to hidden
+      // again, so that it  can be reset.
+      document.getElementById(editForm).className = "hidden";
+
+      //Set the original value in the text area.
+      const TextArea = "textArea" + lastChar;
+      document.getElementById(TextArea).value = textAreaContentUpdate;
+
+      document.getElementById("textArea" + lastChar).className =
+        "form-control editTextArea";
+
+      const savePostbutton =
+        "btn btn-sm btn-outline-primary SavePostButton" + lastChar;
+
+      document.getElementById("savePostButton" + lastChar).className =
+        savePostbutton;
+
+      return false;
+      event.preventDefault();
+    })
+
+    // .catch((error) => {
+    //   console.log(error);
+    // });
+
+    return false;
+
+    // return false;
+    // event.preventDefault()
+
+  //FIXME: Do I need to add an event listener for the edit post button again.
+  // document.getElementById("editButton" + lastChar).className =
+  // "btn btn-sm btn-outline-primary edit0";
+
+  // document.querySelector("[id^='editButton0']").addEventListener("click", (event) => {
+  //   event.preventDefault();
+  //   debugger;
+  //   editPost(postID);
+  // });
+
+  //FIXME: Need to put this back the way it was.
+
+  // const editForm = "editForm" + lastChar;
+  //Need to set the savePost form text area and button class to hidden
+  // again, so that it  can be reset.
+  // document.getElementById(editForm).className = "hidden";
+
+  //Set the original value in the text area.
+  // const TextArea = "textArea" + lastChar;
+  // document.getElementById(TextArea).value = originalText;
+
+  // document.getElementById("textArea" + lastChar).className = "form-control editTextArea";
+
+  // const savePostbutton = "savePostButton" + lastChar;
+
+  // const readonly = "readonlyContent" + lastChar;
+
+  // newClassName = "form-control content" + lastChar;
+
+  // document.getElementById(readonly).className = newClassName;
+
+  // //reinstate the button
+  // const editButton = "editButton" + lastChar;
+  // clssName = "btn btn-sm btn-outline-primary edit" + lastChar;
+  // document.getElementById(editButton).className = clssName;
 }
 
+//This for creating a new post.  This goes to savePost view in Django.
 function savePost() {
   console.log("I'm in the savePost function!");
 
@@ -284,11 +385,25 @@ function savePost() {
       console.log(result);
     });
 
-
-
   //timeout so that database is updated.
   // setTimeout(() => {
   //   loadAllPosts();
   //   console.log("Delayed for 100 milliseconds.");
   // }, "100");
+}
+
+function likePost(postID, creatorOfPost, currentUser) {
+  console.log("In Like Post function!");
+}
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
+function abortFetching() {
+  console.log('Now aborting');
+  // Abort.
+  controller.abort()
 }

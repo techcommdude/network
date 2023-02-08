@@ -2,12 +2,31 @@
 body {
     margin: 1.1em;
 }
+
+a {
+    text-decoration: none;
+}
 #posty {
 
     margin: 1.0em;
     border-style: solid;
     border-width: thin;
     border-color: lightgray;
+}
+
+.form-control {
+
+    margin: 0.3em;
+}
+
+p {
+
+    margin-bottom: 0.4rem;
+}
+
+.creator {
+
+    margin: 0.4em;
 }
 
 /* This is for each post */
@@ -21,9 +40,11 @@ body {
 
 [id*="readonlyContent"] {
 
-
+    margin-bottom: 0.5em;
     background-color: whitesmoke
 }
+
+
 
 #post-form {
 
