@@ -70,6 +70,7 @@
             <!-- The user already likes it.  Display the appropriate icon. -->
 
             <p>Thumbs up!</p>
+            <i class="fa fa-thumbs-up" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
             <p>{{post.id}}</p>
 
             {% elif post.id not in likeList and post.creator.username != user.username %}
@@ -77,12 +78,13 @@
             <!-- The user DOES NOT currently like it.  Display the appropriate icon. -->
 
             <p>Thumbs down!</p>
+            <i class="fa fa-thumbs-down" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
             <p>{{post.id}}</p>
 
             {% else %}
 
             <!-- do nothing -->
-            <p>{{post.id}}</p>
+
 
             {% endif %}
 
