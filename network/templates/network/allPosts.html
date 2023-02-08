@@ -51,8 +51,9 @@
             </form>
 
             <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
-
             <p class="numberLikes{{forloop.counter0}}">Likes for this post: {{post.numberLikes}}</p>
+
+
 
             {% if post.creator.username != user.username %}
 
@@ -60,7 +61,26 @@
                 id="likeButton{{forloop.counter0}}"
                 onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')">Like!</button>
 
+
             {% endif %}
+
+
+            {% if post.id == likedUser2.id %}
+
+            <!-- The user already likes it.  Display the appropriate icon. -->
+
+            <p>Thumbs down!</p>
+
+            {% else %}
+
+            <!-- The user DOES NOT currently it.  Display the appropriate icon. -->
+
+            <p>Thumbs up!</p>
+
+            {% endif %}
+
+
+
 
         </div>
 

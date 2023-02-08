@@ -190,6 +190,15 @@ def getAllPosts(request):
 def djangoAllPosts(request):
 
     print("In DjangoAllPosts")
+
+    user = request.user
+    userLoggedIn = request.user.username
+    # Get the user ID of the logged in user for the User object
+    user_id = request.user.id
+    userName = User.objects.get(id=user_id)
+    print(userName)
+    print(user)
+    print(userLoggedIn)
     # TODO: most recent posts first, how to do?  Need to sort the below.
 
     # user = User.objects.values('username')
@@ -200,12 +209,21 @@ def djangoAllPosts(request):
     # postings = Posts.objects.all().order_by('-createdDate')
     postings = Posts.objects.filter().order_by('-createdDate')
 
+    #Just want to determine if the current user likes a particular post or not.
+    user_id = request.user.id
+    #This will return a queryset of all objects that the user likes.
+    # likedUser = Posts.objects.filter(likedUser = user_id)
+    likedUser = Posts.objects.get(likedUser = user_id)
+
+    print(likedUser)
+    print(likedUser.id)
+
     # for post in posts:
 
     #     # FIXME: this only gets the last object.  Need to loop it.
     #     test = post.serialize()
 
-    return render(request, "network/allPosts.html", {"postings": postings})
+    return render(request, "network/allPosts.html", {"postings": postings, "likedUser": likedUser})
 
 
 # @csrf_exempt
