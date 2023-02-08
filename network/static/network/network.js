@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //   editPost(post.content, post.id);
   // });
 
+  //Only disable the new post button if it exists.  This will throw an error otherwise.
   let element = document.querySelector('#post-body')
 
   if (element != null) {
