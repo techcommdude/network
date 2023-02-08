@@ -55,30 +55,18 @@
 
 
 
-            {% if post.creator.username != user.username %}
-
-            <button class="btn btn-sm btn-outline-primary likeButton{{forloop.counter0}}"
-                id="likeButton{{forloop.counter0}}"
-                onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')">Like!</button>
-
-
-            {% endif %}
-
-
             {% if post.id in likeList and post.creator.username != user.username %}
 
             <!-- The user already likes it.  Display the appropriate icon. -->
 
-            <p>Thumbs up!</p>
-            <i class="fa fa-thumbs-up" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
+            <i class="fa fa-thumbs-up" id="thumbsUp{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
             <p>{{post.id}}</p>
 
             {% elif post.id not in likeList and post.creator.username != user.username %}
 
             <!-- The user DOES NOT currently like it.  Display the appropriate icon. -->
 
-            <p>Thumbs down!</p>
-            <i class="fa fa-thumbs-down" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
+            <i class="fa fa-thumbs-down" id="thumbsDown{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
             <p>{{post.id}}</p>
 
             {% else %}
