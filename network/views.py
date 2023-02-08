@@ -218,7 +218,6 @@ def djangoAllPosts(request):
     likedUser = Posts.objects.filter(likedUser = user_id)
 
     print(likedUser)
-    #print(likedUser.posts_id)
 
     likeList = []
 
@@ -228,17 +227,10 @@ def djangoAllPosts(request):
         #     print("yes")
         currentObject = User.objects.get(id=user_id)
         #This is the ID of the user.  can throw this away.
-
         print(currentObject.id)
-
-         #This is the post.id that the current user likes
+        #This is the post.id that the current user likes
         print(like.id)
         likeList.append(like.id)
-
-    # for post in posts:
-
-    #     # FIXME: this only gets the last object.  Need to loop it.
-    #     test = post.serialize()
 
     return render(request, "network/allPosts.html", {"postings": postings, "likeList": likeList})
 

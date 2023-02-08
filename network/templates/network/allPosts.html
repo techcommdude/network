@@ -65,17 +65,16 @@
             {% endif %}
 
 
-            {% if post.id in likeList %}
+            {% if post.id in likeList and post.creator.username != user.username %}
 
             <!-- The user already likes it.  Display the appropriate icon. -->
 
             <p>Thumbs up!</p>
             <p>{{post.id}}</p>
 
-            {% elif post.id not in likeList %}
+            {% elif post.id not in likeList and post.creator.username != user.username %}
 
-            <!-- The user DOES NOT currently it.  Display the appropriate icon. -->
-
+            <!-- The user DOES NOT currently like it.  Display the appropriate icon. -->
 
             <p>Thumbs down!</p>
             <p>{{post.id}}</p>
