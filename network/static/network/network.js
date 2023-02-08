@@ -377,8 +377,12 @@ function saveEditedPost(postID, lastChar, originalText) {
 function savePost() {
   console.log("I'm in the savePost function!");
 
+   //Get the cookie so the application is secure.
+   csrfCookie = getCookie("csrftoken");
+
   fetch("/post", {
     method: "POST",
+    headers: { "Content-type": "application/json", "X-CSRFToken": csrfCookie },
     body: JSON.stringify({
       content: document.querySelector("#post-body").value,
     }),

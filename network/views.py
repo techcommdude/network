@@ -19,7 +19,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 @login_required
-@csrf_exempt
 def savePost(request):
     print("In savePost")
     # TODO: Use this to return the JSON for a particular post.
