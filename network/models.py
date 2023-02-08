@@ -19,7 +19,7 @@ class Posts(models.Model):
     #If the user liked it then above is automatically True.  If they are not in this list then they haven't liked it.
     # If the user is already in this list, then display the thumbs down.
     likedUser = models.ManyToManyField(
-        User, blank=True, related_name="get_liked_users")
+        User, related_name="get_liked_users", blank=True)
     #This is the total number of likes, regardless of the user.
     numberLikes = models.IntegerField(blank=True, default=0)
 

@@ -213,17 +213,34 @@ def djangoAllPosts(request):
     user_id = request.user.id
     #This will return a queryset of all objects that the user likes.
     # likedUser = Posts.objects.filter(likedUser = user_id)
-    likedUser = Posts.objects.get(likedUser = user_id)
+
+    #likedUser = Posts.objects.get(likedUser = user_id)
+    likedUser = Posts.objects.filter(likedUser = user_id)
 
     print(likedUser)
-    print(likedUser.id)
+    #print(likedUser.posts_id)
+
+    likeList = []
+
+#This will create a list of all the posts that a user likes.
+    for like in likedUser:
+        # if (like.user.id == user_id):
+        #     print("yes")
+        currentObject = User.objects.get(id=user_id)
+        #This is the ID of the user.  can throw this away.
+
+        print(currentObject.id)
+
+         #This is the post.id that the current user likes
+        print(like.id)
+        likeList.append(like.id)
 
     # for post in posts:
 
     #     # FIXME: this only gets the last object.  Need to loop it.
     #     test = post.serialize()
 
-    return render(request, "network/allPosts.html", {"postings": postings, "likedUser": likedUser})
+    return render(request, "network/allPosts.html", {"postings": postings, "likeList": likeList})
 
 
 # @csrf_exempt
