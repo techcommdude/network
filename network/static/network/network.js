@@ -432,18 +432,20 @@ function likePost(postID, creatorOfPost, currentUser) {
   console.log(classNameLikeIcon.includes(substrthumbsUp));
   console.log(classNameLikeIcon.includes(substrthumbsDown));
 
-   //Get the cookie so the application is secure.
-   csrfCookie = getCookie("csrftoken");
+  //Get the cookie so the application is secure.
+  csrfCookie = getCookie("csrftoken");
 
   if (classNameLikeIcon.includes(substrthumbsUp)) {
     // If the icon is thumbs up, Go to the unlike function and remove the like.
     fetch(`/unlikePost/${postID}`, {
       method: "PUT",
-      headers: { "Content-type": "application/json", "X-CSRFToken": csrfCookie },
+      headers: {
+        "Content-type": "application/json",
+        "X-CSRFToken": csrfCookie,
+      },
       body: JSON.stringify({
         creator: creatorOfPost,
         currentUser: currentUser,
-
       }),
     })
       .then((response) => response.json())
@@ -452,9 +454,9 @@ function likePost(postID, creatorOfPost, currentUser) {
         console.log("Just finished fetching unlike information.");
 
         //Get the number of likes to add to the page.
-        numberLikes = data['data']
+        numberLikes = data["data"];
 
-        //TODO: Need to hide the existing thumbs up and display the thumbs down and also update the count with the numberLikes.
+        //Need to hide the existing thumbs up and display the thumbs down and also update the count with the numberLikes.
 
         //Hide the thumbs up icon
         const thumbsUpID = "thumbsUp" + lastChar;
@@ -462,44 +464,53 @@ function likePost(postID, creatorOfPost, currentUser) {
 
         //Unhide the thumbs down icon
         const thumbDownID = "thumbsDown" + lastChar;
-        const classNameThumbsDown = "fa fa-thumbs-down " + lastChar
+        const classNameThumbsDown = "fa fa-thumbs-down " + lastChar;
         document.getElementById(thumbDownID).className = classNameThumbsDown;
 
         const likeID = "numberLikes" + lastChar;
-        document.getElementById(likeID).innerHTML = "Likes for this post: " + numberLikes;
-
+        document.getElementById(likeID).innerHTML =
+          "Likes for this post: " + numberLikes;
 
         return false;
-
       });
 
     return false;
-
-
-
-
   } else {
     //If the icon is thumbs down, Go to the like function and add the like.
 
     fetch(`/likePost/${postID}`, {
       method: "PUT",
-      headers: { "Content-type": "application/json", "X-CSRFToken": csrfCookie },
+      headers: {
+        "Content-type": "application/json",
+        "X-CSRFToken": csrfCookie,
+      },
       body: JSON.stringify({
         creator: creatorOfPost,
         currentUser: currentUser,
       }),
-    })
-    .then((data) => {
-      console.log(data);
-      console.log("Just finished fetching unlike information.");
+    }).then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        console.log("Just finished fetching Like information.");
 
+      //Get the number of likes to add to the page.
+      numberLikes = data["data"];
 
+      //Hide the thumbs Down icon
+      const thumbsUpID = "thumbsDown" + lastChar;
+      document.getElementById(thumbsUpID).className = "hidden";
+
+      //Unhide the thumbs Up icon
+      const thumbUpID = "thumbsUp" + lastChar;
+      const classNameThumbsUp = "fa fa-thumbs-up " + lastChar;
+      document.getElementById(thumbUpID).className = classNameThumbsUp;
+
+      const likeID = "numberLikes" + lastChar;
+      document.getElementById(likeID).innerHTML =
+        "Likes for this post: " + numberLikes;
 
       return false;
-      // event.preventDefault();
     });
-
-
   }
 }
 
