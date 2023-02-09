@@ -450,7 +450,6 @@ function likePost(postID, creatorOfPost, currentUser) {
       .then((data) => {
         console.log(data);
         console.log("Just finished fetching unlike information.");
-        debugger;
 
         //Get the number of likes to add to the page.
         numberLikes = data['data']
@@ -470,17 +469,9 @@ function likePost(postID, creatorOfPost, currentUser) {
         document.getElementById(likeID).innerHTML = "Likes for this post: " + numberLikes;
 
 
-
-
-
-
-
-
         return false;
 
       });
-
-
 
     return false;
 
