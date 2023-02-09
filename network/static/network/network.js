@@ -405,9 +405,9 @@ function likePost(postID, creatorOfPost, currentUser) {
   console.log("In Like Post function!");
   console.log(postID);
   console.log(currentUser);
+  console.log(creatorOfPost);
 
   debugger;
-
 
 
   // This is the edit button that was clicked on.

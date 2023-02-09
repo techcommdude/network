@@ -59,10 +59,10 @@
 
             <!-- The user already likes it.  Display the appropriate icon. -->
 
-            <i class="fa fa-thumbs-up {{forloop.counter0}}" id="thumbsUp{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
+            <i class="fa fa-thumbs-up {{forloop.counter0}}" id="thumbsUp{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
             <p>{{post.id}}</p>
 
-            <i class="hidden" id="thumbsUp{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
+            <i class="hidden" id="thumbsUp{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
 
 
 
@@ -70,10 +70,10 @@
 
             <!-- The user DOES NOT currently like it.  Display the appropriate icon. -->
 
-            <i class="fa fa-thumbs-down {{forloop.counter0}}" id="thumbsDown{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
+            <i class="fa fa-thumbs-down {{forloop.counter0}}" id="thumbsDown{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
             <p>{{post.id}}</p>
 
-            <i class="hidden" id="thumbsDown{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
+            <i class="hidden" id="thumbsDown{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
 
 
             {% else %}
