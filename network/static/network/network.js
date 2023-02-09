@@ -424,24 +424,21 @@ function likePost(postID, creatorOfPost, currentUser) {
   classNameLikeIcon = postdiv[0].className;
   console.log(classNameLikeIcon);
 
-    //last char of each of the elements.
+  //last char of each of the elements.
   const lastChar = classNameLikeIcon.substring(classNameLikeIcon.length - 1);
 
-
-  const substrthumbsUp = 'thumbs-up';
-  const substrthumbsDown = 'thumbs-down';
+  const substrthumbsUp = "thumbs-up";
+  const substrthumbsDown = "thumbs-down";
 
   console.log(classNameLikeIcon.includes(substrthumbsUp));
   console.log(classNameLikeIcon.includes(substrthumbsDown));
 
-
   if (classNameLikeIcon.includes(substrthumbsUp)) {
     // If the icon is thumbs up, Go to the unlike function and remove the like.
+
+
   } else {
-//If the icon is thumbs down, Go to the like function and add the like.
-
-
-
+    //If the icon is thumbs down, Go to the like function and add the like.
   }
 }
 
