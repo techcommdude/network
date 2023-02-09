@@ -175,7 +175,6 @@ def saveDjangoNewPost(request):
     return HttpResponseRedirect(reverse("djangoAllPosts"))
 
 
-# @csrf_exempt
 @login_required
 def updatePost(request, post_id):
 
@@ -263,7 +262,6 @@ def getAllPosts(request):
 
 
 @login_required
-# @csrf_exempt
 def djangoAllPosts(request):
 
     print("In DjangoAllPosts")
@@ -312,7 +310,6 @@ def djangoAllPosts(request):
     return render(request, "network/allPosts.html", {"postings": postings, "likeList": likeList})
 
 
-# @csrf_exempt
 @login_required
 def getProfile(request, username):
     print("In getProfile")
@@ -567,7 +564,6 @@ def getFollowingFlag(request, username):
         return isFollowing
 
 
-# @csrf_exempt
 @login_required
 def getFollowing(request):
     print("In getFollowing")
@@ -639,8 +635,7 @@ def getFollowing(request):
     #     return render(request, "network/following.html", {"displayNothing": displayNothing})
 
 
-@csrf_exempt
-# @login_required
+
 def index(request):
     # Authenticated users view their inbox
     if request.user.is_authenticated:
