@@ -29,6 +29,16 @@ p {
     margin: 0.4em;
 }
 
+.fa {
+    font-size: 50px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .fa:hover {
+    color: darkblue;
+  }
+
 /* This is for each post */
 [class*="post"] {
 

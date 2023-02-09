@@ -62,12 +62,19 @@
             <i class="fa fa-thumbs-up" id="thumbsUp{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
             <p>{{post.id}}</p>
 
+            <i class="hidden" id="thumbsUp{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
+
+
+
             {% elif post.id not in likeList and post.creator.username != user.username %}
 
             <!-- The user DOES NOT currently like it.  Display the appropriate icon. -->
 
             <i class="fa fa-thumbs-down" id="thumbsDown{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
             <p>{{post.id}}</p>
+
+            <i class="hidden" id="thumbsDown{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}, {{post.creator.username}}, {{user.username}}')"></i>
+
 
             {% else %}
 

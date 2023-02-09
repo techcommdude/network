@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
   // const controller = new AbortController()
   // const signal = controller.signal
   // document
@@ -18,6 +17,14 @@ document.addEventListener("DOMContentLoaded", function () {
   //   event.preventDefault();
   //   editPost(post.content, post.id);
   // });
+
+  //Only disable the new post button if it exists.  This will throw an error otherwise.
+  let element = document.querySelector("#post-body");
+
+  if (element != null) {
+    // Do something with the element
+    disableNewPostButton();
+  }
 });
 
 function loadAllPosts() {
@@ -186,7 +193,9 @@ function editPost(postID) {
 
   document
     .querySelector(savePostbutton)
-    .addEventListener("click", () => saveEditedPost(postID, lastChar, originalText));
+    .addEventListener("click", () =>
+      saveEditedPost(postID, lastChar, originalText)
+    );
 
   //FIXME: Need to add the original content back to the editable text area.
 
@@ -229,7 +238,6 @@ function saveEditedPost(postID, lastChar, originalText) {
 
   textAreaContentUpdate = document.querySelector("#textArea" + lastChar).value;
 
-
   const formControl = "form-control content" + lastChar;
   //readonly area to reenable:
   document.getElementById("readonlyContent" + lastChar).className = formControl;
@@ -251,11 +259,12 @@ function saveEditedPost(postID, lastChar, originalText) {
   // test = getCookie("csrftoken")
   // getCookie("csrftoken")
 
-  test = getCookie("csrftoken");
+  //Get the cookie so the application is secure.
+  csrfCookie = getCookie("csrftoken");
 
   fetch(`/posts/${postID}`, {
     method: "PUT",
-    headers: { "Content-type": "application/json" },
+    headers: { "Content-type": "application/json", "X-CSRFToken": csrfCookie },
     body: JSON.stringify({
       content: textAreaContentUpdate,
     }),
@@ -267,24 +276,19 @@ function saveEditedPost(postID, lastChar, originalText) {
 
       test2 = data.responseCode;
 
+      //This is no longer necessary since I validate the front end for empty posts.
       if (test2 === "400") {
-          console.log("400code");
-          //the user didn't enter any text.  If the user gets this error.  the readonly area will
-          //have to be re-populated with the text that was submitted.  Pop an alert here.
-          alert("Empty posts are not permitted.  Please try again.");
-          //Need to add this back to teh form.
-          console.log(originalText);
+        console.log("400code");
+        //the user didn't enter any text.  If the user gets this error.  the readonly area will
+        //have to be re-populated with the text that was submitted.  Pop an alert here.
+        alert("Empty posts are not permitted.  Please try again.");
+        //Need to add this back to teh form.
+        console.log(originalText);
 
-           const readOnlyContent = "#" + "readonlyContent" + lastChar;
-  //Get the value of the text area before it is hidden.
-          document.querySelector(readOnlyContent).value = originalText;
-
+        const readOnlyContent = "#" + "readonlyContent" + lastChar;
+        //Get the value of the text area before it is hidden.
+        document.querySelector(readOnlyContent).value = originalText;
       }
-
-
-
-
-
 
       // if(!response.ok) {
       //   return response.text().then(text => { throw new Error(text) })
@@ -320,17 +324,17 @@ function saveEditedPost(postID, lastChar, originalText) {
         savePostbutton;
 
       return false;
-      event.preventDefault();
-    })
+      // event.preventDefault();
+    });
 
-    // .catch((error) => {
-    //   console.log(error);
-    // });
+  // .catch((error) => {
+  //   console.log(error);
+  // });
 
-    return false;
+  return false;
 
-    // return false;
-    // event.preventDefault()
+  // return false;
+  // event.preventDefault()
 
   //FIXME: Do I need to add an event listener for the edit post button again.
   // document.getElementById("editButton" + lastChar).className =
@@ -373,8 +377,12 @@ function saveEditedPost(postID, lastChar, originalText) {
 function savePost() {
   console.log("I'm in the savePost function!");
 
+   //Get the cookie so the application is secure.
+   csrfCookie = getCookie("csrftoken");
+
   fetch("/post", {
     method: "POST",
+    headers: { "Content-type": "application/json", "X-CSRFToken": csrfCookie },
     body: JSON.stringify({
       content: document.querySelector("#post-body").value,
     }),
@@ -392,8 +400,12 @@ function savePost() {
   // }, "100");
 }
 
+//likely only need postID and currentUser here because Like button is filtered out if the creator of post and current user are the
+//same.
 function likePost(postID, creatorOfPost, currentUser) {
   console.log("In Like Post function!");
+  console.log(postID);
+  console.log(currentUser);
 }
 
 function getCookie(name) {
@@ -402,8 +414,20 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-function abortFetching() {
-  console.log('Now aborting');
-  // Abort.
-  controller.abort()
+function disableNewPostButton() {
+  if (document.getElementById("post-body").value === "") {
+    document.getElementById("post-button").disabled = true;
+  } else {
+    document.getElementById("post-button").disabled = false;
+  }
+}
+
+function disableEditPostButton(counter) {
+  const textAreaID = "textArea" + counter;
+  const buttonID = "savePostButton" + counter;
+  if (document.getElementById(textAreaID).value === "") {
+    document.getElementById(buttonID).disabled = true;
+  } else {
+    document.getElementById(buttonID).disabled = false;
+  }
 }
