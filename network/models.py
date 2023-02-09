@@ -21,7 +21,7 @@ class Posts(models.Model):
     likedUser = models.ManyToManyField(
         User, related_name="get_liked_users", blank=True)
     #This is the total number of likes, regardless of the user.
-    numberLikes = models.IntegerField(blank=True, default=0)
+    numberLikes = models.PositiveIntegerField(blank=True, default=0)
 
     # def __str__(self) -> str:
     #     return f"User: {self.creator} - user likes: {self.likedUser.all()}"

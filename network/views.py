@@ -41,6 +41,7 @@ def savePost(request):
     data = json.loads(request.body)
     postContent = data.get("content")
 
+    #This is not used since I validate the front end for empty posts.
     if data.get("content") == "":
         return JsonResponse({
             "error": "You have not posted any content.  Please try again."
@@ -88,11 +89,11 @@ def unlikePost(request, postID):
 
             post.save()
 
-            # numLikes = data["content"]
+           #Add a new field to the data dictionary that needs to be returned in the JSON response.
             data['numberLikes'] = post.numberLikes
             print(data)
 
-        # Also need to remove the user from the likedUser field.
+        # Also need to remove the user from the likedUser field if it exists.
         likedUserList = post.likedUser.all()
 
         if userName in likedUserList:
@@ -100,7 +101,6 @@ def unlikePost(request, postID):
             post.save()
             print(post.likedUser.all())
 
-    # return JsonResponse({"message": "Post created successfully!", "data": data["content"]}, safe=False)
     return JsonResponse({"data": data["numberLikes"]}, safe=False)
 
 

@@ -450,18 +450,37 @@ function likePost(postID, creatorOfPost, currentUser) {
       .then((data) => {
         console.log(data);
         console.log("Just finished fetching unlike information.");
+        debugger;
 
-        //TODO: Need to hide the existing thumbs up and display the thumbs down and also update the count by - 1.
+        //Get the number of likes to add to the page.
+        numberLikes = data['data']
+
+        //TODO: Need to hide the existing thumbs up and display the thumbs down and also update the count with the numberLikes.
+
+        //Hide the thumbs up icon
+        const thumbsUpID = "thumbsUp" + lastChar;
+        document.getElementById(thumbsUpID).className = "hidden";
+
+        //Unhide the thumbs down icon
+        const thumbDownID = "thumbsDown" + lastChar;
+        const classNameThumbsDown = "fa fa-thumbs-down " + lastChar
+        document.getElementById(thumbDownID).className = classNameThumbsDown;
+
+        const likeID = "numberLikes" + lastChar;
+        document.getElementById(likeID).innerHTML = "Likes for this post: " + numberLikes;
+
+
+
+
+
 
 
 
         return false;
-        // event.preventDefault();
+
       });
 
-    // .catch((error) => {
-    //   console.log(error);
-    // });
+
 
     return false;
 
