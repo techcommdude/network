@@ -18,7 +18,7 @@ from .models import User, Posts, Follow
 from django.views.decorators.csrf import csrf_exempt
 
 
-#Creates a new post.
+# Creates a new post.
 @login_required
 def savePost(request):
     print("In savePost")
@@ -50,20 +50,58 @@ def savePost(request):
         creator=userName,
         content=postContent
     )
-    #Create a new post.
+    # Create a new post.
     newPost.save()
 
     return JsonResponse({"message": "Post created successfully!"}, status=201)
 
 
 @login_required
-def likePost(request, postID, creatorOfPost, currentUser):
-    pass
+def likePost(request, postID):
+    test = postID
+    print(test)
 
 
 @login_required
-def unlikePost(request, postID, creatorOfPost, currentUser):
-    pass
+def unlikePost(request, postID):
+    test = postID
+    print(test)
+
+    # user id and username of the logged in user.
+    user_id = request.user.id
+    user_name = request.user.username
+    userName = User.objects.get(id=user_id)
+
+    # Need to decrease the Like count for this post.  Remove the user from the likedUser field of the Post.
+
+    if request.method != "PUT":
+        return JsonResponse({"error": "PUT request required."}, status=400)
+
+    if request.method == "PUT":
+
+        data = json.loads(request.body)
+        # FIXME: This is where teh webpage changes for some reason.
+        post = Posts.objects.get(pk=postID)
+
+        if post.numberLikes != 0:
+            post.numberLikes = post.numberLikes - 1
+
+            post.save()
+
+            # numLikes = data["content"]
+            data['numberLikes'] = post.numberLikes
+            print(data)
+
+        # Also need to remove the user from the likedUser field.
+        likedUserList = post.likedUser.all()
+
+        if userName in likedUserList:
+            post.likedUser.remove(user_id)
+            post.save()
+            print(post.likedUser.all())
+
+    # return JsonResponse({"message": "Post created successfully!", "data": data["content"]}, safe=False)
+    return JsonResponse({"data": data["numberLikes"]}, safe=False)
 
 
 @login_required
@@ -99,7 +137,7 @@ def saveDjangoNewPost(request):
 
     newPost.save()
     messages.info(
-            request, 'Your post has been submitted.' )
+        request, 'Your post has been submitted.')
     return HttpResponseRedirect(reverse("djangoAllPosts"))
 
 
@@ -214,26 +252,26 @@ def djangoAllPosts(request):
     # postings = Posts.objects.all().order_by('-createdDate')
     postings = Posts.objects.filter().order_by('-createdDate')
 
-    #Just want to determine if the current user likes a particular post or not.
+    # Just want to determine if the current user likes a particular post or not.
     user_id = request.user.id
-    #This will return a queryset of all objects that the user likes.
+    # This will return a queryset of all objects that the user likes.
     # likedUser = Posts.objects.filter(likedUser = user_id)
 
     #likedUser = Posts.objects.get(likedUser = user_id)
-    likedUser = Posts.objects.filter(likedUser = user_id)
+    likedUser = Posts.objects.filter(likedUser=user_id)
 
     print(likedUser)
 
     likeList = []
 
-#This will create a list of all the posts that a user likes.
+# This will create a list of all the posts that a user likes.
     for like in likedUser:
         # if (like.user.id == user_id):
         #     print("yes")
         currentObject = User.objects.get(id=user_id)
-        #This is the ID of the user.  can throw this away.
+        # This is the ID of the user.  can throw this away.
         print(currentObject.id)
-        #This is the post.id that the current user likes
+        # This is the post.id that the current user likes
         print(like.id)
         likeList.append(like.id)
 

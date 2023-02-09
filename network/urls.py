@@ -13,6 +13,8 @@ urlpatterns = [
     path("following", views.getFollowing, name="getFollowing"),
     path("allPosts", views.djangoAllPosts, name="djangoAllPosts"),
     path("newPost", views.saveDjangoNewPost, name="saveDjangoNewPost"),
+    path("likePost/<int:postID>", views.likePost, name="likePost"),
+    path("unlikePost/<int:postID>", views.unlikePost, name="unlikePost"),
 
 
     # API Routes

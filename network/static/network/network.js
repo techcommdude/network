@@ -401,13 +401,12 @@ function savePost() {
 
 //likely only need postID and currentUser here because Like button is filtered out if the creator of post and current user are the
 //same.
+//This is the handler for both like and unLike.
 function likePost(postID, creatorOfPost, currentUser) {
   console.log("In Like Post function!");
   console.log(postID);
   console.log(currentUser);
   console.log(creatorOfPost);
-
-  debugger;
 
   // This is the edit button that was clicked on.
 
@@ -433,12 +432,64 @@ function likePost(postID, creatorOfPost, currentUser) {
   console.log(classNameLikeIcon.includes(substrthumbsUp));
   console.log(classNameLikeIcon.includes(substrthumbsDown));
 
+   //Get the cookie so the application is secure.
+   csrfCookie = getCookie("csrftoken");
+
   if (classNameLikeIcon.includes(substrthumbsUp)) {
     // If the icon is thumbs up, Go to the unlike function and remove the like.
+    fetch(`/unlikePost/${postID}`, {
+      method: "PUT",
+      headers: { "Content-type": "application/json", "X-CSRFToken": csrfCookie },
+      body: JSON.stringify({
+        creator: creatorOfPost,
+        currentUser: currentUser,
+
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        console.log("Just finished fetching unlike information.");
+
+        //TODO: Need to hide the existing thumbs up and display the thumbs down and also update the count by - 1.
+
+
+
+        return false;
+        // event.preventDefault();
+      });
+
+    // .catch((error) => {
+    //   console.log(error);
+    // });
+
+    return false;
+
+
 
 
   } else {
     //If the icon is thumbs down, Go to the like function and add the like.
+
+    fetch(`/likePost/${postID}`, {
+      method: "PUT",
+      headers: { "Content-type": "application/json", "X-CSRFToken": csrfCookie },
+      body: JSON.stringify({
+        creator: creatorOfPost,
+        currentUser: currentUser,
+      }),
+    })
+    .then((data) => {
+      console.log(data);
+      console.log("Just finished fetching unlike information.");
+
+
+
+      return false;
+      // event.preventDefault();
+    });
+
+
   }
 }
 
