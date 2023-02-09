@@ -18,6 +18,7 @@ from .models import User, Posts, Follow
 from django.views.decorators.csrf import csrf_exempt
 
 
+#Creates a new post.
 @login_required
 def savePost(request):
     print("In savePost")
@@ -48,16 +49,20 @@ def savePost(request):
     newPost = Posts(
         creator=userName,
         content=postContent
-
     )
-
+    #Create a new post.
     newPost.save()
 
     return JsonResponse({"message": "Post created successfully!"}, status=201)
 
-@csrf_exempt
+
 @login_required
 def likePost(request, postID, creatorOfPost, currentUser):
+    pass
+
+
+@login_required
+def unlikePost(request, postID, creatorOfPost, currentUser):
     pass
 
 

@@ -376,8 +376,8 @@ function saveEditedPost(postID, lastChar, originalText) {
 function savePost() {
   console.log("I'm in the savePost function!");
 
-   //Get the cookie so the application is secure.
-   csrfCookie = getCookie("csrftoken");
+  //Get the cookie so the application is secure.
+  csrfCookie = getCookie("csrftoken");
 
   fetch("/post", {
     method: "POST",
@@ -409,7 +409,6 @@ function likePost(postID, creatorOfPost, currentUser) {
 
   debugger;
 
-
   // This is the edit button that was clicked on.
 
   //FIXME: need to send the Postcontent and the ID from the event listener.
@@ -419,15 +418,31 @@ function likePost(postID, creatorOfPost, currentUser) {
   //class  of the button that was clicked.
   likeIconClass = element.className;
 
-  //Select the button first.  This selects two buttons.
+  //This finds the class name of the like/unlike icon.
   postdiv = document.getElementsByClassName(likeIconClass);
+  //This is what needs to change to hidden later.
+  classNameLikeIcon = postdiv[0].className;
+  console.log(classNameLikeIcon);
+
+    //last char of each of the elements.
+  const lastChar = classNameLikeIcon.substring(classNameLikeIcon.length - 1);
+
+
+  const substrthumbsUp = 'thumbs-up';
+  const substrthumbsDown = 'thumbs-down';
+
+  console.log(classNameLikeIcon.includes(substrthumbsUp));
+  console.log(classNameLikeIcon.includes(substrthumbsDown));
+
+
+  if (classNameLikeIcon.includes(substrthumbsUp)) {
+    // If the icon is thumbs up, Go to the unlike function and remove the like.
+  } else {
+//If the icon is thumbs down, Go to the like function and add the like.
 
 
 
-
-
-
-
+  }
 }
 
 function getCookie(name) {
