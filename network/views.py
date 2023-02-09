@@ -41,7 +41,7 @@ def savePost(request):
     data = json.loads(request.body)
     postContent = data.get("content")
 
-    #This is not used since I validate the front end for empty posts.
+    # This is not used since I validate the front end for empty posts.
     if data.get("content") == "":
         return JsonResponse({
             "error": "You have not posted any content.  Please try again."
@@ -61,6 +61,40 @@ def savePost(request):
 def likePost(request, postID):
     test = postID
     print(test)
+
+    # user id and username of the logged in user.
+    user_id = request.user.id
+    user_name = request.user.username
+    userName = User.objects.get(id=user_id)
+
+    # Need to increase the Like count for this post.  Add the user to the likedUser field of the Post.
+
+    if request.method != "PUT":
+        return JsonResponse({"error": "PUT request required."}, status=400)
+
+    if request.method == "PUT":
+
+        data = json.loads(request.body)
+        # FIXME: This is where teh webpage changes for some reason.
+        post = Posts.objects.get(pk=postID)
+
+        post.numberLikes = post.numberLikes + 1
+
+        post.save()
+
+        # Add a new field to the data dictionary that needs to be returned in the JSON response.
+        data['numberLikes'] = post.numberLikes
+        print(data)
+
+        # Also need to remove the user from the likedUser field if it exists.
+        likedUserList = post.likedUser.all()
+
+        if userName not in likedUserList:
+            post.likedUser.add(user_id)
+            post.save()
+            print(post.likedUser.all())
+
+    return JsonResponse({"data": data["numberLikes"]}, safe=False)
 
 
 @login_required
@@ -89,7 +123,7 @@ def unlikePost(request, postID):
 
             post.save()
 
-           #Add a new field to the data dictionary that needs to be returned in the JSON response.
+           # Add a new field to the data dictionary that needs to be returned in the JSON response.
             data['numberLikes'] = post.numberLikes
             print(data)
 
