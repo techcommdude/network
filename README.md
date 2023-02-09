@@ -1,8 +1,8 @@
 # Social Networking/Blog application built with Javascript, Django, Python, HTML and CSS
 
-TODO:
 
-You can also register and create your own credentials.
+
+
 
 This project is deployed on Heroku (please have patience since the instance is likely sleeping but will wake up after a few seconds): <a href="???????">????????</a>
 

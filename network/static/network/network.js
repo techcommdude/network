@@ -119,7 +119,6 @@ function editPost(postID) {
   // This is the edit button that was clicked on.
 
   //FIXME: need to send the Postcontent and the ID from the event listener.
-
   const element = event.target;
   //Post div class name.
   buttonParentClassName = element.parentElement.className;
@@ -406,6 +405,29 @@ function likePost(postID, creatorOfPost, currentUser) {
   console.log("In Like Post function!");
   console.log(postID);
   console.log(currentUser);
+
+  debugger;
+
+
+
+  // This is the edit button that was clicked on.
+
+  //FIXME: need to send the Postcontent and the ID from the event listener.
+  const element = event.target;
+  //Post div class name.
+  likeIconClassName = element.parentElement.className;
+  //class  of the button that was clicked.
+  likeIconClass = element.className;
+
+  //Select the button first.  This selects two buttons.
+  postdiv = document.getElementsByClassName(likeIconClass);
+
+
+
+
+
+
+
 }
 
 function getCookie(name) {
