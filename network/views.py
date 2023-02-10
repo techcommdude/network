@@ -263,9 +263,8 @@ def getAllPosts(request):
     # return JsonResponse(serialized_q, safe=False, status=200)
 
 
-#Used by the Django Paginor class
+# Used by the Django Paginor class
 class PostsListView(ListView):
-    # paginate_by = 2
     model = Posts
 
 
@@ -292,15 +291,13 @@ def djangoAllPosts(request):
     # postings = Posts.objects.all().order_by('-createdDate')
     postings = Posts.objects.filter().order_by('-createdDate')
 
-    #Pagination details.
+    # Pagination details.
     postsPagination = postings
-    paginator = Paginator(postsPagination, 2) # Show this many postings per page.
+    # Show this many postings per page.
+    paginator = Paginator(postsPagination, 2)
 
     page_number = request.GET.get('page', '1')
     page_obj = paginator.get_page(page_number)
-
-
-
 
     # Just want to determine if the current user likes a particular post or not.
     user_id = request.user.id
@@ -325,7 +322,7 @@ def djangoAllPosts(request):
         print(like.id)
         likeList.append(like.id)
 
-    return render (request, "network/allPosts.html", {"page_obj": page_obj, "postings": postings, "likeList": likeList})
+    return render(request, "network/allPosts.html", {"page_obj": page_obj, "postings": postings, "likeList": likeList})
 
 
 @login_required
@@ -647,11 +644,18 @@ def getFollowing(request):
 
             PostsByDate = newQueryset.order_by('-createdDate')
 
-            return render(request, "network/following.html", {"listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, })
+            # Pagination details.
+            postsPagination = PostsByDate
+             # Show this many postings per page.
+            paginator = Paginator(postsPagination, 7)
+
+            page_number = request.GET.get('page', '1')
+            page_obj = paginator.get_page(page_number)
+
+    return render(request, "network/following.html", {"page_obj": page_obj, "listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, })
 
     # if not emptyQueryset:
     #     return render(request, "network/following.html", {"displayNothing": displayNothing})
-
 
 
 def index(request):
