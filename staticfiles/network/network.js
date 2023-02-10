@@ -119,7 +119,6 @@ function editPost(postID) {
   // This is the edit button that was clicked on.
 
   //FIXME: need to send the Postcontent and the ID from the event listener.
-
   const element = event.target;
   //Post div class name.
   buttonParentClassName = element.parentElement.className;
@@ -377,8 +376,8 @@ function saveEditedPost(postID, lastChar, originalText) {
 function savePost() {
   console.log("I'm in the savePost function!");
 
-   //Get the cookie so the application is secure.
-   csrfCookie = getCookie("csrftoken");
+  //Get the cookie so the application is secure.
+  csrfCookie = getCookie("csrftoken");
 
   fetch("/post", {
     method: "POST",
@@ -402,10 +401,117 @@ function savePost() {
 
 //likely only need postID and currentUser here because Like button is filtered out if the creator of post and current user are the
 //same.
+//This is the handler for both like and unLike.
 function likePost(postID, creatorOfPost, currentUser) {
   console.log("In Like Post function!");
   console.log(postID);
   console.log(currentUser);
+  console.log(creatorOfPost);
+
+  // This is the edit button that was clicked on.
+
+  //FIXME: need to send the Postcontent and the ID from the event listener.
+  const element = event.target;
+  //Post div class name.
+  likeIconClassName = element.parentElement.className;
+  //class  of the button that was clicked.
+  likeIconClass = element.className;
+
+  //This finds the class name of the like/unlike icon.
+  postdiv = document.getElementsByClassName(likeIconClass);
+  //This is what needs to change to hidden later.
+  classNameLikeIcon = postdiv[0].className;
+  console.log(classNameLikeIcon);
+
+  //last char of each of the elements.
+  const lastChar = classNameLikeIcon.substring(classNameLikeIcon.length - 1);
+
+  const substrthumbsUp = "thumbs-up";
+  const substrthumbsDown = "thumbs-down";
+
+  console.log(classNameLikeIcon.includes(substrthumbsUp));
+  console.log(classNameLikeIcon.includes(substrthumbsDown));
+
+  //Get the cookie so the application is secure.
+  csrfCookie = getCookie("csrftoken");
+
+  if (classNameLikeIcon.includes(substrthumbsUp)) {
+    // If the icon is thumbs up, Go to the unlike function and remove the like.
+    fetch(`/unlikePost/${postID}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+        "X-CSRFToken": csrfCookie,
+      },
+      body: JSON.stringify({
+        creator: creatorOfPost,
+        currentUser: currentUser,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        console.log("Just finished fetching unlike information.");
+
+        //Get the number of likes to add to the page.
+        numberLikes = data["data"];
+
+        //Need to hide the existing thumbs up and display the thumbs down and also update the count with the numberLikes.
+
+        //Hide the thumbs up icon
+        const thumbsUpID = "thumbsUp" + lastChar;
+        document.getElementById(thumbsUpID).className = "hidden";
+
+        //Unhide the thumbs down icon
+        const thumbDownID = "thumbsDown" + lastChar;
+        const classNameThumbsDown = "fa fa-thumbs-down " + lastChar;
+        document.getElementById(thumbDownID).className = classNameThumbsDown;
+
+        const likeID = "numberLikes" + lastChar;
+        document.getElementById(likeID).innerHTML =
+          "Likes for this post: " + numberLikes;
+
+        return false;
+      });
+
+    return false;
+  } else {
+    //If the icon is thumbs down, Go to the like function and add the like.
+
+    fetch(`/likePost/${postID}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+        "X-CSRFToken": csrfCookie,
+      },
+      body: JSON.stringify({
+        creator: creatorOfPost,
+        currentUser: currentUser,
+      }),
+    }).then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        console.log("Just finished fetching Like information.");
+
+      //Get the number of likes to add to the page.
+      numberLikes = data["data"];
+
+      //Hide the thumbs Down icon
+      const thumbsUpID = "thumbsDown" + lastChar;
+      document.getElementById(thumbsUpID).className = "hidden";
+
+      //Unhide the thumbs Up icon
+      const thumbUpID = "thumbsUp" + lastChar;
+      const classNameThumbsUp = "fa fa-thumbs-up " + lastChar;
+      document.getElementById(thumbUpID).className = classNameThumbsUp;
+
+      const likeID = "numberLikes" + lastChar;
+      document.getElementById(likeID).innerHTML =
+        "Likes for this post: " + numberLikes;
+
+      return false;
+    });
+  }
 }
 
 function getCookie(name) {
