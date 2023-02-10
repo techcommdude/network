@@ -51,21 +51,24 @@
             </form>
 
             <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
-            <p id="numberLikes{{forloop.counter0}}" class="numberLikes{{forloop.counter0}}">Likes for this post: {{post.numberLikes}}</p>
+            <p id="numberLikes{{forloop.counter0}}" class="numberLikes{{forloop.counter0}}">Likes for this post:
+                {{post.numberLikes}}</p>
 
 
             {% if post.id in likeList and post.creator.username != user.username %}
 
             <!-- The user already likes it.  Display the appropriate icon. -->
 
-            <i class="fa fa-thumbs-up {{forloop.counter0}}" id="thumbsUp{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
+            <i class="fa fa-thumbs-up {{forloop.counter0}}" id="thumbsUp{{forloop.counter0}}" aria-hidden="true"
+                onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
 
 
             {% elif post.id not in likeList and post.creator.username != user.username %}
 
             <!-- The user DOES NOT currently like it.  Display the appropriate icon. -->
 
-            <i class="fa fa-thumbs-down {{forloop.counter0}}" id="thumbsDown{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
+            <i class="fa fa-thumbs-down {{forloop.counter0}}" id="thumbsDown{{forloop.counter0}}" aria-hidden="true"
+                onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
 
 
             {% else %}
@@ -74,9 +77,11 @@
 
             {% endif %}
 
-            <i class="hidden" id="thumbsUp{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
+            <i class="hidden" id="thumbsUp{{forloop.counter0}}" aria-hidden="true"
+                onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
 
-            <i class="hidden" id="thumbsDown{{forloop.counter0}}" aria-hidden="true" onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
+            <i class="hidden" id="thumbsDown{{forloop.counter0}}" aria-hidden="true"
+                onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
 
 
         </div>
@@ -86,12 +91,11 @@
     {% endfor %}
 </div>
 
-
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -99,11 +103,44 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>
+
+<h1>Bootstrap version below</h1>
+
+<!-- Try to make this the bootstrap version. -->
+<nav aria-label="Page navigation">
+    <div class="pagination">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            </li>
+
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+            <!-- this does work -->
+            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+            <!-- does not work -->
+            <!-- <li class="page-item"><a class="page-link" href="{{ page_obj.number }}">First</a></li> -->
+
+            {% if page_obj.has_next %}
+
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+
+
+            {% endif %}
+        </ul>
+    </div>
+</nav>
 
 {% endblock %}
 
