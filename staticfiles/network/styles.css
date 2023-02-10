@@ -19,10 +19,19 @@ a {
     margin: 0.3em;
 }
 
+
+
 p {
 
     margin-bottom: 0.4rem;
 }
+
+.paginationNumberPages {
+    justify-content: center;
+    display: flex;
+
+}
+
 
 .creator {
 
@@ -54,6 +63,26 @@ p {
     background-color: whitesmoke
 }
 
+#follow-button {
+
+    display: flex;
+    width: 5.4em;
+    margin-top: 7px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#unfollow-button {
+
+    display: flex;
+    width: 5.4em;
+    margin-top: 7px;
+    align-items: center;
+    justify-content: center;
+
+}
+
 
 
 #post-form {
@@ -64,6 +93,11 @@ p {
 #post-button {
 
     margin-top: 0.4em;
+}
+
+#post-body {
+
+    height: 115px;
 }
 
 .hidden {
