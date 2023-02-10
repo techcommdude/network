@@ -355,6 +355,17 @@ def getProfile(request, username):
     try:
         posts = Posts.objects.filter(creator=profileUser)
         postsUser = posts.order_by('-createdDate')
+
+          # Pagination details.
+        postsPagination = postsUser
+            # Show this many postings per page.
+        paginator = Paginator(postsPagination, 2)
+
+        page_number = request.GET.get('page', '1')
+        page_obj = paginator.get_page(page_number)
+
+
+
         noListings = False
     except Posts.DoesNotExist:
         print("blah")
@@ -397,9 +408,9 @@ def getProfile(request, username):
 
     if followObject == False:
         # This one does not return the users that are following and followers.  May or may not use that.
-        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "isFollowing": isFollowing})
+        return render(request, "network/profile.html", {"page_obj": page_obj,"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "isFollowing": isFollowing})
     else:
-        return render(request, "network/profile.html", {"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username, "isFollowing": isFollowing})
+        return render(request, "network/profile.html", {"page_obj": page_obj,"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username, "isFollowing": isFollowing})
 
     # This returns a queryset which must be serialized to convert to JSON.
     # currentObjects = Follow.objects.filter(followUser=user_id)

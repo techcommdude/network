@@ -1,6 +1,9 @@
 # Social Networking/Blog application built with Javascript, Django, Python, HTML and CSS
 
 
+I used Django's Paginator class to paginate the postings and stylized the pagination with Bootstrap.
+
+
 
 
 
