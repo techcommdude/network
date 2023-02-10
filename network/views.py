@@ -304,6 +304,7 @@ def djangoAllPosts(request):
 
     return render(request, "network/allPosts.html", {"page_obj": page_obj, "postings": postings, "likeList": likeList})
 
+@login_required
 def returnlikeList(request):
     # Just want to determine if the current user likes a particular post or not.
     user_id = request.user.id
