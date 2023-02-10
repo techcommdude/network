@@ -293,7 +293,7 @@ def djangoAllPosts(request):
 
     #Pagination details.
     postsPagination = postings
-    paginator = Paginator(postsPagination, 5) # Show this many contacts per page.
+    paginator = Paginator(postsPagination, 2) # Show this many contacts per page.
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
