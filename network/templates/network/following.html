@@ -4,30 +4,50 @@
 
 <h3>Following</h3>
 
-
-
-
 {% for list in page_obj %}
 
 <div id="followingPostings">
 
-
-    <div class="post">
+    <div class="post{{forloop.counter0}}">
         <!-- FIXME: Redirect the userr to the login if they are not authenticated and click on link. -->
         <h5 class="creator">Posted by <a
                 href="{% url 'getProfile' list.creator.username %}">{{list.creator.username}}</a></h5>
         <textarea class="form-control content{{forloop.counter0}}" id="readonlyContent{{forloop.counter0}}" rows="5" readonly="true">{{list.content}}</textarea>
         <p class="timestamp{{forloop.counter0}}">Posted on {{list.createdDate}}</p>
-        <p class="numberLikes{{forloop.counter0}}">Likes for this post: {{list.numberLikes}}</p>
+        <p id="numberLikes{{forloop.counter0}}" class="numberLikes{{forloop.counter0}}">Likes for this post: {{list.numberLikes}}</p>
 
-        <button class="btn btn-sm btn-outline-primary likeButton{{forloop.counter0}}"
-        id="likeButton{{forloop.counter0}}"
-        onclick="likePost('{{list.id}}', '{{list.creator.username}}', '{{user.username}}')">Like!</button>
+        {% if list.id in likeList and list.creator.username != user.username %}
+
+        <!-- The user already likes it.  Display the appropriate icon. -->
+
+        <i class="fa fa-thumbs-up {{forloop.counter0}}" id="thumbsUp{{forloop.counter0}}" aria-hidden="true"
+            onclick="likePost('{{list.id}}', '{{list.creator.username}}', '{{user.username}}')"></i>
+
+
+        {% elif list.id not in likeList and list.creator.username != user.username %}
+
+        <!-- The user DOES NOT currently like it.  Display the appropriate icon. -->
+
+        <i class="fa fa-thumbs-down {{forloop.counter0}}" id="thumbsDown{{forloop.counter0}}" aria-hidden="true"
+            onclick="likePost('{{list.id}}', '{{list.creator.username}}', '{{user.username}}')"></i>
+
+
+        {% else %}
+
+        <!-- do nothing -->
+
+        {% endif %}
+
+        <i class="hidden" id="thumbsUp{{forloop.counter0}}" aria-hidden="true"
+            onclick="likePost('{{list.id}}', '{{list.creator.username}}', '{{user.username}}')"></i>
+
+        <i class="hidden" id="thumbsDown{{forloop.counter0}}" aria-hidden="true"
+            onclick="likePost('{{list.id}}', '{{list.creator.username}}', '{{user.username}}')"></i>
+
+
     </div>
 
 </div>
-
-
 
 {% empty %}
 <h5>This user is not following anyone.</h5>
@@ -72,18 +92,14 @@
 
             {% endif %}
 
-
             {% if page_obj.has_next %}
 
             <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a></li>
 
-
             {% endif %}
         </ul>
     </div>
 </nav>
-
-
 
 {% endblock %}

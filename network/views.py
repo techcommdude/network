@@ -299,6 +299,12 @@ def djangoAllPosts(request):
     page_number = request.GET.get('page', '1')
     page_obj = paginator.get_page(page_number)
 
+    #Get the likeList for the like icon
+    likeList = returnlikeList(request)
+
+    return render(request, "network/allPosts.html", {"page_obj": page_obj, "postings": postings, "likeList": likeList})
+
+def returnlikeList(request):
     # Just want to determine if the current user likes a particular post or not.
     user_id = request.user.id
     # This will return a queryset of all objects that the user likes.
@@ -322,7 +328,8 @@ def djangoAllPosts(request):
         print(like.id)
         likeList.append(like.id)
 
-    return render(request, "network/allPosts.html", {"page_obj": page_obj, "postings": postings, "likeList": likeList})
+    return likeList
+
 
 
 @login_required
@@ -406,11 +413,13 @@ def getProfile(request, username):
     if followObject == True:
         following = follow.following.all()
 
+    likeList = returnlikeList(request)
+
     if followObject == False:
         # This one does not return the users that are following and followers.  May or may not use that.
         return render(request, "network/profile.html", {"page_obj": page_obj,"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "isFollowing": isFollowing})
     else:
-        return render(request, "network/profile.html", {"page_obj": page_obj,"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username, "isFollowing": isFollowing})
+        return render(request, "network/profile.html", {"page_obj": page_obj,"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username, "isFollowing": isFollowing, "likeList": likeList})
 
     # This returns a queryset which must be serialized to convert to JSON.
     # currentObjects = Follow.objects.filter(followUser=user_id)
@@ -602,7 +611,6 @@ def getFollowing(request):
     user_name = request.user.username
 
     # If the user doesnlt have any followers, following or posts it will throw an error.
-
     try:
         currentOBJ = Follow.objects.get(followUser=user_id)
         displayNothing = False
@@ -663,7 +671,10 @@ def getFollowing(request):
             page_number = request.GET.get('page', '1')
             page_obj = paginator.get_page(page_number)
 
-    return render(request, "network/following.html", {"page_obj": page_obj, "listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, })
+            #Get the likeList for the like icon
+            likeList = returnlikeList(request)
+
+    return render(request, "network/following.html", {"page_obj": page_obj, "listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, "likeList": likeList })
 
     # if not emptyQueryset:
     #     return render(request, "network/following.html", {"displayNothing": displayNothing})

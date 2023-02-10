@@ -37,7 +37,36 @@
             </form>
 
             <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
-            <p class="numberLikes{{forloop.counter0}}">Likes for this post: {{post.numberLikes}}</p>
+            <p id="numberLikes{{forloop.counter0}}" class="numberLikes{{forloop.counter0}}">Likes for this post: {{post.numberLikes}}</p>
+
+
+            {% if post.id in likeList and post.creator.username != user.username %}
+
+            <!-- The user already likes it.  Display the appropriate icon. -->
+
+            <i class="fa fa-thumbs-up {{forloop.counter0}}" id="thumbsUp{{forloop.counter0}}" aria-hidden="true"
+                onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
+
+
+            {% elif post.id not in likeList and post.creator.username != user.username %}
+
+            <!-- The user DOES NOT currently like it.  Display the appropriate icon. -->
+
+            <i class="fa fa-thumbs-down {{forloop.counter0}}" id="thumbsDown{{forloop.counter0}}" aria-hidden="true"
+                onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
+
+
+            {% else %}
+
+            <!-- do nothing -->
+
+            {% endif %}
+
+            <i class="hidden" id="thumbsUp{{forloop.counter0}}" aria-hidden="true"
+                onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
+
+            <i class="hidden" id="thumbsDown{{forloop.counter0}}" aria-hidden="true"
+                onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
 
 
             <!-- This works when a user is already a follower. -->

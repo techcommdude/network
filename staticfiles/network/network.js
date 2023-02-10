@@ -453,6 +453,8 @@ function likePost(postID, creatorOfPost, currentUser) {
         console.log(data);
         console.log("Just finished fetching unlike information.");
 
+
+
         //Get the number of likes to add to the page.
         numberLikes = data["data"];
 
@@ -488,29 +490,30 @@ function likePost(postID, creatorOfPost, currentUser) {
         creator: creatorOfPost,
         currentUser: currentUser,
       }),
-    }).then((response) => response.json())
+    })
+      .then((response) => response.json())
       .then((data) => {
         console.log(data);
         console.log("Just finished fetching Like information.");
 
-      //Get the number of likes to add to the page.
-      numberLikes = data["data"];
+        //Get the number of likes to add to the page.
+        numberLikes = data["data"];
 
-      //Hide the thumbs Down icon
-      const thumbsUpID = "thumbsDown" + lastChar;
-      document.getElementById(thumbsUpID).className = "hidden";
+        //Hide the thumbs Down icon
+        const thumbsUpID = "thumbsDown" + lastChar;
+        document.getElementById(thumbsUpID).className = "hidden";
 
-      //Unhide the thumbs Up icon
-      const thumbUpID = "thumbsUp" + lastChar;
-      const classNameThumbsUp = "fa fa-thumbs-up " + lastChar;
-      document.getElementById(thumbUpID).className = classNameThumbsUp;
+        //Unhide the thumbs Up icon
+        const thumbUpID = "thumbsUp" + lastChar;
+        const classNameThumbsUp = "fa fa-thumbs-up " + lastChar;
+        document.getElementById(thumbUpID).className = classNameThumbsUp;
 
-      const likeID = "numberLikes" + lastChar;
-      document.getElementById(likeID).innerHTML =
-        "Likes for this post: " + numberLikes;
+        const likeID = "numberLikes" + lastChar;
+        document.getElementById(likeID).innerHTML =
+          "Likes for this post: " + numberLikes;
 
-      return false;
-    });
+        return false;
+      });
   }
 }
 
