@@ -19,11 +19,6 @@ from yaml import serialize_all
 from .models import User, Posts, Follow
 from django.views.decorators.csrf import csrf_exempt
 
-#Used by the Django Paginor class
-class PostsListView(ListView):
-    paginate_by = 2
-    model = Posts
-
 
 # Creates a new post.
 @login_required
@@ -268,6 +263,12 @@ def getAllPosts(request):
     # return JsonResponse(serialized_q, safe=False, status=200)
 
 
+#Used by the Django Paginor class
+class PostsListView(ListView):
+    # paginate_by = 2
+    model = Posts
+
+
 @login_required
 def djangoAllPosts(request):
 
@@ -293,13 +294,10 @@ def djangoAllPosts(request):
 
     #Pagination details.
     postsPagination = postings
-    paginator = Paginator(postsPagination, 2) # Show this many contacts per page.
+    paginator = Paginator(postsPagination, 2) # Show this many postings per page.
 
-    page_number = request.GET.get('page')
+    page_number = request.GET.get('page', '1')
     page_obj = paginator.get_page(page_number)
-
-
-
 
 
 
