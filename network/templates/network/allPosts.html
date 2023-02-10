@@ -20,7 +20,7 @@
 
     </div>
 
-    {% for post in postings %}
+    {% for post in page_obj %}
 
     <div id="allPostings">
 
@@ -104,8 +104,6 @@
         {% endif %}
     </span>
 </div>
-
-{% for post in page_obj %}<pre>{{post.id}}</pre>{% endfor %}
 
 {% endblock %}
 
