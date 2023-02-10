@@ -91,36 +91,20 @@
     {% endfor %}
 </div>
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
 
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
-
-<h1>Bootstrap version below</h1>
-
-<!-- Try to make this the bootstrap version. -->
+<!--  bootstrap version of the pagination. -->
 <nav aria-label="Page navigation">
 
-    <span class="paginationNumberPages">
-        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-    </span>
-    <div class="pagination">
-        <ul class="pagination">
+
+    <div class="Djangopagination">
+
+        <h6 class="paginationNumberPages"> Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</h6>
+
+        <ul class="pagination justify-content-center">
+
+
             {% if page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
                 <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
             </li>
 
@@ -132,7 +116,7 @@
             {% endif %}
 
 
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+            <li class="page-item active" aria-current="page"><a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
 
             {% if page_obj.has_next %}
 
@@ -144,7 +128,7 @@
             {% if page_obj.has_next %}
 
             <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-                 <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+                 <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a></li>
 
 
             {% endif %}

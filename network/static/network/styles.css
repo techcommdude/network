@@ -24,6 +24,12 @@ p {
     margin-bottom: 0.4rem;
 }
 
+.paginationNumberPages {
+    justify-content: center;
+    display: flex;
+
+}
+
 .creator {
 
     margin: 0.4em;
