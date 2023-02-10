@@ -471,7 +471,7 @@ function likePost(postID, creatorOfPost, currentUser) {
 
         const likeID = "numberLikes" + lastChar;
         document.getElementById(likeID).innerHTML =
-          "Likes for this post: " + numberLikes;
+          "<strong>Number of likes</strong>: " + numberLikes;
 
         return false;
       });
@@ -510,7 +510,7 @@ function likePost(postID, creatorOfPost, currentUser) {
 
         const likeID = "numberLikes" + lastChar;
         document.getElementById(likeID).innerHTML =
-          "Likes for this post: " + numberLikes;
+          "<strong>Number of likes</strong>: " + numberLikes;
 
         return false;
       });

@@ -14,7 +14,7 @@
                 href="{% url 'getProfile' list.creator.username %}">{{list.creator.username}}</a></h5>
         <textarea class="form-control content{{forloop.counter0}}" id="readonlyContent{{forloop.counter0}}" rows="5" readonly="true">{{list.content}}</textarea>
         <p class="timestamp{{forloop.counter0}}">Posted on {{list.createdDate}}</p>
-        <p id="numberLikes{{forloop.counter0}}" class="numberLikes{{forloop.counter0}}">Likes for this post: {{list.numberLikes}}</p>
+        <p id="numberLikes{{forloop.counter0}}" class="numberLikes{{forloop.counter0}}"><strong>Number of likes</strong>: {{list.numberLikes}}</p>
 
         {% if list.id in likeList and list.creator.username != user.username %}
 

@@ -37,7 +37,7 @@
             </form>
 
             <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
-            <p id="numberLikes{{forloop.counter0}}" class="numberLikes{{forloop.counter0}}">Likes for this post: {{post.numberLikes}}</p>
+            <p id="numberLikes{{forloop.counter0}}" class="numberLikes{{forloop.counter0}}"><strong>Number of likes</strong>: {{post.numberLikes}}</p>
 
 
             {% if post.id in likeList and post.creator.username != user.username %}
