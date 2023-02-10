@@ -73,7 +73,7 @@
 
             {% if isFollowing %}
 
-            <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' post.creator.username %}">Unfollow</a>
+            <a class="btn btn-sm btn-outline-primary" id="unfollow-button" href="{% url 'follow' post.creator.username %}">Unfollow</a>
 
 
             {% elif isFollowing == None %}
@@ -83,7 +83,7 @@
 
             {% else %}
 
-            <a class="btn btn-sm btn-outline-primary" href="{% url 'follow' post.creator.username %}">Follow</a>
+            <a class="btn btn-sm btn-outline-primary" id="follow-button" href="{% url 'follow' post.creator.username %}">Follow</a>
 
             {% endif %}
 
