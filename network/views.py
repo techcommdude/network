@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.views.generic import ListView
+from django.core.paginator import Paginator
 from django.core.serializers import serialize
 from django.shortcuts import render
 from django.urls import reverse
@@ -16,6 +18,11 @@ from yaml import serialize_all
 # from yaml import serialize_all
 from .models import User, Posts, Follow
 from django.views.decorators.csrf import csrf_exempt
+
+#Used by the Django Paginor class
+class PostsListView(ListView):
+    paginate_by = 2
+    model = Posts
 
 
 # Creates a new post.
@@ -284,6 +291,19 @@ def djangoAllPosts(request):
     # postings = Posts.objects.all().order_by('-createdDate')
     postings = Posts.objects.filter().order_by('-createdDate')
 
+    #Pagination details.
+    postsPagination = postings
+    paginator = Paginator(postsPagination, 5) # Show this many contacts per page.
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+
+
+
+
+
+
     # Just want to determine if the current user likes a particular post or not.
     user_id = request.user.id
     # This will return a queryset of all objects that the user likes.
@@ -307,7 +327,7 @@ def djangoAllPosts(request):
         print(like.id)
         likeList.append(like.id)
 
-    return render(request, "network/allPosts.html", {"postings": postings, "likeList": likeList})
+    return render (request, "network/allPosts.html", {"page_obj": page_obj, "postings": postings, "likeList": likeList})
 
 
 @login_required
