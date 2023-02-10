@@ -44,6 +44,8 @@
         <i class="hidden" id="thumbsDown{{forloop.counter0}}" aria-hidden="true"
             onclick="likePost('{{list.id}}', '{{list.creator.username}}', '{{user.username}}')"></i>
 
+        <a class="btn btn-sm btn-outline-primary" id="unfollow-button" href="{% url 'follow' list.creator.username %}">Unfollow</a>
+
 
     </div>
 

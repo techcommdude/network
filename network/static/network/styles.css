@@ -19,6 +19,8 @@ a {
     margin: 0.3em;
 }
 
+
+
 p {
 
     margin-bottom: 0.4rem;
@@ -91,6 +93,11 @@ p {
 #post-button {
 
     margin-top: 0.4em;
+}
+
+#post-body {
+
+    height: 115px;
 }
 
 .hidden {
