@@ -1,5 +1,6 @@
 body {
   margin: 1.1em;
+  background-color: burlywood;
 }
 
 a {
@@ -10,10 +11,26 @@ a {
   border-style: solid;
   border-width: thin;
   border-color: lightgray;
+  background-color: burlywood;
+}
+
+#post-view {
+    background-color: burlywood;
 }
 
 .form-control {
   margin: 0.3em;
+}
+
+.form-control:focus {
+
+    background-color: antiquewhite !important;
+
+}
+
+#nav-bar {
+
+    background-color: burlywood !important;
 }
 
 p {
@@ -53,7 +70,7 @@ p {
 
 [id*="readonlyContent"] {
   margin-bottom: 0.5em;
-  background-color: whitesmoke;
+  background-color: antiquewhite;
 }
 
 #follow-button {
@@ -85,6 +102,7 @@ p {
 
 #post-body {
   height: 115px;
+  background-color: antiquewhite;
 }
 
 .hidden {
