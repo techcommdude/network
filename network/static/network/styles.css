@@ -60,6 +60,7 @@ p {
   display: flex;
   width: 5.4em;
   margin-top: 7px;
+  margin-bottom: 6px;
   align-items: center;
   justify-content: center;
 }
@@ -68,8 +69,10 @@ p {
   display: flex;
   width: 5.4em;
   margin-top: 7px;
+  margin-bottom: 6px;
   align-items: center;
   justify-content: center;
+
 }
 
 #post-form {
