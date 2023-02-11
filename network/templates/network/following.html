@@ -13,7 +13,7 @@
         <h5 class="creator">Posted by <a
                 href="{% url 'getProfile' list.creator.username %}">{{list.creator.username}}</a></h5>
         <textarea class="form-control content{{forloop.counter0}}" id="readonlyContent{{forloop.counter0}}" rows="5" readonly="true">{{list.content}}</textarea>
-        <p class="timestamp{{forloop.counter0}}">Posted on {{list.createdDate}}</p>
+
         <p id="numberLikes{{forloop.counter0}}" class="numberLikes{{forloop.counter0}}"><strong>Number of likes</strong>: {{list.numberLikes}}</p>
 
         {% if list.id in likeList and list.creator.username != user.username %}
@@ -45,6 +45,8 @@
             onclick="likePost('{{list.id}}', '{{list.creator.username}}', '{{user.username}}')"></i>
 
         <a class="btn btn-sm btn-outline-primary" id="unfollow-button" href="{% url 'follow' list.creator.username %}">Unfollow</a>
+
+        <p class="timestamp{{forloop.counter0}}">Posted on {{list.createdDate}}</p>
 
 
     </div>

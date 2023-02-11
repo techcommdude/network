@@ -1,106 +1,89 @@
-
 body {
-    margin: 1.1em;
+  margin: 1.1em;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 #posty {
-
-    margin: 1.0em;
-    border-style: solid;
-    border-width: thin;
-    border-color: lightgray;
+  margin: 1em;
+  border-style: solid;
+  border-width: thin;
+  border-color: lightgray;
 }
 
 .form-control {
-
-    margin: 0.3em;
+  margin: 0.3em;
 }
 
-
-
 p {
-
-    margin-bottom: 0.4rem;
+  margin-bottom: 0.4rem;
 }
 
 .paginationNumberPages {
-    justify-content: center;
-    display: flex;
-
+  justify-content: center;
+  display: flex;
 }
 
-
 .creator {
-
-    margin: 0.4em;
+  margin: 0.4em;
 }
 
 .fa {
-    font-size: 50px;
-    cursor: pointer;
-    user-select: none;
-  }
+  font-size: 50px;
+  cursor: pointer;
+  user-select: none;
+}
 
-  .fa:hover {
-    color: darkblue;
-  }
+.fa:hover {
+  color: darkblue;
+}
 
 /* This is for each post */
 [class*="post"] {
-
-    margin: 1.0em;
-    border-style: solid;
-    border-width: thin;
-    border-color: lightgray;
+  margin: 1em;
+  border-style: solid;
+  border-width: thin;
+  border-color: lightgray;
 }
 
-[id*="readonlyContent"] {
+[class*="timestamp"] {
+    color: grey
+  }
 
-    margin-bottom: 0.5em;
-    background-color: whitesmoke
+[id*="readonlyContent"] {
+  margin-bottom: 0.5em;
+  background-color: whitesmoke;
 }
 
 #follow-button {
-
-    display: flex;
-    width: 5.4em;
-    margin-top: 7px;
-    align-items: center;
-    justify-content: center;
-
+  display: flex;
+  width: 5.4em;
+  margin-top: 7px;
+  align-items: center;
+  justify-content: center;
 }
 
 #unfollow-button {
-
-    display: flex;
-    width: 5.4em;
-    margin-top: 7px;
-    align-items: center;
-    justify-content: center;
-
+  display: flex;
+  width: 5.4em;
+  margin-top: 7px;
+  align-items: center;
+  justify-content: center;
 }
 
-
-
 #post-form {
-
-    margin: 1em;
+  margin: 1em;
 }
 
 #post-button {
-
-    margin-top: 0.4em;
+  margin-top: 0.4em;
 }
 
 #post-body {
-
-    height: 115px;
+  height: 115px;
 }
 
 .hidden {
-
-    display: none;
+  display: none;
 }

@@ -36,7 +36,7 @@
                     id="savePostButton{{forloop.counter0}}">
             </form>
 
-            <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
+
             <p id="numberLikes{{forloop.counter0}}" class="numberLikes{{forloop.counter0}}"><strong>Number of likes</strong>: {{post.numberLikes}}</p>
 
 
@@ -86,6 +86,8 @@
             <a class="btn btn-sm btn-outline-primary" id="follow-button" href="{% url 'follow' post.creator.username %}">Follow</a>
 
             {% endif %}
+
+            <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
 
 
         </div>
