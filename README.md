@@ -1,13 +1,8 @@
-# Social Networking/Blog application built with Javascript, Django, Python, HTML and CSS
+# Social Networking/blog application built with Javascript, Django, Python, HTML and CSS
 
+A Twitter-like social network website for making posts and following users.
 
-I used Django's Paginator class to paginate the postings and stylized the pagination with Bootstrap.
-
-
-
-
-
-This project is deployed on Heroku (please have patience since the instance is likely sleeping but will wake up after a few seconds): <a href="???????">????????</a>
+This project is deployed on Heroku (please have patience since the instance is likely sleeping but will wake up after a few seconds): <a href="https://farnellg-social-network.herokuapp.com/">https://farnellg-social-network.herokuapp.com/</a>
 
 A screencast of the project can be found here: <a href="??????">???????</a>
 
@@ -21,7 +16,7 @@ Some of the technologies I used when building this demo application:
 * Javascript (vanilla, not a framework) with AJAX
 * APIs in Python that return a JSON response
 * Visual Studio Code
-* Django web framework
+* Django web framework.  I used Django's Paginator class to paginate the postings and stylized the pagination with Bootstrap.
 * Git.
 * HTML
 * CSS
@@ -30,7 +25,7 @@ Some of the technologies I used when building this demo application:
 -----------
 ## Project overview
 
-Using JavaScript, HTML, and CSS, complete the implementation of your single-page-app email client inside of inbox.js (and not additional or other files; for grading purposes, we’re only going to be considering inbox.js!). You must fulfill the following requirements:
+This demo application completed the requirements below using JavaScript, Django/Python, HTML, and CSS:
 
 * **New Post**: Users who are signed in should be able to write a new text-based post by filling in text into a text area and then clicking a button to submit the post.
     * The screenshot at the top of this specification shows the “New Post” box at the top of the “All Posts” page. You may choose to do this as well, or you may make the “New Post” feature a separate page.
