@@ -17,7 +17,7 @@ sudo fuser -k 5000/tcp
 
 **Connect to the remote repository:**
 
-heroku git:remote -a mail-client-gfarnell
+heroku git:remote -a farnellg-social-network
 
 **Perhaps do this and make sure everything is committed to Git:**
 
