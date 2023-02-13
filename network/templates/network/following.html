@@ -65,6 +65,8 @@
 {% endif %}
 
 <!--  bootstrap version of the pagination. -->
+
+{% if page_obj.number %}
 <nav aria-label="Page navigation">
 
 
@@ -105,5 +107,7 @@
         </ul>
     </div>
 </nav>
+
+{% endif %}
 
 {% endblock %}
