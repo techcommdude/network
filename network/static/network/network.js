@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function loadAllPosts() {
   //window.location.href = "post";
   // document.querySelector("#post-view").style.display = "block";
-  //Only use this as an API.
+  //FIXME: Only use this to return JSON as an API.  Not currently used for anything.
 
   fetch(`/posts`)
     .then((response) => response.json())
