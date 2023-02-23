@@ -525,6 +525,12 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
   //The user that is currently logged in.
   console.log(loggedinUser);
 
+   const element = event.target;
+
+   //likeIconClassName = element.parentElement.className;
+   //class  of the button that was clicked.
+   likeIconClass = element.className;
+
 
 }
 
