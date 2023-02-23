@@ -515,10 +515,15 @@ function likePost(postID, creatorOfPost, currentUser) {
   }
 }
 
-function followUnfollowUser(currentUser) {
+function followUnfollowUser(currentUserProfile, loggedinUser) {
+
+  debugger;
 
   console.log("In followUnfollowUser function!");
-  console.log(currentUser);
+  //The user for which we are displaying the profile
+  console.log(currentUserProfile);
+  //The user that is currently logged in.
+  console.log(loggedinUser);
 
 
 }
