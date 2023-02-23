@@ -442,7 +442,7 @@ def getProfile(request, username):
 # This method does both following and unfollowing.
 @login_required
 def follow(request, username):
-    print("in Follw")
+    print("in follow function")
     isFollowing = False
     # Current user that wants to add a follower.  this is the User object.
     userLoggedin = request.user
@@ -526,6 +526,12 @@ def follow(request, username):
 
     # TODO: Or should I display the Following list here?
     return HttpResponseRedirect(reverse("getFollowing"))
+
+# The username here is the user that the logged in user wants to follow.
+# This method does both following and unfollowing for the JavaScript version of the button.  Needs to return JSON.
+@login_required
+def followUser(request, username):
+    print("In followUser in Django!")
 
 
 @login_required
