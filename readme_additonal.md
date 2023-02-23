@@ -34,6 +34,8 @@ git commit -am "make it better"
 
 **Push the changes to the remote repository on Heroku:**
 
+heroku login
+
 git push heroku master
 
 Note: the branch could also be called "main" in Git.
