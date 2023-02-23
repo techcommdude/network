@@ -515,6 +515,15 @@ function likePost(postID, creatorOfPost, currentUser) {
   }
 }
 
+function followUnfollowUser(currentUser) {
+
+  console.log("In followUnfollowUser function!");
+  console.log(currentUser);
+
+
+}
+
+
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
