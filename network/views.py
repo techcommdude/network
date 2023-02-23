@@ -541,6 +541,27 @@ def followUser(request, username):
     userID = User.objects.get(username=un)
     userIDNewFollowing = userID.id
 
+    # user id and username of the logged in user.
+    user_id = request.user.id
+    user_name = request.user.username
+
+    userLoggedin = request.user
+    IDOfUserLoggedIn = userLoggedin.id
+
+    print(userLoggedin)
+
+    # FIXME: This is for cases where there is no Follow object.
+    try:
+        UserLoggedIn = Follow.objects.get(followUser=IDOfUserLoggedIn)
+    except:
+        # If they don't have a Folow object, need to create one.
+        UserLoggedIn = Follow(followUser_id=IDOfUserLoggedIn)
+        UserLoggedIn.save()
+
+    follow = Follow.objects.get(followUser_id=user_id)
+
+
+
     if request.method != "PUT":
         return JsonResponse({"error": "PUT request required."}, status=400)
 
@@ -551,11 +572,20 @@ def followUser(request, username):
         print(followBoolean)
         if (followBoolean):
             #If true, then need to add the user to the following list of the logged in user.  request.user.username.
-            pass
+                        # add the user to to the following list if they are not already there.  Set the flag for use in the template.
+            follow.following.add(userIDNewFollowing)
+
+            follow.save()
+            print(follow.following.all())
 
         else:
-            pass
+
         #follow = false, remove the user from the logged in users following list.
+
+         # remove the user as a follower if they are already in the list. Set the flag for use in the template.
+            follow.following.remove(userIDNewFollowing)
+            follow.save()
+            print(follow.following.all())
 
 
 

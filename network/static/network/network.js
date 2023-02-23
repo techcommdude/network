@@ -563,6 +563,31 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
   } else {
     console.log("Clicked Follow!");
     //add the user as a follower.
+
+    debugger;
+
+    fetch(`/followUser/${currentUserProfile}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+        "X-CSRFToken": csrfCookie,
+      },
+      body: JSON.stringify({
+        currentUser: currentUserProfile,
+        follow: true,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        console.log("Just finished fetching the information.");
+
+        return false;
+      });
+
+
+
+
   }
 
 
