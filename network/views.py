@@ -531,7 +531,40 @@ def follow(request, username):
 # This method does both following and unfollowing for the JavaScript version of the button.  Needs to return JSON.
 @login_required
 def followUser(request, username):
+    #if follow from the JSON = false, then need to Unfollow the user.  Opposite if true.
     print("In followUser in Django!")
+
+    # Need the ID of the user you want to add or remove from the following list.
+    print(username)
+    un = username
+    # user id of the user to be added to following list.
+    userID = User.objects.get(username=un)
+    userIDNewFollowing = userID.id
+
+    if request.method != "PUT":
+        return JsonResponse({"error": "PUT request required."}, status=400)
+
+    if request.method == "PUT":
+
+        data = json.loads(request.body)
+        followBoolean = data.get("follow")
+        print(followBoolean)
+        if (followBoolean):
+            #If true, then need to add the user to the following list of the logged in user.  request.user.username.
+            pass
+
+        else:
+            pass
+        #follow = false, remove the user from the logged in users following list.
+
+
+
+
+
+
+
+
+    # return HttpResponse("In followUser function.")
 
 
 @login_required

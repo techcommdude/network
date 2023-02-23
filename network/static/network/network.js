@@ -516,7 +516,6 @@ function likePost(postID, creatorOfPost, currentUser) {
 }
 
 function followUnfollowUser(currentUserProfile, loggedinUser) {
-  debugger;
 
   console.log("In followUnfollowUser function!");
   //The user for which we are displaying the profile
@@ -531,26 +530,42 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
   followUnfollowClass = element.className;
 
   //Look for the "Unfollow" substring in the class name.
-  const str = followUnfollowClass
+  const str = followUnfollowClass;
   const substr = "unfollow";
-
-  if(str.includes(substr)){
-
-    console.log("Clicked Unfollow!")
-    //remove the user as a follower.
-  }
-  else {
-
-    console.log("Clicked Follow!")
-    //add the user as a follower.
-
-
-  }
-
-  // console.log(str.includes(substr));
 
   //Get the cookie so the application is secure.
   csrfCookie = getCookie("csrftoken");
+
+  if (str.includes(substr)) {
+    console.log("Clicked Unfollow!");
+    //remove the user as a follower.
+
+    //const follow = false;
+
+    fetch(`/followUser/${currentUserProfile}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+        "X-CSRFToken": csrfCookie,
+      },
+      body: JSON.stringify({
+        currentUser: currentUserProfile,
+        follow: false,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        console.log("Just finished fetching the information.");
+
+        return false;
+      });
+  } else {
+    console.log("Clicked Follow!");
+    //add the user as a follower.
+  }
+
+
 
 
 }
