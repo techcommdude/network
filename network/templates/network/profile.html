@@ -9,6 +9,14 @@
     <ul>
         <li>Total number of followers: {{countFollowers}}</li>
         <li>Total number following: {{countFollowing}}</li>
+
+        <!-- Display according to flag that is returned from Django. -->
+
+        <button class="btn btn-sm btn-outline-primary follow" id="followButton"
+        onclick="followUnfollowUser('{{username}}')">Follow</button>
+
+        <button class="btn btn-sm btn-outline-primary unfollow" id="unfollowButton"
+        onclick="followUnfollowUser('{{username}}')">Unfollow</button>
     </ul>
     <div>
 
