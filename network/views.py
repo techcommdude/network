@@ -142,7 +142,7 @@ def unlikePost(request, postID):
 
 @login_required
 def saveDjangoNewPost(request):
-    # TODO: This is for saving the post when clicking the POST button at the top of the page.
+    # This is for saving the post when clicking the POST button at the top of the page.
     user = request.user
     userLoggedIn = request.user.username
     # Get the user ID of the logged in user for the User object
@@ -299,10 +299,11 @@ def djangoAllPosts(request):
     page_number = request.GET.get('page', '1')
     page_obj = paginator.get_page(page_number)
 
-    #Get the likeList for the like icon
+    # Get the likeList for the like icon
     likeList = returnlikeList(request)
 
     return render(request, "network/allPosts.html", {"page_obj": page_obj, "postings": postings, "likeList": likeList})
+
 
 @login_required
 def returnlikeList(request):
@@ -330,7 +331,6 @@ def returnlikeList(request):
         likeList.append(like.id)
 
     return likeList
-
 
 
 @login_required
@@ -364,15 +364,13 @@ def getProfile(request, username):
         posts = Posts.objects.filter(creator=profileUser)
         postsUser = posts.order_by('-createdDate')
 
-          # Pagination details.
+        # Pagination details.
         postsPagination = postsUser
-            # Show this many postings per page.
+        # Show this many postings per page.
         paginator = Paginator(postsPagination, 2)
 
         page_number = request.GET.get('page', '1')
         page_obj = paginator.get_page(page_number)
-
-
 
         noListings = False
     except Posts.DoesNotExist:
@@ -418,9 +416,9 @@ def getProfile(request, username):
 
     if followObject == False:
         # This one does not return the users that are following and followers.  May or may not use that.
-        return render(request, "network/profile.html", {"page_obj": page_obj,"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "isFollowing": isFollowing})
+        return render(request, "network/profile.html", {"page_obj": page_obj, "noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "isFollowing": isFollowing})
     else:
-        return render(request, "network/profile.html", {"page_obj": page_obj,"noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username, "isFollowing": isFollowing, "likeList": likeList})
+        return render(request, "network/profile.html", {"page_obj": page_obj, "noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username, "isFollowing": isFollowing, "likeList": likeList})
 
     # This returns a queryset which must be serialized to convert to JSON.
     # currentObjects = Follow.objects.filter(followUser=user_id)
@@ -666,16 +664,16 @@ def getFollowing(request):
 
             # Pagination details.
             postsPagination = PostsByDate
-             # Show this many postings per page.
+            # Show this many postings per page.
             paginator = Paginator(postsPagination, 7)
 
             page_number = request.GET.get('page', '1')
             page_obj = paginator.get_page(page_number)
 
-            #Get the likeList for the like icon
+            # Get the likeList for the like icon
             likeList = returnlikeList(request)
 
-    return render(request, "network/following.html", {"page_obj": page_obj, "listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, "likeList": likeList })
+    return render(request, "network/following.html", {"page_obj": page_obj, "listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, "likeList": likeList})
 
     # if not emptyQueryset:
     #     return render(request, "network/following.html", {"displayNothing": displayNothing})
