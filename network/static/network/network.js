@@ -516,7 +516,6 @@ function likePost(postID, creatorOfPost, currentUser) {
 }
 
 function followUnfollowUser(currentUserProfile, loggedinUser) {
-
   debugger;
 
   console.log("In followUnfollowUser function!");
@@ -525,15 +524,36 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
   //The user that is currently logged in.
   console.log(loggedinUser);
 
-   const element = event.target;
+  const element = event.target;
 
-   //likeIconClassName = element.parentElement.className;
-   //class  of the button that was clicked.
-   likeIconClass = element.className;
+  //likeIconClassName = element.parentElement.className;
+  //class  of the button that was clicked.
+  followUnfollowClass = element.className;
+
+  //Look for the "Unfollow" substring in the class name.
+  const str = followUnfollowClass
+  const substr = "unfollow";
+
+  if(str.includes(substr)){
+
+    console.log("Clicked Unfollow!")
+    //remove the user as a follower.
+  }
+  else {
+
+    console.log("Clicked Follow!")
+    //add the user as a follower.
+
+
+  }
+
+  // console.log(str.includes(substr));
+
+  //Get the cookie so the application is secure.
+  csrfCookie = getCookie("csrftoken");
 
 
 }
-
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;
