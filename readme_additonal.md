@@ -43,3 +43,5 @@ Note: the branch could also be called "main" in Git.
 **Also sometimes need to run collectstatic locally in the Python command line before pushing to Heroku:**
 
 python ./manage.py collectstatic
+
+To quit Ubuntu: exit
