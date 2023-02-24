@@ -14,27 +14,26 @@
         {% if isFollowing %}
 
         <button class="btn btn-sm btn-outline-primary unfollow" id="unfollowButton"
-        onclick="followUnfollowUser('{{username}}', '{{user.username}}')">Unfollow</button>
+            onclick="followUnfollowUser('{{username}}', '{{user.username}}')">Unfollow</button>
 
         {% elif isFollowing == None %}
 
         <!-- Do not display anything becuase the logged in user and the profile are the same.  You cannot follow yourself. -->
 
-
         {% else %}
 
         <button class="btn btn-sm btn-outline-primary follow" id="followButton"
-        onclick="followUnfollowUser('{{username}}', '{{user.username}}')">Follow</button>
+            onclick="followUnfollowUser('{{username}}', '{{user.username}}')">Follow</button>
 
         {% endif %}
 
         <!-- These buttons will become hidden or unhide to replace the buttons above for JavaScript. -->
 
         <button class="hidden" id="unfollowButton"
-        onclick="followUnfollowUser('{{username}}', '{{user.username}}')">Unfollow</button>
+            onclick="followUnfollowUser('{{username}}', '{{user.username}}')">Unfollow</button>
 
         <button class="hidden" id="followButton"
-        onclick="followUnfollowUser('{{username}}', '{{user.username}}')">Follow</button>
+            onclick="followUnfollowUser('{{username}}', '{{user.username}}')">Follow</button>
 
 
     </ul>
@@ -65,7 +64,8 @@
             </form>
 
 
-            <p id="numberLikes{{forloop.counter0}}" class="numberLikes{{forloop.counter0}}"><strong>Number of likes</strong>: {{post.numberLikes}}</p>
+            <p id="numberLikes{{forloop.counter0}}" class="numberLikes{{forloop.counter0}}"><strong>Number of
+                    likes</strong>: {{post.numberLikes}}</p>
 
 
             {% if post.id in likeList and post.creator.username != user.username %}
@@ -96,81 +96,64 @@
             <i class="hidden" id="thumbsDown{{forloop.counter0}}" aria-hidden="true"
                 onclick="likePost('{{post.id}}', '{{post.creator.username}}', '{{user.username}}')"></i>
 
-
-            <!-- This works when a user is already a follower. -->
-
-            {% if isFollowing %}
-
-            <a class="btn btn-sm btn-outline-primary" id="unfollow-button" href="{% url 'follow' post.creator.username %}">Unfollow</a>
-
-
-            {% elif isFollowing == None %}
-
-            <!-- This works when a user is not a follower. -->
-
-
-            {% else %}
-
-            <a class="btn btn-sm btn-outline-primary" id="follow-button" href="{% url 'follow' post.creator.username %}">Follow</a>
-
-            {% endif %}
-
             <p class="timestamp{{forloop.counter0}}">Posted on {{post.createdDate}}</p>
 
-
         </div>
-
-
 
         {% empty %}
         <h5>This user does not have any posts.</h5>
 
-
         {% endfor %}
 
-<!--  bootstrap version of the pagination. -->
-<nav aria-label="Page navigation">
+        <!--  bootstrap version of the pagination. -->
+        <nav aria-label="Page navigation">
 
 
-    <div class="Djangopagination">
+            <div class="Djangopagination">
 
-        <h6 class="paginationNumberPages"> Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</h6>
+                <h6 class="paginationNumberPages"> Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</h6>
 
-        <ul class="pagination justify-content-center">
-
-
-            {% if page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
-                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-            </li>
-
-            {% endif %}
-
-            {% if page_obj.has_previous %}
-
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number}}">{{ page_obj.previous_page_number}}</a></li>
-            {% endif %}
+                <ul class="pagination justify-content-center">
 
 
-            <li class="page-item active" aria-current="page"><a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+                    {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
+                    <li class="page-item"><a class="page-link"
+                            href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
 
-            {% if page_obj.has_next %}
+                    {% endif %}
 
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                    {% if page_obj.has_previous %}
 
-            {% endif %}
-
-
-            {% if page_obj.has_next %}
-
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-                 <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number}}">{{
+                            page_obj.previous_page_number}}</a></li>
+                    {% endif %}
 
 
-            {% endif %}
-        </ul>
-    </div>
-</nav>
+                    <li class="page-item active" aria-current="page"><a class="page-link"
+                            href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+
+                    {% if page_obj.has_next %}
+
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{
+                            page_obj.next_page_number }}</a></li>
+
+                    {% endif %}
+
+
+                    {% if page_obj.has_next %}
+
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last
+                            &raquo;</a></li>
+
+
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
 
 
         {% endblock %}
