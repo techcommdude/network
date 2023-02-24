@@ -578,23 +578,20 @@ def followUser(request, username):
             follow.save()
             print(follow.following.all())
 
+            return JsonResponse({"data": data["follow"]}, safe=False)
+
         else:
 
         #follow = false, remove the user from the logged in users following list.
+        #TODO: When you click Unfollow you end up here and return follow: false.
 
          # remove the user as a follower if they are already in the list. Set the flag for use in the template.
             follow.following.remove(userIDNewFollowing)
             follow.save()
             print(follow.following.all())
 
+            return JsonResponse({"data": data["follow"]}, safe=False)
 
-
-
-
-
-
-
-    # return HttpResponse("In followUser function.")
 
 
 @login_required

@@ -28,6 +28,14 @@
 
         {% endif %}
 
+        <!-- These buttons will become hidden or unhide to replace the buttons above for JavaScript. -->
+
+        <button class="hidden" id="unfollowButton"
+        onclick="followUnfollowUser('{{username}}', '{{user.username}}')">Unfollow</button>
+
+        <button class="hidden" id="followButton"
+        onclick="followUnfollowUser('{{username}}', '{{user.username}}')">Follow</button>
+
 
     </ul>
     <div>

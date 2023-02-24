@@ -516,7 +516,6 @@ function likePost(postID, creatorOfPost, currentUser) {
 }
 
 function followUnfollowUser(currentUserProfile, loggedinUser) {
-
   console.log("In followUnfollowUser function!");
   //The user for which we are displaying the profile
   console.log(currentUserProfile);
@@ -558,13 +557,18 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
         console.log(data);
         console.log("Just finished fetching the information.");
 
+        //Need to hide the existing button and display the hidden Follow button.
+
+        document.getElementById("unfollowButton").className = "hidden";
+
+        document.getElementById("followButton").className =
+          "btn btn-sm btn-outline-primary follow";
+
         return false;
       });
   } else {
     console.log("Clicked Follow!");
     //add the user as a follower.
-
-    debugger;
 
     fetch(`/followUser/${currentUserProfile}`, {
       method: "PUT",
@@ -580,19 +584,17 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+
         console.log("Just finished fetching the information.");
+
+        //Need to hide the existing button and display the hidden Unfollow button.
+        document.getElementById("followButton").className = "hidden";
+        document.getElementById("unfollowButton").className =
+          "btn btn-sm btn-outline-primary unfollow";
 
         return false;
       });
-
-
-
-
   }
-
-
-
-
 }
 
 function getCookie(name) {
