@@ -515,14 +515,87 @@ function likePost(postID, creatorOfPost, currentUser) {
   }
 }
 
-function followUnfollowUser(currentUser) {
-
+function followUnfollowUser(currentUserProfile, loggedinUser) {
   console.log("In followUnfollowUser function!");
-  console.log(currentUser);
+  //The user for which we are displaying the profile
+  console.log(currentUserProfile);
+  //The user that is currently logged in.
+  console.log(loggedinUser);
 
+  const element = event.target;
 
+  //likeIconClassName = element.parentElement.className;
+  //class  of the button that was clicked.
+  followUnfollowClass = element.className;
+
+  //Look for the "Unfollow" substring in the class name.
+  const str = followUnfollowClass;
+  const substr = "unfollow";
+
+  //Get the cookie so the application is secure.
+  csrfCookie = getCookie("csrftoken");
+
+  if (str.includes(substr)) {
+    console.log("Clicked Unfollow!");
+    //remove the user as a follower.
+
+    //const follow = false;
+
+    fetch(`/followUser/${currentUserProfile}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+        "X-CSRFToken": csrfCookie,
+      },
+      body: JSON.stringify({
+        currentUser: currentUserProfile,
+        follow: false,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        console.log("Just finished fetching the information.");
+
+        //Need to hide the existing button and display the hidden Follow button.
+
+        document.getElementById("unfollowButton").className = "hidden";
+
+        document.getElementById("followButton").className =
+          "btn btn-sm btn-outline-primary follow";
+
+        return false;
+      });
+  } else {
+    console.log("Clicked Follow!");
+    //add the user as a follower.
+
+    fetch(`/followUser/${currentUserProfile}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+        "X-CSRFToken": csrfCookie,
+      },
+      body: JSON.stringify({
+        currentUser: currentUserProfile,
+        follow: true,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+
+        console.log("Just finished fetching the information.");
+
+        //Need to hide the existing button and display the hidden Unfollow button.
+        document.getElementById("followButton").className = "hidden";
+        document.getElementById("unfollowButton").className =
+          "btn btn-sm btn-outline-primary unfollow";
+
+        return false;
+      });
+  }
 }
-
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;

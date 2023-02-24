@@ -89,6 +89,27 @@ p {
   justify-content: center;
 }
 
+/* Follow/Unfollow button at the top of the profile */
+
+
+[class*="unfollow"] {
+  display: flex;
+  width: 5.4em;
+  margin-top: 7px;
+  margin-bottom: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+[class*="follow"] {
+  display: flex;
+  width: 5.4em;
+  margin-top: 7px;
+  margin-bottom: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
 #post-form {
   margin: 1em;
 }
