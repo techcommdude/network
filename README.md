@@ -4,7 +4,10 @@ A Twitter-like social network website for making posts and following users.
 
 This project is deployed on Heroku (please have patience since the instance is likely sleeping but will wake up after a few seconds): <a href="https://farnellg-social-network.herokuapp.com/">https://farnellg-social-network.herokuapp.com/</a>
 
-A screencast of the project can be found here: <a href="https://youtu.be/mnw06wUITk8">https://youtu.be/mnw06wUITk8</a>
+A screencast of the project is available on YouTube:
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=mnw06wUITk8
+" target="_blank"><img src="{% static 'network/Network.gif' %}"
+alt="Social Network by Geoff Farnell" width="600" height="360" /></a>
 
 You can log in to the Heroku app above with this account that is already entered by default. No registration is required (although you can register):
 
