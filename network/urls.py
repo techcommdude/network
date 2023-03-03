@@ -27,7 +27,7 @@ urlpatterns = [
     # This is never called in JavaScript or from any HTML page.  Need to redo this for the API.  A GET  for all posts.
     path("posts", views.getAllPosts, name="getAllPosts"),
     # This is never called in JavaScript or from any HTML page.  Need to redo this for the API to return the JSON for a single post ID.  A GET for a single post.
-    path("posts/<int:post_id>", views.updatePost, name="updatePost"),
+    path("post/<int:post_id>", views.getPost, name="getPost"),
     # Doesn't appear to be used at the moment for anything.  Possibly update to create a new POST with JSON.
     path("post", views.savePost, name="savePost"),
 

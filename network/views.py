@@ -178,7 +178,7 @@ def saveDjangoNewPost(request):
 
 
 @login_required
-def updatePost(request, post_id):
+def getPost(request, post_id):
 
     # TODO: This is for editing the post after clicking edit.
     print("In updatePost")
