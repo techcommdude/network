@@ -225,11 +225,22 @@ def getAllPosts(request):
     print("In getAllPosts")
     # TODO: most recent posts first, how to do?  Need to sort the below.
 
-    user = User.objects.values('username')
+    # FIXME: May want to do this by user, but for now just return everything regardless of user.  Can use this info later or in another function.
+    user = request.user
+    userLoggedIn = request.user.username
+    # Get the user ID of the logged in user for the User object
+    user_id = request.user.id
+    userNameObject = User.objects.get(id=user_id)
+    print(userNameObject)
+    print(user)
+    print(userLoggedIn)
 
-    userName = User.objects.get(id=1)
-    test = userName.username
-    # this is a queryset of Posts objects only
+    # user = User.objects.values('userName')
+    # Need to get the actual user here.
+    # userName = User.objects.get(id=2)
+    # test = userName.username
+
+    # this is a queryset of all Posts objects
     posts = Posts.objects.all().order_by('-createdDate')
 
     # for post in posts:
@@ -529,9 +540,11 @@ def follow(request, username):
 
 # The username here is the user that the logged in user wants to follow.
 # This method does both following and unfollowing for the JavaScript version of the button.  Needs to return JSON.
+
+
 @login_required
 def followUser(request, username):
-    #if follow from the JSON = false, then need to Unfollow the user.  Opposite if true.
+    # if follow from the JSON = false, then need to Unfollow the user.  Opposite if true.
     print("In followUser in Django!")
 
     # Need the ID of the user you want to add or remove from the following list.
@@ -560,8 +573,6 @@ def followUser(request, username):
 
     follow = Follow.objects.get(followUser_id=user_id)
 
-
-
     if request.method != "PUT":
         return JsonResponse({"error": "PUT request required."}, status=400)
 
@@ -571,8 +582,8 @@ def followUser(request, username):
         followBoolean = data.get("follow")
         print(followBoolean)
         if (followBoolean):
-            #If true, then need to add the user to the following list of the logged in user.  request.user.username.
-                        # add the user to to the following list if they are not already there.  Set the flag for use in the template.
+            # If true, then need to add the user to the following list of the logged in user.  request.user.username.
+            # add the user to to the following list if they are not already there.  Set the flag for use in the template.
             follow.following.add(userIDNewFollowing)
 
             follow.save()
@@ -582,8 +593,8 @@ def followUser(request, username):
 
         else:
 
-        #follow = false, remove the user from the logged in users following list.
-        #TODO: When you click Unfollow you end up here and return follow: false.
+            # follow = false, remove the user from the logged in users following list.
+            # TODO: When you click Unfollow you end up here and return follow: false.
 
          # remove the user as a follower if they are already in the list. Set the flag for use in the template.
             follow.following.remove(userIDNewFollowing)
@@ -591,7 +602,6 @@ def followUser(request, username):
             print(follow.following.all())
 
             return JsonResponse({"data": data["follow"]}, safe=False)
-
 
 
 @login_required
