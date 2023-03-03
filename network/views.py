@@ -198,23 +198,35 @@ def updatePost(request, post_id):
     # except Posts.DoesNotExist:
     #     return JsonResponse({"error": "Post not found."}, status=404)
 
-    if request.method != "PUT":
+    if request.method != "GET":
         return JsonResponse({"error": "PUT request required."}, status=400)
 
-    if request.method == "PUT":
+    if request.method == "GET":
 
-        data = json.loads(request.body)
-        # FIXME: This is where teh webpage changes for some reason.
-        post = Posts.objects.get(pk=post_id)
-        if data.get("content") is not None:
-            postContent = data["content"]
+        # data = json.loads(request.body)
 
-            post.content = postContent
-            post.save()
+        #FIXME: Can do an ID of 107-80 for the ID.
+        #TODO: Need to account for DoesNotExist error if they type an ID that does not exist.
+
+        try:
+            post = Posts.objects.get(pk=post_id)
+        except Posts.DoesNotExist:
+            # return JsonResponse({"error": "Post not found."}, status=404)
+            messages.error(
+            request, 'Post with ID of ' + str(post_id) + ' not found.  Please try again.')
+        # Redirect to activeListings page.
+            return HttpResponseRedirect(reverse("index"))
+
+
+        # if data.get("content") is not None:
+        #     postContent = data["content"]
+
+        #     post.content = postContent
+        #     post.save()
             # time.sleep(0.5)
 
             # return JsonResponse({"message": "Post created successfully!", "data": data["content"]}, safe=False)
-            return JsonResponse({"data": data["content"]}, safe=False)
+        return HttpResponse("In the Post ID API!")
 
 
 @login_required
