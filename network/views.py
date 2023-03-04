@@ -15,7 +15,6 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 from yaml import serialize_all
 
-# from yaml import serialize_all
 from .models import User, Posts, Follow
 from django.views.decorators.csrf import csrf_exempt
 
@@ -227,6 +226,16 @@ def getPost(request, post_id):
 
             # return JsonResponse({"message": "Post created successfully!", "data": data["content"]}, safe=False)
         return HttpResponse("In the Post ID API!")
+
+
+from rest_framework import routers, serializers, viewsets, status
+# from ..project4.urls import PostSerializer, FollowSerializer, UserSerializer
+class PostViewSet(viewsets.ModelViewSet):
+    """
+    List all workers, or create a new worker.
+    """
+    queryset = Posts.objects.all()
+    # serializer_class = PostSerializer
 
 
 @login_required
