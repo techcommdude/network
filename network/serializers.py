@@ -12,10 +12,12 @@ class FollowSerializer(serializers.ModelSerializer):
      pass
 class PostSerializer(serializers.ModelSerializer):
 
+    #TODO: This needs to be worked on.
         get_liked_users = UserSerializer(many=True, read_only=True)
 
         class Meta:
             ordering = ['-createdDate']
             model = Posts
             fields = ("id", "creator", "content", "createdDate", "get_liked_users", "numberLikes")
-            extra_kwargs = {'get_liked_users': {'required': False}}
+            #TODO: This never shows anything.
+            # extra_kwargs = {'get_liked_users': {'required': True}}
