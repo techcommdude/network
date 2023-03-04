@@ -31,8 +31,5 @@ urlpatterns = [
     # Doesn't appear to be used at the moment for anything.  Possibly update to create a new POST with JSON.
     path("post", views.savePost, name="savePost"),
 
-    #Django REST Framework
-    path('api-auth/', include('rest_framework.urls')),
-
 
 ]
