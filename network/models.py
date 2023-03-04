@@ -27,21 +27,6 @@ class Posts(models.Model):
     #     return f"User: {self.creator} - user likes: {self.likedUser.all()}"
 
 
-#TODO: get rid of this?
-#FIXME: This is broken right now due to the additional fields. the /posts API doesn't work right now.
-    def serialize(self):
-        return {
-            #id of the post
-            "id": self.id,
-            #This passes in the user id of the creator.
-            "creator": getUserName(self.creator.id),
-            "content": self.content,
-            "createdDate": self.createdDate.strftime("%b %d %Y, %I:%M %p"),
-            "likedUser": self.likedUser,
-            "numberLikes": self.numberLikes
-        }
-
-
 class Follow(models.Model):
     #The name of the user
     followUser = models.ForeignKey(
