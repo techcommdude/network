@@ -15,6 +15,8 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 from yaml import serialize_all
 
+from network.serializers import PostSerializer, FollowSerializer, UserSerializer
+
 from .models import User, Posts, Follow
 from django.views.decorators.csrf import csrf_exempt
 
@@ -229,13 +231,17 @@ def getPost(request, post_id):
 
 
 from rest_framework import routers, serializers, viewsets, status
-# from ..project4.urls import PostSerializer, FollowSerializer, UserSerializer
 class PostViewSet(viewsets.ModelViewSet):
     """
     List all workers, or create a new worker.
     """
     queryset = Posts.objects.all()
-    # serializer_class = PostSerializer
+    serializer_class = PostSerializer
+
+# ViewSets define the view behavior.
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 @login_required

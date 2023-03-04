@@ -23,20 +23,9 @@ from network.models import User, Posts, Follow
 
 from django.contrib.auth import get_user_model
 
-from network.views import PostViewSet
+from network.views import PostViewSet, UserViewSet
 User = get_user_model()
 
-# Serializers define the API representation.
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'email', 'is_staff', 'is_superuser']
-
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -45,19 +34,12 @@ router = routers.DefaultRouter()
 #This opens the Django rest framework
 # http://127.0.0.1:8000/users/?format=api
 router.register(r'users', UserViewSet)
+# http://127.0.0.1:8000/api/posts/?format=json
+#This opens the Django rest framework
+# http://127.0.0.1:8000/api/posts/?format=api
 router.register(r'api/posts', PostViewSet, basename='posts')
 
-class FollowSerializer(serializers.ModelSerializer):
-     pass
-class PostSerializer(serializers.ModelSerializer):
 
-        get_liked_users = UserSerializer(many=True, read_only=True)
-
-        class Meta:
-            ordering = ['-createdDate']
-            model = Posts
-            fields = ("id", "creator", "content", "createdDate", "get_liked_users", "numberLikes")
-            extra_kwargs = {'get_liked_users': {'required': False}}
 
 urlpatterns = [
     path("admin/", admin.site.urls),
