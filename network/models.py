@@ -43,13 +43,13 @@ class Follow(models.Model):
         return f"User: {self.followUser} - Followers: {self.followers.all()} Following: {self.following.all()}"
 
     #TODO: get rid of this?
-    def serialize(self):
-        return {
-            "id": self.id,
-            "followUser": self.followUser,
-            "followers": getFollowers(self.id),
-            "following": [user.username for user in self.following.all()],
-        }
+    # def serialize(self):
+    #     return {
+    #         "id": self.id,
+    #         "followUser": self.followUser,
+    #         "followers": getFollowers(self.id),
+    #         "following": [user.username for user in self.following.all()],
+    #     }
 def getUserName(userID):
     userName = User.objects.get(id=userID)
     test = userName.username

@@ -1,3 +1,4 @@
+from rest_framework import routers, serializers, viewsets, status
 import datetime
 from itertools import chain
 import time
@@ -206,18 +207,17 @@ def getPost(request, post_id):
 
         # data = json.loads(request.body)
 
-        #FIXME: Can do an ID of 107-80 for the ID.
-        #TODO: Need to account for DoesNotExist error if they type an ID that does not exist.
+        # FIXME: Can do an ID of 107-80 for the ID.
+        # TODO: Need to account for DoesNotExist error if they type an ID that does not exist.
 
         try:
             post = Posts.objects.get(pk=post_id)
         except Posts.DoesNotExist:
             # return JsonResponse({"error": "Post not found."}, status=404)
             messages.error(
-            request, 'Post with ID of ' + str(post_id) + ' not found.  Please try again.')
+                request, 'Post with ID of ' + str(post_id) + ' not found.  Please try again.')
         # Redirect to activeListings page.
             return HttpResponseRedirect(reverse("index"))
-
 
         # if data.get("content") is not None:
         #     postContent = data["content"]
@@ -230,7 +230,6 @@ def getPost(request, post_id):
         return HttpResponse("In the Post ID API!")
 
 
-from rest_framework import routers, serializers, viewsets, status
 class PostViewSet(viewsets.ModelViewSet):
     """
     List all workers, or create a new worker.
@@ -239,6 +238,8 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
 
 # ViewSets define the view behavior.
+
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
