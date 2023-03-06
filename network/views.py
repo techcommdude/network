@@ -215,6 +215,7 @@ def getPost(request, post_id):
 
 
 # ViewSets define the view behavior.
+
 class PostViewSet(viewsets.ModelViewSet):
     """
     List all posts.
@@ -241,6 +242,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 # Used by the Django Paginor class
+
 class PostsListView(ListView):
     model = Posts
 
