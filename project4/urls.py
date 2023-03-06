@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 from django.contrib.auth import get_user_model
-from network.views import PostViewSet, UserViewSet
+from network.views import PostViewSet, UserViewSet, FollowViewSet
 User = get_user_model()
 
 
@@ -34,6 +34,9 @@ router.register(r'api/posts', PostViewSet, basename='posts')
 # http://127.0.0.1:8000/api/posts/89/?format=json
 # This opens the Django rest framework
 # http://127.0.0.1:8000/api/posts/?format=api
+router.register(r'api/follow', FollowViewSet, basename='follow')
+# http://127.0.0.1:8000/api/follow/?format=json
+# http://127.0.0.1:8000/api/follow/3/?format=json
 
 urlpatterns = [
     path("admin/", admin.site.urls),

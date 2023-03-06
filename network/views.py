@@ -230,14 +230,21 @@ def getPost(request, post_id):
         return HttpResponse("In the Post ID API!")
 
 
+# ViewSets define the view behavior.
 class PostViewSet(viewsets.ModelViewSet):
     """
-    List all workers, or create a new worker.
+    List all posts.
     """
     queryset = Posts.objects.all()
     serializer_class = PostSerializer
 
-# ViewSets define the view behavior.
+class FollowViewSet(viewsets.ModelViewSet):
+    """
+    List all follow objects
+    """
+    queryset = Follow.objects.all()
+    serializer_class = FollowSerializer
+
 
 
 class UserViewSet(viewsets.ModelViewSet):
