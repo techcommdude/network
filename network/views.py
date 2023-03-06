@@ -183,29 +183,14 @@ def saveDjangoNewPost(request):
 def getPost(request, post_id):
 
     # TODO: This is for editing the post after clicking edit.
-    print("In updatePost")
+    print("In getPost")
 
-    # TODO: Use this to return the JSON for a particular post.
-    # user = request.user
-    # userLoggedIn = request.user.username
-    # Get the user ID of the logged in user for the User object
-    # user_id = request.user.id
-    # userName = User.objects.get(id=user_id)
-    # print(userName)
-    # print(user)
-    # print(userLoggedIn)
-
-    # try:
-    #     test = Posts.objects.get(pk=post_id)
-    # except Posts.DoesNotExist:
-    #     return JsonResponse({"error": "Post not found."}, status=404)
-
-    if request.method != "GET":
+    if request.method != "PUT":
         return JsonResponse({"error": "PUT request required."}, status=400)
 
-    if request.method == "GET":
+    if request.method == "PUT":
 
-        # data = json.loads(request.body)
+        data = json.loads(request.body)
 
         # FIXME: Can do an ID of 107-80 for the ID.
         # TODO: Need to account for DoesNotExist error if they type an ID that does not exist.
@@ -219,15 +204,14 @@ def getPost(request, post_id):
         # Redirect to activeListings page.
             return HttpResponseRedirect(reverse("index"))
 
-        # if data.get("content") is not None:
-        #     postContent = data["content"]
+        if data.get("content") is not None:
+            postContent = data["content"]
 
-        #     post.content = postContent
-        #     post.save()
-            # time.sleep(0.5)
+            post.content = postContent
+            post.save()
+            time.sleep(0.5)
 
-            # return JsonResponse({"message": "Post created successfully!", "data": data["content"]}, safe=False)
-        return HttpResponse("In the Post ID API!")
+            return JsonResponse({"message": "Post created successfully!", "data": data["content"]}, safe=False)
 
 
 # ViewSets define the view behavior.
@@ -248,65 +232,12 @@ class FollowViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    """
+    List all users.
+    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
-@login_required
-def getAllPosts(request):
-
-    # TODO: Keep this for the API.  Perhaps create a button or document.  /posts route.
-
-    print("In getAllPosts")
-    # TODO: most recent posts first, how to do?  Need to sort the below.
-
-    # FIXME: May want to do this by user, but for now just return everything regardless of user.  Can use this info later or in another function.
-    user = request.user
-    userLoggedIn = request.user.username
-    # Get the user ID of the logged in user for the User object
-    user_id = request.user.id
-    userNameObject = User.objects.get(id=user_id)
-    print(userNameObject)
-    print(user)
-    print(userLoggedIn)
-
-    # user = User.objects.values('userName')
-    # Need to get the actual user here.
-    # userName = User.objects.get(id=2)
-    # test = userName.username
-
-    # this is a queryset of all Posts objects
-    posts = Posts.objects.all().order_by('-createdDate')
-
-    # for post in posts:
-
-    #     # FIXME: this only gets the last object.  Need to loop it.
-    #     test = post.serialize()
-
-    return JsonResponse([post.serialize() for post in posts], safe=False)
-
-    # serialized_q = json.dumps(
-    #     list(allPosts), cls=DjangoJSONEncoder, default=str)
-    # print(serialized_q)
-
-    # serialized_data = serialize("json", allPosts)
-    # serialized_data = json.loads(serialized_data)
-    # print(serialized_data)
-    # test = json.dumps(serialized_data)
-    # print(test)
-
-#     createdDate = '2019-01-04T16:41:24+02:00'
-
-#    createdDate.strftime("%b %d %Y, %I:%M %p")
-    # //TODO: This converts the format of the date.
-    # test = datetime.datetime.fromisoformat('2019-01-04T16:41:24+02:00')
-    # print(test)
-
-    # posts = json.dumps([dict(item) for item in Posts.objects.all().values('id', 'creator', 'content', 'createdDate', 'numberLikes')], default=str)
-    # print(posts)
-
-    # If you are returning anything other than a dict, you must use safe=False.
-    # return JsonResponse(serialized_q, safe=False, status=200)
 
 
 # Used by the Django Paginor class
