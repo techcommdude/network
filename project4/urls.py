@@ -23,15 +23,17 @@ User = get_user_model()
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
 # TODO: http://127.0.0.1:8000/users/ will retrieve the users in the system.
 # http://127.0.0.1:8000/users/?format=json
+# http://127.0.0.1:8000/users/3/?format=json
 # This opens the Django rest framework
 # http://127.0.0.1:8000/users/?format=api
-router.register(r'users', UserViewSet)
+router.register(r'api/posts', PostViewSet, basename='posts')
 # http://127.0.0.1:8000/api/posts/?format=json
+# http://127.0.0.1:8000/api/posts/89/?format=json
 # This opens the Django rest framework
 # http://127.0.0.1:8000/api/posts/?format=api
-router.register(r'api/posts', PostViewSet, basename='posts')
 
 urlpatterns = [
     path("admin/", admin.site.urls),

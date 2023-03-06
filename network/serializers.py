@@ -7,7 +7,7 @@ from network.models import User, Posts, Follow
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'is_staff', 'is_superuser']
+        fields = ['url','id', 'username', 'email', 'is_staff', 'is_superuser']
 
 
 class FollowSerializer(serializers.ModelSerializer):
@@ -21,5 +21,5 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         ordering = ['-createdDate']
         model = Posts
-        fields = ("id", "creator", "content",
+        fields = ("url","id", "creator", "content",
                   "createdDate", "likedUser", "numberLikes")
