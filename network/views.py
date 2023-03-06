@@ -223,6 +223,7 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Posts.objects.all()
     serializer_class = PostSerializer
 
+
 class FollowViewSet(viewsets.ModelViewSet):
     """
     List all follow objects
@@ -231,14 +232,12 @@ class FollowViewSet(viewsets.ModelViewSet):
     serializer_class = FollowSerializer
 
 
-
 class UserViewSet(viewsets.ModelViewSet):
     """
     List all users.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
 
 
 # Used by the Django Paginor class
@@ -399,23 +398,6 @@ def getProfile(request, username):
     else:
         return render(request, "network/profile.html", {"page_obj": page_obj, "noListings": noListings, "postings": postsUser, "countFollowers": countFollowers, "countFollowing": countFollowing, "username": username, "isFollowing": isFollowing, "likeList": likeList})
 
-    # This returns a queryset which must be serialized to convert to JSON.
-    # currentObjects = Follow.objects.filter(followUser=user_id)
-
-    # serialized_q = json.dumps(list(currentObjects), cls=DjangoJSONEncoder)
-
-    # return JsonResponse([currentObject.serialize() for currentObject in currentObjects], safe=False)
-
-    # return HttpResponse("In the getProfile function!")
-
-    # serialized_data = serialize("json", followQS)
-    # serialized_data = json.loads(serialized_data)
-    # print(serialized_data)
-
-    # TODO: Need to handle the case where nothing is returned.  What do we display on the page.
-
-    # return JsonResponse(serialized_data, safe=False, status=200)
-
 
 # The username here is the user that the logged in user wants to follow.
 # This method does both following and unfollowing.
@@ -474,15 +456,6 @@ def follow(request, username):
 
         # FIXME: returns a Qs of those theat the user follows. Need to test this to see if the new user is in this QS.  If it is not, then add it.
         following = follow.following.all()
-
-        #test = Follow.objects.filter(followUser_id=user_id)
-
-        # test = Follow.objects.get(followUser_id=user_id)
-
-        # for userID in range(test):
-        #     test.following.remove(userIDNewFollowing)
-        #     test.save()
-        #     isFollowing = False
 
         # FIXME: Needs to find the value in the list.
         # if userIDNewFollowing in following:
