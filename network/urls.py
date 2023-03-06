@@ -23,6 +23,6 @@ urlpatterns = [
     path("unlikePost/<int:postID>", views.unlikePost, name="unlikePost"),
     # This is for editing the post after clicking the edit button.
     path("posts/<int:post_id>", views.getPost, name="getPost"),
-
+    path("viewJSON", views.viewJSON, name="viewJSON"),
 
 ]

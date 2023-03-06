@@ -769,3 +769,6 @@ def handler500(request, exception, template_name="500.html"):
     response = render(template_name)
     response.status_code = 500
     return response
+
+def viewJSON(request):
+    return render(request, "network/JSONAPI.html")

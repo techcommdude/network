@@ -1,0 +1,32 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+
+{% block body %}
+{% include "network/messages.html" %}
+
+
+<h3>View API output with the Django REST Framework</h3>
+
+<div id="allPostings">
+
+    <a href="http://127.0.0.1:8000/api/posts/?format=json">
+        <button class="btn btn-sm btn-outline-primary" id="">JSON for all posts</button>
+    </a>
+
+    <a href="http://127.0.0.1:8000/users/?format=json">
+
+        <button class="btn btn-sm btn-outline-primary" id="">JSON for all users</button>
+    </a>
+
+    <a href="http://127.0.0.1:8000/api/follow/?format=json">
+
+        <button class="btn btn-sm btn-outline-primary" id="">JSON for following and followers</button>
+
+    </a>
+
+    {% endblock %}
+
+    {% block script %}
+    <script src="{% static 'network/network.js' %}"></script>
+    {% endblock %}
