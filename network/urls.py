@@ -24,10 +24,5 @@ urlpatterns = [
     # This is for editing the post after clicking the edit button.
     path("posts/<int:post_id>", views.getPost, name="getPost"),
 
-    # API Routes
-    # This is never called in JavaScript or from any HTML page.  Need to redo this for the API.  A GET  for all posts.
-    # path("posts", views.getAllPosts, name="getAllPosts"),
-    path("post", views.savePost, name="savePost"),
-
 
 ]
