@@ -6,27 +6,99 @@
 {% include "network/messages.html" %}
 
 
-<h3>View API output with the Django REST Framework</h3>
+<h3>View API output with the Django REST Framework:</h3>
 
-<div id="allPostings">
+{% if request.build_absolute_uri == 'http://127.0.0.1:8000/viewJSON' %}
 
-    <a href="http://127.0.0.1:8000/api/posts/?format=json">
-        <button class="btn btn-sm btn-outline-primary" id="">JSON for all posts</button>
-    </a>
+<div id="json_buttons">
 
-    <a href="http://127.0.0.1:8000/users/?format=json">
+    <ul>
 
-        <button class="btn btn-sm btn-outline-primary" id="">JSON for all users</button>
-    </a>
+        <li>
+            <div><a href="http://127.0.0.1:8000/api/posts/?format=json" target="_blank" rel="noopener">JSON for all user
+                    posts</a></div>
+        </li>
 
-    <a href="http://127.0.0.1:8000/api/follow/?format=json">
+        <li>
+            <div><a href="http://127.0.0.1:8000/api/posts/?format=api" target="_blank" rel="noopener">JSON for all
+                    posts,
+                    browsable
+                    API</a></div>
+        </li>
 
-        <button class="btn btn-sm btn-outline-primary" id="">JSON for following and followers</button>
+        <li>
+            <div><a href="http://127.0.0.1:8000/users/?format=json" target="_blank" rel="noopener">JSON for all
+                    users</a></div>
+        </li>
 
-    </a>
+        <li>
+            <div> <a href="http://127.0.0.1:8000/users/?format=api" target="_blank" rel="noopener">
 
-    {% endblock %}
+                    JSON for all users, browsable API
+                </a></div>
+        </li>
 
-    {% block script %}
-    <script src="{% static 'network/network.js' %}"></script>
-    {% endblock %}
+        <li>
+            <div> <a href="http://127.0.0.1:8000/api/follow/?format=json" target="_blank" rel="noopener">
+
+                    JSON for following and followers
+                </a></div>
+        </li>
+
+        <li>
+            <div> <a href="http://127.0.0.1:8000/api/follow/?format=api" target="_blank" rel="noopener">
+
+                    JSON for following and followers, browsable
+                    API
+
+                </a></div>
+        </li>
+
+    </ul>
+
+
+    {% else %}
+
+    <div id="json_buttons">
+
+        <div> <a href="http://farnellg-social-network.herokuapp.com/api/posts/?format=json" target="_blank"
+                rel="noopener">JSON for all posts
+            </a></div>
+
+        <div> <a href="http://farnellg-social-network.herokuapp.com/api/posts/?format=api" target="_blank"
+                rel="noopener">
+                JSON for all posts, browsable API
+            </a></div>
+
+        <div> <a href="http://farnellg-social-network.herokuapp.com/users/?format=json" target="_blank" rel="noopener">
+
+                JSON for all users
+            </a></div>
+
+
+        <div> <a href="http://farnellg-social-network.herokuapp.com/users/?format=api" target="_blank" rel="noopener">
+
+                JSON for all users, browsable API
+            </a></div>
+
+        <div> <a href="farnellg-social-network.herokuapp.com/api/follow/?format=json" target="_blank" rel="noopener">
+
+                JSON for following and followers
+
+            </a></div>
+
+        <div> <a href="farnellg-social-network.herokuapp.com/api/follow/?format=api" target="_blank" rel="noopener">
+
+                JSON for following and followers, browsable
+                API
+
+            </a></div>
+
+
+        {% endif %}
+
+        {% endblock %}
+
+        {% block script %}
+        <script src="{% static 'network/network.js' %}"></script>
+        {% endblock %}

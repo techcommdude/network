@@ -14,6 +14,16 @@ a {
   background-color: #e8f0e3;
 }
 
+#json_buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+[class$="json"]  {
+
+  margin: 10px;
+}
+
 #post-view {
   background-color: #e8f0e3;
 }
@@ -90,7 +100,6 @@ p {
 }
 
 /* Follow/Unfollow button at the top of the profile */
-
 
 [class*="unfollow"] {
   display: flex;
