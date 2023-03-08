@@ -564,6 +564,14 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
         document.getElementById("followButton").className =
           "btn btn-sm btn-outline-primary follow";
 
+        //Display the "no longer following" heading.
+
+        debugger;
+
+        document.getElementById("text_nofollowing_top").className = "hidden"
+
+        document.getElementById("text_nofollowing_bottom").className = "text_nofollowing_bottom"
+
         return false;
       });
   } else {
@@ -591,6 +599,14 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
         document.getElementById("followButton").className = "hidden";
         document.getElementById("unfollowButton").className =
           "btn btn-sm btn-outline-primary unfollow";
+
+              //Display the "no longer following" heading.
+
+        debugger;
+
+        document.getElementById("text_following_top").className = "hidden"
+
+        document.getElementById("text_following_bottom").className = "text_following_bottom"
 
         return false;
       });
