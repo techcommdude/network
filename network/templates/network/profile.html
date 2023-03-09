@@ -8,7 +8,7 @@
 
     <ul>
         <li>Total number of followers: {{countFollowers}}</li>
-        <li>Total number following: {{countFollowing}}</li>
+        <li id="countFollowing">Total number following: {{countFollowing}}</li>
 
         <!-- Display according to flag that is returned from Django.  Three choices: Follow, Unfollow, or nothing. -->
         {% if isFollowing %}

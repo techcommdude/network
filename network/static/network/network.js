@@ -578,7 +578,21 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
           document.getElementById("text_nofollowing_bottom").className =
             "text_nofoll_bottom";
 
-         //Alter the number of followers on the page. Reduce or increase the number by 1.
+         //Alter the number of followers on the page. Reduce the number by 1 here.
+
+         const text = document.getElementById("countFollowing").textContent;
+         console.log(text);
+         const lastChar = text.substring(text.length - 1);
+         console.log(lastChar);
+         console.log(parseInt(lastChar));
+
+         const finalNumber = parseInt(lastChar);
+         const finalNumber2 = finalNumber - 1;
+
+        //regext to replace the last character in the string with the new number of  followers.
+         var newText = text.replace(/.$/,finalNumber2);
+         document.getElementById("countFollowing").textContent = newText;
+
 
         return false;
       });
@@ -625,7 +639,21 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
           document.getElementById("text_following_bottom").className =
             "text_foll_bottom";
 
-        //Alter the number of followers on the page. Reduce or increase the number by 1.
+        //Alter the number of followers on the page. Increase the number by 1.
+
+        //There is a bug here if the number of followers becomes double digit.
+        //FIXME: Need to search for all the characters after the space.
+
+        const text = document.getElementById("countFollowing").textContent;
+        console.log(text);
+        const lastChar = text.substring(text.length - 1);
+        console.log(lastChar);
+        console.log(parseInt(lastChar));
+        const finalNumber = parseInt(lastChar);
+        const finalNumber2 = finalNumber + 1;
+       //regext to replace the last character in the string with the new number of  followers.
+        var newText = text.replace(/.$/,finalNumber2);
+        document.getElementById("countFollowing").textContent = newText;
 
         return false;
       });
