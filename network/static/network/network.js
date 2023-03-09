@@ -580,8 +580,6 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
 
          //Alter the number of followers on the page. Reduce the number by 1 here.
 
-         debugger;
-
          const text = document.getElementById("countFollowing").textContent;
          console.log(text);
          const lastChar = text.substring(text.length - 1);
@@ -645,8 +643,6 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
 
         //There is a bug here if the number of followers becomes double digit.
         //FIXME: Need to search for all the characters after the space.
-
-        debugger;
 
         const text = document.getElementById("countFollowing").textContent;
         console.log(text);
