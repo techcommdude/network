@@ -558,11 +558,27 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
         console.log("Just finished fetching the information.");
 
         //Need to hide the existing button and display the hidden Follow button.
-
         document.getElementById("unfollowButton").className = "hidden";
 
         document.getElementById("followButton").className =
           "btn btn-sm btn-outline-primary follow";
+
+          //Alter the text for following or not following.
+        if (
+          document.getElementById("text_following_top") != null ||
+          document.getElementById("text_following_bottom") != null
+        )
+          if (document.getElementById("text_following_top") != null)
+            document.getElementById("text_following_top").className = "hidden";
+
+        if (document.getElementById("text_following_bottom") != null)
+          document.getElementById("text_following_bottom").className = "hidden";
+
+        if (document.getElementById("text_nofollowing_bottom") != null)
+          document.getElementById("text_nofollowing_bottom").className =
+            "text_nofoll_bottom";
+
+         //Alter the number of followers on the page. Reduce or increase the number by 1.
 
         return false;
       });
@@ -591,6 +607,25 @@ function followUnfollowUser(currentUserProfile, loggedinUser) {
         document.getElementById("followButton").className = "hidden";
         document.getElementById("unfollowButton").className =
           "btn btn-sm btn-outline-primary unfollow";
+
+        //Alter the text for following or not following.
+        if (
+          document.getElementById("text_nofollowing_top") != null ||
+          document.getElementById("text_nofollowing_top") != null
+        )
+          if (document.getElementById("text_nofollowing_top") != null)
+            document.getElementById("text_nofollowing_top").className =
+              "hidden";
+
+        if (document.getElementById("text_nofollowing_bottom") != null)
+          document.getElementById("text_nofollowing_bottom").className =
+            "hidden";
+
+        if (document.getElementById("text_following_bottom") != null)
+          document.getElementById("text_following_bottom").className =
+            "text_foll_bottom";
+
+        //Alter the number of followers on the page. Reduce or increase the number by 1.
 
         return false;
       });
