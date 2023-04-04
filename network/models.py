@@ -23,9 +23,6 @@ class Posts(models.Model):
     #This is the total number of likes, regardless of the user.
     numberLikes = models.PositiveIntegerField(blank=True, default=0)
 
-    # def __str__(self) -> str:
-    #     return f"User: {self.creator} - user likes: {self.likedUser.all()}"
-
 
 class Follow(models.Model):
     #The name of the user
@@ -42,14 +39,6 @@ class Follow(models.Model):
     def __str__(self) -> str:
         return f"User: {self.followUser} - Followers: {self.followers.all()} Following: {self.following.all()}"
 
-    #TODO: get rid of this?
-    # def serialize(self):
-    #     return {
-    #         "id": self.id,
-    #         "followUser": self.followUser,
-    #         "followers": getFollowers(self.id),
-    #         "following": [user.username for user in self.following.all()],
-    #     }
 def getUserName(userID):
     userName = User.objects.get(id=userID)
     test = userName.username

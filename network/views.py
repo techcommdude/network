@@ -692,9 +692,6 @@ def getFollowing(request):
 
     return render(request, "network/following.html", {"page_obj": page_obj, "listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, "likeList": likeList})
 
-    # if not emptyQueryset:
-    #     return render(request, "network/following.html", {"displayNothing": displayNothing})
-
 
 def index(request):
     # Authenticated users view their inbox
@@ -769,6 +766,7 @@ def handler500(request, exception, template_name="500.html"):
     response = render(template_name)
     response.status_code = 500
     return response
+
 
 def viewJSON(request):
     return render(request, "network/JSONAPI.html")
