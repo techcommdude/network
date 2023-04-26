@@ -290,7 +290,7 @@ def returnlikeList(request):
     # This will return a queryset of all objects that the user likes.
     # likedUser = Posts.objects.filter(likedUser = user_id)
 
-    #likedUser = Posts.objects.get(likedUser = user_id)
+    # likedUser = Posts.objects.get(likedUser = user_id)
     likedUser = Posts.objects.filter(likedUser=user_id)
 
     print(likedUser)
@@ -409,7 +409,7 @@ def follow(request, username):
     userLoggedin = request.user
     IDOfUserLoggedIn = userLoggedin.id
 
-    #test = User.objects.get(id=IDOfUserLoggedIn)
+    # test = User.objects.get(id=IDOfUserLoggedIn)
 
     print(userLoggedin)
     # This is the user that the logged in user wants to follow.
@@ -592,7 +592,7 @@ def getFollowingFlag(request, username):
 
         # FIXME: returns a Qs of those theat the user follows. Need to test this to see if the new user is in this QS.  If it is not, then add it.
         following = follow.following.all()
-        #test = Follow.objects.filter(followUser_id=user_id)
+        # test = Follow.objects.filter(followUser_id=user_id)
 
         # FIXME: Needs to find the value in the list.
         # if userIDNewFollowing in following:
@@ -693,6 +693,11 @@ def getFollowing(request):
     return render(request, "network/following.html", {"page_obj": page_obj, "listings": PostsByDate, "UserObject": UserObject, "displayNothing": displayNothing, "likeList": likeList})
 
 
+@login_required
+def viewJSON(request):
+    return render(request, "network/JSONAPI.html")
+
+
 def index(request):
     # Authenticated users view their inbox
     if request.user.is_authenticated:
@@ -766,7 +771,3 @@ def handler500(request, exception, template_name="500.html"):
     response = render(template_name)
     response.status_code = 500
     return response
-
-
-def viewJSON(request):
-    return render(request, "network/JSONAPI.html")
