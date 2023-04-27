@@ -48,7 +48,7 @@ urlpatterns = [
      # OpenAPI 3 documentation with Swagger UI
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
-        "docs/",
+        "swagger_api_docs/",
         SpectacularSwaggerView.as_view(
             template_name="swagger-ui.html", url_name="schema"
         ),
