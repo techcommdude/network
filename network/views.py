@@ -697,6 +697,10 @@ def getFollowing(request):
 def viewJSON(request):
     return render(request, "network/JSONAPI.html")
 
+@login_required
+def viewSwaggerDocs(request):
+    return render(request, "swagger-ui.html")
+
 
 def index(request):
     # Authenticated users view their inbox
