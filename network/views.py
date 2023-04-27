@@ -20,45 +20,8 @@ from network.serializers import PostSerializer, FollowSerializer, UserSerializer
 
 from .models import User, Posts, Follow
 from django.views.decorators.csrf import csrf_exempt
-
-
-# # Creates a new post.
-# @login_required
-# def savePost(request):
-#     print("In savePost")
-#     # TODO: Use this to return the JSON for a particular post.
-#     user = request.user
-#     userLoggedIn = request.user.username
-#     # Get the user ID of the logged in user for the User object
-#     user_id = request.user.id
-#     userName = User.objects.get(id=user_id)
-#     print(userName)
-#     print(user)
-#     print(userLoggedIn)
-
-#     if request.method != "POST":
-#         return JsonResponse({"error": "POST request required."}, status=400)
-
-#     # Load the content of the POST request.
-#     # It's not necessary to send back the entire model by serializing it if you just
-#     # need one field or more.
-#     data = json.loads(request.body)
-#     postContent = data.get("content")
-
-#     # This is not used since I validate the front end for empty posts.
-#     if data.get("content") == "":
-#         return JsonResponse({
-#             "error": "You have not posted any content.  Please try again."
-#         }, status=400)
-
-#     newPost = Posts(
-#         creator=userName,
-#         content=postContent
-#     )
-#     # Create a new post.
-#     newPost.save()
-
-#     return JsonResponse({"message": "Post created successfully!"}, status=201)
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.types import OpenApiTypes
 
 
 @login_required
@@ -215,32 +178,38 @@ def getPost(request, post_id):
 
 
 # ViewSets define the view behavior.
-
+@extend_schema(description='API endpoint that lists all posts for all users.', methods=["GET"])
+@extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["POST"])
+@extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["PUT"])
+@extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["PATCH"])
+@extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["DELETE"])
 class PostViewSet(viewsets.ModelViewSet):
-    """
-    List all posts.
-    """
     queryset = Posts.objects.all()
     serializer_class = PostSerializer
 
-
+@extend_schema(description='API endpoint that lists all Follow objects for all users.', methods=["GET"])
+@extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["POST"])
+@extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["PUT"])
+@extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["PATCH"])
+@extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["DELETE"])
 class FollowViewSet(viewsets.ModelViewSet):
-    """
-    List all follow objects
-    """
+
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
 
 
+@extend_schema(description='API endpoint that lists all users.', methods=["GET"])
+@extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["POST"])
+@extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["PUT"])
+@extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["PATCH"])
+@extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["DELETE"])
 class UserViewSet(viewsets.ModelViewSet):
-    """
-    List all users.
-    """
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-# Used by the Django Paginor class
+# Used by the Django Paginator class
 
 class PostsListView(ListView):
     model = Posts
