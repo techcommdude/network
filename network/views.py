@@ -186,6 +186,7 @@ def getPost(request, post_id):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Posts.objects.all()
     serializer_class = PostSerializer
+    http_method_names = ['get', 'post']
 
 @extend_schema(description='API endpoint that lists all Follow objects for all users.', methods=["GET"])
 @extend_schema(description='This API endpoint is not implemented.  Please do not use.', methods=["POST"])
@@ -196,6 +197,7 @@ class FollowViewSet(viewsets.ModelViewSet):
 
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
+    http_method_names = ['get']
 
 
 @extend_schema(description='API endpoint that lists all users.', methods=["GET"])
@@ -207,6 +209,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    http_method_names = ['get', 'post', 'delete']
 
 
 # Used by the Django Paginator class
