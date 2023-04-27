@@ -42,10 +42,13 @@ INSTALLED_APPS = [
 
     #rest_framework
     'rest_framework',
+    'drf_spectacular',
 
 ]
 
 REST_FRAMEWORK = {
+
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
@@ -55,7 +58,16 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
     'rest_framework.authentication.TokenAuthentication',),
+
     }
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Social Network RESTful API',
+    'DESCRIPTION': 'Social Network project by Geoff Farnell',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
